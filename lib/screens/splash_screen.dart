@@ -4,9 +4,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
-import 'login_screen.dart';
-import 'registration_step1_screen.dart';
-import 'home_screen.dart';
+import '../providers/history_provider.dart';
+import '../widgets/onboarding_overlay.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,39 +15,46 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  bool _showOnboarding = false;
+
   @override
   void initState() {
     super.initState();
-    _navigateToNextScreen();
+    _initialize();
   }
 
-  Future<void> _navigateToNextScreen() async {
+  Future<void> _initialize() async {
+    // Initialize providers
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final historyProvider = Provider.of<HistoryProvider>(context, listen: false);
+
+    await Future.wait([
+      authProvider.init(),
+      historyProvider.init(),
+    ]);
+
     // Wait for splash animation
     await Future.delayed(const Duration(seconds: 2));
 
-    if (!mounted) return;
-
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
-
-    // Check authentication state
-    Widget nextScreen;
-    if (authProvider.isLoggedIn) {
-      nextScreen = const HomeScreen();
-    } else if (authProvider.isRegistered) {
-      nextScreen = const LoginScreen();
-    } else {
-      nextScreen = const RegistrationStep1Screen();
-    }
-
     if (mounted) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => nextScreen),
-      );
+      setState(() {
+        _showOnboarding = true;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_showOnboarding) {
+      return Scaffold(
+        body: OnboardingOverlay(
+          onComplete: () {
+            // OnboardingOverlay will handle navigation
+          },
+        ),
+      );
+    }
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(

@@ -13,7 +13,8 @@ class RegistrationStep3Screen extends StatefulWidget {
   const RegistrationStep3Screen({super.key});
 
   @override
-  State<RegistrationStep3Screen> createState() => _RegistrationStep3ScreenState();
+  State<RegistrationStep3Screen> createState() =>
+      _RegistrationStep3ScreenState();
 }
 
 class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
@@ -75,6 +76,8 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
                       _buildForm(),
                       const SizedBox(height: 32),
                       _buildButtons(),
+                      const SizedBox(height: 16),
+                      _buildLoginLink(),
                     ],
                   ),
                 ),
@@ -207,7 +210,8 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
               decoration: InputDecoration(
                 labelText: 'Manager Name *',
                 labelStyle: const TextStyle(color: Colors.white60),
-                prefixIcon: const Icon(Icons.person, color: Color(0xFF00D9FF)),
+                prefixIcon:
+                const Icon(Icons.person, color: Color(0xFF00D9FF)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: Colors.white30),
@@ -218,7 +222,8 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFF00D9FF), width: 2),
+                  borderSide:
+                  const BorderSide(color: Color(0xFF00D9FF), width: 2),
                 ),
               ),
               validator: (value) {
@@ -247,7 +252,8 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFF00D9FF), width: 2),
+                  borderSide:
+                  const BorderSide(color: Color(0xFF00D9FF), width: 2),
                 ),
               ),
               validator: (value) {
@@ -271,7 +277,9 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
                 prefixIcon: const Icon(Icons.lock, color: Color(0xFF00D9FF)),
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                    _obscurePassword
+                        ? Icons.visibility_off
+                        : Icons.visibility,
                     color: Colors.white60,
                   ),
                   onPressed: () {
@@ -288,7 +296,8 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFF00D9FF), width: 2),
+                  borderSide:
+                  const BorderSide(color: Color(0xFF00D9FF), width: 2),
                 ),
               ),
               validator: (value) {
@@ -309,14 +318,18 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
               decoration: InputDecoration(
                 labelText: 'Confirm Password *',
                 labelStyle: const TextStyle(color: Colors.white60),
-                prefixIcon: const Icon(Icons.lock_outline, color: Color(0xFF00D9FF)),
+                prefixIcon:
+                const Icon(Icons.lock_outline, color: Color(0xFF00D9FF)),
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
+                    _obscureConfirmPassword
+                        ? Icons.visibility_off
+                        : Icons.visibility,
                     color: Colors.white60,
                   ),
                   onPressed: () {
-                    setState(() => _obscureConfirmPassword = !_obscureConfirmPassword);
+                    setState(() =>
+                    _obscureConfirmPassword = !_obscureConfirmPassword);
                   },
                 ),
                 border: OutlineInputBorder(
@@ -329,7 +342,8 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFF00D9FF), width: 2),
+                  borderSide:
+                  const BorderSide(color: Color(0xFF00D9FF), width: 2),
                 ),
               ),
               validator: (value) {
@@ -392,14 +406,15 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
               width: 20,
               child: CircularProgressIndicator(
                 strokeWidth: 2,
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                valueColor:
+                AlwaysStoppedAnimation<Color>(Colors.black),
               ),
             )
                 : const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Complete Registration',
+                  'Complete',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -415,11 +430,50 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
     );
   }
 
+  Widget _buildLoginLink() {
+    return TextButton(
+      onPressed: _isLoading
+          ? null
+          : () {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (_) => const LoginScreen()),
+              (route) => false,
+        );
+      },
+      style: TextButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+      ),
+      child: RichText(
+        text: TextSpan(
+          style: TextStyle(
+            fontSize: 14,
+            color: _isLoading ? Colors.white30 : Colors.white60,
+          ),
+          children: [
+            const TextSpan(text: 'Already have an account? '),
+            TextSpan(
+              text: 'Login',
+              style: TextStyle(
+                color: _isLoading
+                    ? Colors.white30
+                    : const Color(0xFF00D9FF),
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Future<void> _handleComplete() async {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
 
-      final regProvider = Provider.of<RegistrationProvider>(context, listen: false);
+      final regProvider =
+      Provider.of<RegistrationProvider>(context, listen: false);
 
       regProvider.setManagerInfo(
         _nameController.text,

@@ -2,7 +2,12 @@
 // FILE: lib/widgets/onboarding_overlay.dart
 // ============================================================================
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'glass_card.dart';
+import '../providers/auth_provider.dart';
+import '../screens/login_screen.dart';
+import '../screens/registration_step1_screen.dart';
+import '../screens/home_screen.dart';
 
 class OnboardingOverlay extends StatefulWidget {
   final VoidCallback onComplete;
@@ -35,10 +40,40 @@ class _OnboardingOverlayState extends State<OnboardingOverlay> {
     ),
   ];
 
+  void _handleGetStarted() {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    Widget nextScreen;
+    if (authProvider.isLoggedIn) {
+      // User is logged in -> go to home
+      nextScreen = const HomeScreen();
+    } else if (authProvider.isRegistered) {
+      // User is registered but not logged in -> go to login
+      nextScreen = const LoginScreen();
+    } else {
+      // User is not registered -> go to registration
+      nextScreen = const RegistrationStep1Screen();
+    }
+
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => nextScreen),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black87,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFF0A0E27),
+            Color(0xFF1A1F3A),
+            Color(0xFF0A0E27),
+          ],
+        ),
+      ),
       child: SafeArea(
         child: Column(
           children: [
@@ -96,7 +131,7 @@ class _OnboardingOverlayState extends State<OnboardingOverlay> {
                         flex: 2,
                         child: ElevatedButton(
                           onPressed: _currentPage == _pages.length - 1
-                              ? widget.onComplete
+                              ? _handleGetStarted
                               : () => _pageController.nextPage(
                             duration: const Duration(milliseconds: 300),
                             curve: Curves.easeInOut,

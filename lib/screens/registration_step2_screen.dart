@@ -5,27 +5,34 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/registration_provider.dart';
 import '../services/location_service.dart';
+import '../services/location_data_service.dart';
 import '../widgets/glass_card.dart';
 import 'registration_step3_screen.dart';
+import 'login_screen.dart';
 
 class RegistrationStep2Screen extends StatefulWidget {
   const RegistrationStep2Screen({super.key});
 
   @override
-  State<RegistrationStep2Screen> createState() => _RegistrationStep2ScreenState();
+  State<RegistrationStep2Screen> createState() =>
+      _RegistrationStep2ScreenState();
 }
 
 class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
   final _formKey = GlobalKey<FormState>();
   final _branchNameController = TextEditingController();
-  final _countryController = TextEditingController();
-  final _cityController = TextEditingController();
-  final _regionController = TextEditingController();
   final _addressController = TextEditingController();
   final _landlineController = TextEditingController();
   final _mobileController = TextEditingController();
   final _additionalMobileController = TextEditingController();
   final _locationService = LocationService();
+  final _locationDataService = LocationDataService();
+
+  String? _selectedCountry;
+  String? _selectedCity;
+  String? _selectedRegion;
+  List<String> _availableCities = [];
+  List<String> _availableRegions = [];
 
   double? _latitude;
   double? _longitude;
@@ -36,23 +43,29 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
     super.initState();
     final provider = Provider.of<RegistrationProvider>(context, listen: false);
     _branchNameController.text = provider.branchName ?? '';
-    _countryController.text = provider.country ?? '';
-    _cityController.text = provider.city ?? '';
-    _regionController.text = provider.region ?? '';
     _addressController.text = provider.address ?? '';
     _landlineController.text = provider.landline ?? '';
     _mobileController.text = provider.mobile ?? '';
     _additionalMobileController.text = provider.additionalMobile ?? '';
+
+    _selectedCountry = provider.country;
+    _selectedCity = provider.city;
+    _selectedRegion = provider.region;
     _latitude = provider.latitude;
     _longitude = provider.longitude;
+
+    // Initialize cascading dropdowns
+    if (_selectedCountry != null) {
+      _availableCities = _locationDataService.getCitiesByCountry(_selectedCountry!);
+      if (_selectedCity != null) {
+        _availableRegions = _locationDataService.getRegionsByCity(_selectedCity!);
+      }
+    }
   }
 
   @override
   void dispose() {
     _branchNameController.dispose();
-    _countryController.dispose();
-    _cityController.dispose();
-    _regionController.dispose();
     _addressController.dispose();
     _landlineController.dispose();
     _mobileController.dispose();
@@ -91,6 +104,8 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
                       _buildForm(),
                       const SizedBox(height: 32),
                       _buildButtons(),
+                      const SizedBox(height: 16),
+                      _buildLoginLink(),
                     ],
                   ),
                 ),
@@ -225,30 +240,69 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
               value?.isEmpty ?? true ? 'Please enter branch name' : null,
             ),
             const SizedBox(height: 16),
-            _buildTextField(
-              controller: _countryController,
+
+            // Country Dropdown
+            _buildDropdownField(
               label: 'Country *',
               icon: Icons.public,
+              value: _selectedCountry,
+              items: _locationDataService.getCountries(),
+              onChanged: (value) {
+                setState(() {
+                  _selectedCountry = value;
+                  _selectedCity = null;
+                  _selectedRegion = null;
+                  _availableCities = value != null
+                      ? _locationDataService.getCitiesByCountry(value)
+                      : [];
+                  _availableRegions = [];
+                });
+              },
               validator: (value) =>
-              value?.isEmpty ?? true ? 'Please enter country' : null,
+              value == null ? 'Please select a country' : null,
             ),
             const SizedBox(height: 16),
-            _buildTextField(
-              controller: _cityController,
+
+            // City Dropdown (depends on Country)
+            _buildDropdownField(
               label: 'City *',
               icon: Icons.location_city,
+              value: _selectedCity,
+              items: _availableCities,
+              onChanged: _selectedCountry == null
+                  ? null
+                  : (value) {
+                setState(() {
+                  _selectedCity = value;
+                  _selectedRegion = null;
+                  _availableRegions = value != null
+                      ? _locationDataService.getRegionsByCity(value)
+                      : [];
+                });
+              },
               validator: (value) =>
-              value?.isEmpty ?? true ? 'Please enter city' : null,
+              value == null ? 'Please select a city' : null,
             ),
             const SizedBox(height: 16),
-            _buildTextField(
-              controller: _regionController,
+
+            // Region Dropdown (depends on City)
+            _buildDropdownField(
               label: 'Region *',
               icon: Icons.map,
+              value: _selectedRegion,
+              items: _availableRegions,
+              onChanged: _selectedCity == null
+                  ? null
+                  : (value) {
+                setState(() {
+                  _selectedRegion = value;
+                });
+              },
               validator: (value) =>
-              value?.isEmpty ?? true ? 'Please enter region' : null,
+              value == null ? 'Please select a region' : null,
             ),
             const SizedBox(height: 16),
+
             _buildTextField(
               controller: _addressController,
               label: 'Address *',
@@ -353,6 +407,50 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
     );
   }
 
+  Widget _buildDropdownField({
+    required String label,
+    required IconData icon,
+    required String? value,
+    required List<String> items,
+    required void Function(String?)? onChanged,
+    String? Function(String?)? validator,
+  }) {
+    return DropdownButtonFormField<String>(
+      value: value,
+      dropdownColor: const Color(0xFF1A1F3A),
+      style: const TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: const TextStyle(color: Colors.white60),
+        prefixIcon: Icon(icon, color: const Color(0xFF00D9FF)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.white30),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.white30),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Color(0xFF00D9FF), width: 2),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.white10),
+        ),
+      ),
+      items: items.map((item) {
+        return DropdownMenuItem(
+          value: item,
+          child: Text(item),
+        );
+      }).toList(),
+      onChanged: onChanged,
+      validator: validator,
+    );
+  }
+
   Widget _buildLocationButton() {
     return ElevatedButton.icon(
       onPressed: _isLoadingLocation ? null : _getCurrentLocation,
@@ -440,6 +538,40 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
     );
   }
 
+  Widget _buildLoginLink() {
+    return TextButton(
+      onPressed: () {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (_) => const LoginScreen()),
+              (route) => false,
+        );
+      },
+      style: TextButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+      ),
+      child: RichText(
+        text: const TextSpan(
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.white60,
+          ),
+          children: [
+            TextSpan(text: 'Already have an account? '),
+            TextSpan(
+              text: 'Login',
+              style: TextStyle(
+                color: Color(0xFF00D9FF),
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Future<void> _getCurrentLocation() async {
     setState(() => _isLoadingLocation = true);
 
@@ -450,7 +582,8 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
         _longitude = location['longitude'];
       });
 
-      final provider = Provider.of<RegistrationProvider>(context, listen: false);
+      final provider =
+      Provider.of<RegistrationProvider>(context, listen: false);
       provider.setLocation(_latitude!, _longitude!);
     } catch (e) {
       if (mounted) {
@@ -477,12 +610,13 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
         return;
       }
 
-      final provider = Provider.of<RegistrationProvider>(context, listen: false);
+      final provider =
+      Provider.of<RegistrationProvider>(context, listen: false);
       provider.setBranchInfo(
         name: _branchNameController.text,
-        country: _countryController.text,
-        city: _cityController.text,
-        region: _regionController.text,
+        country: _selectedCountry!,
+        city: _selectedCity!,
+        region: _selectedRegion!,
         address: _addressController.text,
         latitude: _latitude!,
         longitude: _longitude!,

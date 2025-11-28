@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: lib/screens/home_screen.dart (Updated with Logout)
+// FILE: lib/screens/home_screen.dart (Updated - removed onboarding check)
 // ============================================================================
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,15 +7,14 @@ import '../providers/request_provider.dart';
 import '../providers/history_provider.dart';
 import '../providers/settings_provider.dart';
 import '../providers/auth_provider.dart';
-import '../services/persistence_service.dart';
 import '../models/delivery_request.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/status_chip.dart';
 import '../widgets/countdown_timer.dart';
-import '../widgets/onboarding_overlay.dart';
 import 'create_request_screen.dart';
 import 'active_request_screen.dart';
 import 'request_history_screen.dart';
+import 'reports_screen.dart';
 import 'login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,35 +25,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool _showOnboarding = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _checkOnboarding();
-  }
-
-  Future<void> _checkOnboarding() async {
-    final persistence = PersistenceService();
-    final hasOnboarded = await persistence.hasSeenOnboarding();
-    if (!hasOnboarded) {
-      setState(() => _showOnboarding = true);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (_showOnboarding) {
-      return Scaffold(
-        body: OnboardingOverlay(
-          onComplete: () async {
-            await PersistenceService().setOnboardingSeen();
-            setState(() => _showOnboarding = false);
-          },
-        ),
-      );
-    }
-
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -347,6 +319,33 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(width: 12),
             Expanded(
               child: GlassCard(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const ReportsScreen()),
+                ),
+                child: const Column(
+                  children: [
+                    Icon(Icons.analytics, size: 32, color: Color(0xFF00FF88)),
+                    SizedBox(height: 8),
+                    Text(
+                      'Reports',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: GlassCard(
                 onTap: () => _showSettingsDialog(context),
                 child: const Column(
                   children: [
@@ -364,6 +363,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+            const SizedBox(width: 12),
+            Expanded(child: Container()), // Empty space for symmetry
           ],
         ),
       ],

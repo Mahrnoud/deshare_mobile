@@ -217,6 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
               },
             ),
             const SizedBox(height: 32),
+            // Login Button - Primary
             ElevatedButton(
               onPressed: _isLoading ? null : _handleLogin,
               style: ElevatedButton.styleFrom(
@@ -247,39 +248,71 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: (){
+            // Divider with "OR"
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 1,
+                    color: Colors.white30,
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    'OR',
+                    style: TextStyle(
+                      color: Colors.white60,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    height: 1,
+                    color: Colors.white30,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            // Create Account Button - Secondary
+            OutlinedButton(
+              onPressed: _isLoading
+                  ? null
+                  : () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const RegistrationStep1Screen()),
+                  MaterialPageRoute(
+                      builder: (_) => const RegistrationStep1Screen()),
                 );
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF0097B1),
-                foregroundColor: Colors.black,
+              style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
+                side: const BorderSide(color: Color(0xFF00D9FF), width: 2),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                elevation: 8,
-                shadowColor: const Color(0xFF00839A).withOpacity(0.5),
               ),
-              child: _isLoading
-                  ? const SizedBox(
-                height: 20,
-                width: 20,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                ),
-              )
-                  : const Text(
-                'Create Account',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black54
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.person_add_outlined,
+                    color: Color(0xFF00D9FF),
+                    size: 20,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Create New Account',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: _isLoading ? Colors.white38 : const Color(0xFF00D9FF),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

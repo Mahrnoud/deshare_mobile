@@ -12,7 +12,8 @@ class RegistrationStep1Screen extends StatefulWidget {
   const RegistrationStep1Screen({super.key});
 
   @override
-  State<RegistrationStep1Screen> createState() => _RegistrationStep1ScreenState();
+  State<RegistrationStep1Screen> createState() =>
+      _RegistrationStep1ScreenState();
 }
 
 class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
@@ -75,42 +76,8 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
                       _buildForm(),
                       const SizedBox(height: 32),
                       _buildNextButton(),
-                      const SizedBox(height: 32),
-                      ElevatedButton(
-                        onPressed: (){
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => const LoginScreen()),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF01515C),
-                          foregroundColor: Colors.black,
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          elevation: 8,
-                          shadowColor: const Color(0xFF027D91).withOpacity(0.5),
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Skip To Login',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey
-                              ),
-                            ),
-                            SizedBox(width: 8),
-                            Icon(Icons.login, color: Colors.grey,),
-                          ],
-                        ),
-                      ),
-
+                      const SizedBox(height: 16),
+                      _buildLoginLink(),
                     ],
                   ),
                 ),
@@ -239,7 +206,8 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
               decoration: InputDecoration(
                 labelText: 'Store Type *',
                 labelStyle: const TextStyle(color: Colors.white60),
-                prefixIcon: const Icon(Icons.category, color: Color(0xFF00D9FF)),
+                prefixIcon:
+                const Icon(Icons.category, color: Color(0xFF00D9FF)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: Colors.white30),
@@ -250,7 +218,8 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFF00D9FF), width: 2),
+                  borderSide:
+                  const BorderSide(color: Color(0xFF00D9FF), width: 2),
                 ),
               ),
               items: _storeTypes.map((type) {
@@ -276,7 +245,8 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
               decoration: InputDecoration(
                 labelText: 'Store Name *',
                 labelStyle: const TextStyle(color: Colors.white60),
-                prefixIcon: const Icon(Icons.storefront, color: Color(0xFF00D9FF)),
+                prefixIcon:
+                const Icon(Icons.storefront, color: Color(0xFF00D9FF)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: Colors.white30),
@@ -287,7 +257,8 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFF00D9FF), width: 2),
+                  borderSide:
+                  const BorderSide(color: Color(0xFF00D9FF), width: 2),
                 ),
               ),
               validator: (value) {
@@ -316,7 +287,8 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFF00D9FF), width: 2),
+                  borderSide:
+                  const BorderSide(color: Color(0xFF00D9FF), width: 2),
                 ),
               ),
               validator: (value) {
@@ -365,9 +337,43 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
     );
   }
 
+  Widget _buildLoginLink() {
+    return TextButton(
+      onPressed: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const LoginScreen()),
+        );
+      },
+      style: TextButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+      ),
+      child: RichText(
+        text: const TextSpan(
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.white60,
+          ),
+          children: [
+            TextSpan(text: 'Already have an account? '),
+            TextSpan(
+              text: 'Login',
+              style: TextStyle(
+                color: Color(0xFF00D9FF),
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   void _handleNext() {
     if (_formKey.currentState!.validate()) {
-      final provider = Provider.of<RegistrationProvider>(context, listen: false);
+      final provider =
+      Provider.of<RegistrationProvider>(context, listen: false);
       provider.setStoreInfo(
         _selectedStoreType!,
         _storeNameController.text,
