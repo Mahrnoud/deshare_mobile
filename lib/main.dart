@@ -6,7 +6,9 @@ import 'package:provider/provider.dart';
 import 'providers/request_provider.dart';
 import 'providers/history_provider.dart';
 import 'providers/settings_provider.dart';
-import 'screens/home_screen.dart';
+import 'providers/auth_provider.dart';
+import 'providers/registration_provider.dart';
+import 'screens/splash_screen.dart';
 import 'utils/theme.dart';
 
 void main() async {
@@ -21,6 +23,8 @@ class DeShareApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()..init()),
+        ChangeNotifierProvider(create: (_) => RegistrationProvider()),
         ChangeNotifierProvider(create: (_) => SettingsProvider()..init()),
         ChangeNotifierProvider(create: (_) => HistoryProvider()..init()),
         ChangeNotifierProxyProvider<SettingsProvider, RequestProvider>(
@@ -35,7 +39,7 @@ class DeShareApp extends StatelessWidget {
         title: 'DeShare',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.darkTheme,
-        home: const HomeScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

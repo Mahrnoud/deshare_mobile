@@ -1,11 +1,12 @@
 // ============================================================================
-// FILE: lib/screens/home_screen.dart
+// FILE: lib/screens/home_screen.dart (Updated with Logout)
 // ============================================================================
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/request_provider.dart';
 import '../providers/history_provider.dart';
 import '../providers/settings_provider.dart';
+import '../providers/auth_provider.dart';
 import '../services/persistence_service.dart';
 import '../models/delivery_request.dart';
 import '../widgets/glass_card.dart';
@@ -15,6 +16,7 @@ import '../widgets/onboarding_overlay.dart';
 import 'create_request_screen.dart';
 import 'active_request_screen.dart';
 import 'request_history_screen.dart';
+import 'login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -101,20 +103,30 @@ class _HomeScreenState extends State<HomeScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'DeShare',
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              ShaderMask(
+                shaderCallback: (bounds) => const LinearGradient(
+                  colors: [Color(0xFF00D9FF), Color(0xFFFF006E)],
+                ).createShader(bounds),
+                child: const Text(
+                  'DeShare',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-              const Text(
-                'Streamline your delivery, share the load.',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.white60,
-                ),
+              Consumer<AuthProvider>(
+                builder: (context, authProvider, _) {
+                  final user = authProvider.currentUser;
+                  return Text(
+                    user != null ? 'Welcome, ${user['name']}' : 'Store Manager',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.white60,
+                    ),
+                  );
+                },
               ),
             ],
           ),
@@ -123,6 +135,10 @@ class _HomeScreenState extends State<HomeScreen> {
               IconButton(
                 onPressed: () => _showSettingsDialog(context),
                 icon: const Icon(Icons.settings, color: Color(0xFF00D9FF)),
+              ),
+              IconButton(
+                onPressed: () => _showLogoutDialog(context),
+                icon: const Icon(Icons.logout, color: Color(0xFFFF006E)),
               ),
             ],
           ),
@@ -274,12 +290,12 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 8,
         shadowColor: const Color(0xFF00D9FF).withOpacity(0.5),
       ),
-      child: Row(
+      child: const Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.add_circle_outline, size: 28),
-          const SizedBox(width: 12),
-          const Text(
+          Icon(Icons.add_circle_outline, size: 28),
+          SizedBox(width: 12),
+          Text(
             'Create New Delivery Request',
             style: TextStyle(
               fontSize: 18,
@@ -439,6 +455,49 @@ class _HomeScreenState extends State<HomeScreen> {
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: const Text('Close'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: const Color(0xFF1A1F3A),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        title: const Text(
+          'Logout',
+          style: TextStyle(color: Colors.white),
+        ),
+        content: const Text(
+          'Are you sure you want to logout?',
+          style: TextStyle(color: Colors.white70),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              final authProvider = Provider.of<AuthProvider>(context, listen: false);
+              await authProvider.logout();
+
+              if (context.mounted) {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (_) => const LoginScreen()),
+                      (route) => false,
+                );
+              }
+            },
+            child: const Text(
+              'Logout',
+              style: TextStyle(color: Color(0xFFFF006E)),
+            ),
           ),
         ],
       ),
