@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: lib/screens/home_screen.dart (Updated - removed onboarding check)
+// FILE: lib/screens/home_screen.dart (UPDATED - removed settings from quick actions)
 // ============================================================================
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -339,32 +339,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            Expanded(
-              child: GlassCard(
-                onTap: () => _showSettingsDialog(context),
-                child: const Column(
-                  children: [
-                    Icon(Icons.tune, size: 32, color: Color(0xFFFF006E)),
-                    SizedBox(height: 8),
-                    Text(
-                      'Settings',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(child: Container()), // Empty space for symmetry
           ],
         ),
       ],

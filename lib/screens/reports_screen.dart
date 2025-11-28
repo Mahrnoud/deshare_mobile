@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: lib/screens/reports_screen.dart
+// FILE: lib/screens/reports_screen.dart (UPDATED)
 // ============================================================================
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -51,6 +51,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
                         _buildStatsCard(stats),
                         const SizedBox(height: 16),
                         _buildDeliveredOrdersCard(stats),
+                        const SizedBox(height: 16),
+                        _buildExpiredOrdersCard(stats),
                         const SizedBox(height: 16),
                         _buildCancelledOrdersCard(stats),
                         const SizedBox(height: 16),
@@ -276,10 +278,10 @@ class _ReportsScreenState extends State<ReportsScreen> {
             children: [
               Expanded(
                 child: _buildStatItem(
-                  'Cancelled',
-                  '${stats.cancelledCount}',
-                  Icons.cancel,
-                  const Color(0xFFFF006E),
+                  'Expired',
+                  '${stats.expiredCount}',
+                  Icons.timer_off,
+                  const Color(0xFFFFD600),
                 ),
               ),
               Container(
@@ -289,10 +291,10 @@ class _ReportsScreenState extends State<ReportsScreen> {
               ),
               Expanded(
                 child: _buildStatItem(
-                  'Success Rate',
-                  '${stats.successRate.toStringAsFixed(0)}%',
-                  Icons.trending_up,
-                  const Color(0xFFFFD600),
+                  'Cancelled',
+                  '${stats.cancelledCount}',
+                  Icons.cancel,
+                  const Color(0xFFFF006E),
                 ),
               ),
             ],
@@ -379,6 +381,51 @@ class _ReportsScreenState extends State<ReportsScreen> {
             Icons.local_shipping,
             const Color(0xFFFFD600),
             subtitle: 'Total fees collected',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildExpiredOrdersCard(ReportStats stats) {
+    return GlassCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFD600).withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Icon(
+                  Icons.timer_off,
+                  color: Color(0xFFFFD600),
+                  size: 20,
+                ),
+              ),
+              const SizedBox(width: 12),
+              const Text(
+                'Expired Orders',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          _buildReportRow(
+            'Total Expired',
+            '${stats.expiredCount}',
+            Icons.timer_off_outlined,
+            const Color(0xFFFFD600),
+            subtitle: stats.expiredCount > 0
+                ? '${((stats.expiredCount / stats.totalRequests) * 100).toStringAsFixed(1)}% of total'
+                : 'No expired requests',
           ),
         ],
       ),
@@ -646,6 +693,10 @@ class _ReportsScreenState extends State<ReportsScreen> {
         .where((r) => r.status == RequestStatus.delivered)
         .toList();
 
+    final expiredRequests = filteredRequests
+        .where((r) => r.status == RequestStatus.expired)
+        .toList();
+
     final cancelledRequests = filteredRequests
         .where((r) => r.status == RequestStatus.cancelled)
         .toList();
@@ -658,18 +709,14 @@ class _ReportsScreenState extends State<ReportsScreen> {
       totalDeliveryFees += request.totalDeliveryFees;
     }
 
-    final successRate = filteredRequests.isEmpty
-        ? 0.0
-        : (deliveredRequests.length / filteredRequests.length) * 100;
-
     return ReportStats(
       totalRequests: filteredRequests.length,
       deliveredCount: deliveredRequests.length,
+      expiredCount: expiredRequests.length,
       cancelledCount: cancelledRequests.length,
       deliveredOrdersAmount: totalOrdersAmount,
       deliveredDeliveryFees: totalDeliveryFees,
       totalRevenue: totalOrdersAmount + totalDeliveryFees,
-      successRate: successRate,
     );
   }
 
@@ -748,19 +795,19 @@ class _ReportsScreenState extends State<ReportsScreen> {
 class ReportStats {
   final int totalRequests;
   final int deliveredCount;
+  final int expiredCount;
   final int cancelledCount;
   final double deliveredOrdersAmount;
   final double deliveredDeliveryFees;
   final double totalRevenue;
-  final double successRate;
 
   ReportStats({
     required this.totalRequests,
     required this.deliveredCount,
+    required this.expiredCount,
     required this.cancelledCount,
     required this.deliveredOrdersAmount,
     required this.deliveredDeliveryFees,
     required this.totalRevenue,
-    required this.successRate,
   });
 }
