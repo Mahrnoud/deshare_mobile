@@ -61,38 +61,28 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildLogo() {
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: LinearGradient(
-              colors: [
-                const Color(0xFF00D9FF).withOpacity(0.3),
-                const Color(0xFFFF006E).withOpacity(0.3),
-              ],
-            ),
-          ),
-          child: const Icon(
-            Icons.delivery_dining,
-            size: 64,
-            color: Color(0xFF00D9FF),
-          ),
-        ),
+        // Container(
+        //   padding: const EdgeInsets.all(24),
+        //   decoration: BoxDecoration(
+        //     shape: BoxShape.circle,
+        //     color: Color(0xFFffffff).withOpacity(0.1),
+        //   ),
+        //   child: const Icon(
+        //     Icons.delivery_dining,
+        //     size: 64,
+        //     color: Color(0xFF00D9FF),
+        //   ),
+        // ),
         const SizedBox(height: 24),
-        ShaderMask(
-          shaderCallback: (bounds) => const LinearGradient(
-            colors: [Color(0xFF00D9FF), Color(0xFFFF006E)],
-          ).createShader(bounds),
-          child: const Text(
-            'DeShare',
-            style: TextStyle(
-              fontSize: 42,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+        const Text(
+          'DeShare',
+          style: TextStyle(
+            fontSize: 42,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 5),
         const Text(
           'Store Manager Login',
           style: TextStyle(
@@ -219,8 +209,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                elevation: 8,
-                shadowColor: const Color(0xFF00D9FF).withOpacity(0.5),
+                // elevation: 8,
+                // shadowColor: const Color(0xFF00D9FF).withOpacity(0.5),
               ),
               child: _isLoading
                   ? const SizedBox(
