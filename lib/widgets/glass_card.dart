@@ -20,15 +20,15 @@ class GlassCard extends StatelessWidget {
     final content = Container(
       padding: padding ?? const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Color(0xFF1A1A1A), // Dark gray instead of white.withOpacity
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: Colors.white.withOpacity(0.1),
+          color: Color(0xFF2A2A2A), // Border gray
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF00D9FF).withOpacity(0.1),
+            color: Colors.white.withOpacity(0.05), // Subtle white glow
             blurRadius: 20,
             spreadRadius: -5,
           ),

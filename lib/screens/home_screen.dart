@@ -30,15 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xFF0A0E27),
-              Color(0xFF1A1F3A),
-              Color(0xFF0A0E27),
-            ],
-          ),
+          color: Color(0xFF000000),
         ),
         child: SafeArea(
           child: Column(
@@ -75,17 +67,12 @@ class _HomeScreenState extends State<HomeScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ShaderMask(
-                shaderCallback: (bounds) => const LinearGradient(
-                  colors: [Color(0xFF00D9FF), Color(0xFFFF006E)],
-                ).createShader(bounds),
-                child: const Text(
-                  'DeShare',
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+              const Text(
+                'DeShare',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
               Consumer<AuthProvider>(
@@ -106,11 +93,11 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               IconButton(
                 onPressed: () => _showSettingsDialog(context),
-                icon: const Icon(Icons.settings, color: Color(0xFF00D9FF)),
+                icon: const Icon(Icons.settings, color: Colors.white),
               ),
               IconButton(
                 onPressed: () => _showLogoutDialog(context),
-                icon: const Icon(Icons.logout, color: Color(0xFFFF006E)),
+                icon: const Icon(Icons.logout, color: Colors.white),
               ),
             ],
           ),
@@ -253,25 +240,26 @@ class _HomeScreenState extends State<HomeScreen> {
         MaterialPageRoute(builder: (_) => const CreateRequestScreen()),
       ),
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF00D9FF),
+        backgroundColor: const Color(0xFF065067),
         foregroundColor: Colors.black,
         padding: const EdgeInsets.symmetric(vertical: 20),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        elevation: 8,
-        shadowColor: const Color(0xFF00D9FF).withOpacity(0.5),
+        // elevation: 8,
+        // shadowColor: const Color(0xFF00D9FF).withOpacity(0.5),
       ),
       child: const Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.add_circle_outline, size: 28),
+          Icon(Icons.add_circle_outline, size: 28, color: Colors.white,),
           SizedBox(width: 12),
           Text(
             'Create New Delivery Request',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
+              color: Colors.white
             ),
           ),
         ],

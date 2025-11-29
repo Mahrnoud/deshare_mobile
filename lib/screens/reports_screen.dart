@@ -25,15 +25,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xFF0A0E27),
-              Color(0xFF1A1F3A),
-              Color(0xFF0A0E27),
-            ],
-          ),
+          color: Color(0xFF000000)
         ),
         child: SafeArea(
           child: Column(
@@ -79,19 +71,6 @@ class _ReportsScreenState extends State<ReportsScreen> {
             icon: const Icon(Icons.arrow_back, color: Colors.white),
           ),
           const SizedBox(width: 12),
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: const Color(0xFF00D9FF).withOpacity(0.2),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Icon(
-              Icons.analytics,
-              color: Color(0xFF00D9FF),
-              size: 28,
-            ),
-          ),
-          const SizedBox(width: 16),
           const Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

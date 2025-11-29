@@ -20,15 +20,7 @@ class ActiveRequestScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xFF0A0E27),
-              Color(0xFF1A1F3A),
-              Color(0xFF0A0E27),
-            ],
-          ),
+          color: Color(0xFF000000),
         ),
         child: SafeArea(
           child: Column(
@@ -55,12 +47,14 @@ class ActiveRequestScreen extends StatelessWidget {
                         if (activeRequest.status == RequestStatus.searching ||
                             activeRequest.status == RequestStatus.offerReceived)
                           _buildTimerCard(activeRequest),
+                        const SizedBox(height: 16),
                         if (activeRequest.offers.isNotEmpty &&
                             activeRequest.status != RequestStatus.accepted)
                           ..._buildOffersList(context, activeRequest),
                         if (activeRequest.status == RequestStatus.searching &&
                             activeRequest.offers.isEmpty)
                           _buildSearchingCard(),
+                        const SizedBox(height: 16),
                         if (activeRequest.status == RequestStatus.expired)
                           _buildExpiredCard(context, activeRequest),
                         _buildStopsCard(activeRequest),
@@ -95,17 +89,12 @@ class ActiveRequestScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ShaderMask(
-                  shaderCallback: (bounds) => const LinearGradient(
-                    colors: [Color(0xFF00D9FF), Color(0xFFFF006E)],
-                  ).createShader(bounds),
-                  child: Text(
-                    'Request #${request.id.substring(request.id.length - 6)}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                Text(
+                  'Request #${request.id.substring(request.id.length - 6)}',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
                 Text(
@@ -301,7 +290,7 @@ class ActiveRequestScreen extends StatelessWidget {
           ElevatedButton(
             onPressed: () => _retryRequest(context, request),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF00D9FF),
+              backgroundColor: Colors.white,
               foregroundColor: Colors.black,
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               shape: RoundedRectangleBorder(
@@ -494,10 +483,10 @@ class ActiveRequestScreen extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20),
       width: double.infinity,
       height: 56,
-      child: OutlinedButton(
+      child: ElevatedButton(
         onPressed: () => _showCancelDialog(context),
         style: OutlinedButton.styleFrom(
-          side: const BorderSide(color: Color(0xFFFF006E), width: 2),
+          side: const BorderSide(color: Colors.white, width: 1),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -558,7 +547,7 @@ class ActiveRequestScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: const Color(0xFF1A1F3A),
+        backgroundColor: Colors.black,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),

@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
     ]);
 
     // Wait for splash animation
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 3));
 
     if (mounted) {
       setState(() {
@@ -58,15 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xFF0A0E27),
-              Color(0xFF1A1F3A),
-              Color(0xFF0A0E27),
-            ],
-          ),
+          color: Color(0xFF000000)
         ),
         child: Center(
           child: Column(
@@ -75,58 +67,22 @@ class _SplashScreenState extends State<SplashScreen> {
               TweenAnimationBuilder<double>(
                 duration: const Duration(milliseconds: 1000),
                 tween: Tween(begin: 0.0, end: 1.0),
-                builder: (context, value, child) {
-                  return Transform.scale(
-                    scale: value,
-                    child: Container(
-                      padding: const EdgeInsets.all(32),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0xFF00D9FF).withOpacity(0.3 * value),
-                            Color(0xFFFF006E).withOpacity(0.3 * value),
-                          ],
-                        ),
-                      ),
-                      child: Icon(
-                        Icons.delivery_dining,
-                        size: 80,
-                        color: Color.lerp(
-                          Colors.transparent,
-                          const Color(0xFF00D9FF),
-                          value,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(height: 32),
-              TweenAnimationBuilder<double>(
-                duration: const Duration(milliseconds: 1000),
-                tween: Tween(begin: 0.0, end: 1.0),
                 curve: Curves.easeOut,
                 builder: (context, value, child) {
                   return Opacity(
                     opacity: value,
-                    child: ShaderMask(
-                      shaderCallback: (bounds) => const LinearGradient(
-                        colors: [Color(0xFF00D9FF), Color(0xFFFF006E)],
-                      ).createShader(bounds),
-                      child: const Text(
-                        'DeShare',
-                        style: TextStyle(
-                          fontSize: 48,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                    child: const Text(
+                      'DeShare',
+                      style: TextStyle(
+                        fontSize: 48,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                   );
                 },
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 5),
               TweenAnimationBuilder<double>(
                 duration: const Duration(milliseconds: 1000),
                 tween: Tween(begin: 0.0, end: 1.0),
@@ -146,7 +102,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               const SizedBox(height: 48),
               const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF00D9FF)),
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white10),
               ),
             ],
           ),

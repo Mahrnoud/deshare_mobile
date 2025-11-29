@@ -64,15 +64,7 @@ class _OnboardingOverlayState extends State<OnboardingOverlay> {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xFF0A0E27),
-            Color(0xFF1A1F3A),
-            Color(0xFF0A0E27),
-          ],
-        ),
+        color: Color(0xFF000000),
       ),
       child: SafeArea(
         child: Column(
@@ -184,12 +176,7 @@ class _OnboardingPage extends StatelessWidget {
             padding: const EdgeInsets.all(32),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              gradient: LinearGradient(
-                colors: [
-                  const Color(0xFF00D9FF).withOpacity(0.3),
-                  const Color(0xFFFF006E).withOpacity(0.3),
-                ],
-              ),
+              color: Color(0xFFffffff).withOpacity(0.1), // <-- fixed color here
             ),
             child: Icon(icon, size: 80, color: const Color(0xFF00D9FF)),
           ),

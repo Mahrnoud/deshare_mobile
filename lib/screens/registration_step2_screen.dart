@@ -78,15 +78,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xFF0A0E27),
-              Color(0xFF1A1F3A),
-              Color(0xFF0A0E27),
-            ],
-          ),
+          color: Color(0xFF000000),
         ),
         child: SafeArea(
           child: Column(

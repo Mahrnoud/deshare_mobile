@@ -23,15 +23,7 @@ class RequestConfirmationScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xFF0A0E27),
-              Color(0xFF1A1F3A),
-              Color(0xFF0A0E27),
-            ],
-          ),
+          color: Color(0xFF000000)
         ),
         child: SafeArea(
           child: Column(
@@ -325,7 +317,7 @@ class RequestConfirmationScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () => _confirmRequest(context),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF00D9FF),
+                  backgroundColor: Colors.white,
                   foregroundColor: Colors.black,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
