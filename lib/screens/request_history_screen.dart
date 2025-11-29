@@ -128,11 +128,11 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFF00D9FF).withOpacity(0.2)
+              ? const Color(0xFFffffff).withOpacity(0.2)
               : Colors.white.withOpacity(0.05),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? const Color(0xFF00D9FF) : Colors.white30,
+            color: isSelected ? const Color(0xFFffffff) : Colors.white30,
             width: 1,
           ),
         ),
@@ -141,7 +141,7 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
-            color: isSelected ? const Color(0xFF00D9FF) : Colors.white70,
+            color: isSelected ? const Color(0xFFffffff) : Colors.white70,
           ),
         ),
       ),
@@ -190,7 +190,7 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
           const SizedBox(height: 8),
           Row(
             children: [
-              const Icon(Icons.location_on, size: 14, color: Color(0xFF00D9FF)),
+              const Icon(Icons.location_on, size: 14, color: Color(0xFFffffff)),
               const SizedBox(width: 8),
               Text(
                 '${request.stops.length} stop(s)',
@@ -200,7 +200,7 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
                 ),
               ),
               const SizedBox(width: 16),
-              const Icon(Icons.attach_money, size: 14, color: Color(0xFF00FF88)),
+              const Icon(Icons.attach_money, size: 14, color: Color(0xFFffffff)),
               const SizedBox(width: 8),
               Text(
                 '\$${request.grandTotal.toStringAsFixed(2)}',
@@ -211,32 +211,6 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
               ),
             ],
           ),
-          if (request.status == RequestStatus.delivered) ...[
-            const SizedBox(height: 12),
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: const Color(0xFF00FF88).withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: const Color(0xFF00FF88)),
-              ),
-              child: const Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.check_circle, size: 14, color: Color(0xFF00FF88)),
-                  SizedBox(width: 8),
-                  Text(
-                    'Successfully delivered',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Color(0xFF00FF88),
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
         ],
       ),
     );

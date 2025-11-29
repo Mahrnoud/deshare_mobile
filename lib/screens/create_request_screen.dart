@@ -145,10 +145,10 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: const Color(0xFF00D9FF).withOpacity(0.2),
+              color: const Color(0xFFffffff).withOpacity(0.2),
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.add, color: Color(0xFF00D9FF)),
+            child: const Icon(Icons.add, color: Color(0xFFffffff)),
           ),
           const SizedBox(width: 12),
           const Text(
@@ -178,11 +178,11 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          _buildSummaryRow('Subtotal (Orders)', _subtotal, const Color(0xFF00FF88)),
+          _buildSummaryRow('Subtotal (Orders)', _subtotal, const Color(0xFFffffff)),
           const SizedBox(height: 8),
-          _buildSummaryRow('Delivery Fees', _totalFees, const Color(0xFFFFD600)),
+          _buildSummaryRow('Delivery Fees', _totalFees, const Color(0xFFffffff)),
           const Divider(color: Colors.white30, height: 24),
-          _buildSummaryRow('Grand Total', _grandTotal, const Color(0xFF00D9FF), isTotal: true),
+          _buildSummaryRow('Grand Total', _grandTotal, const Color(0xFFffffff), isTotal: true),
         ],
       ),
     );
@@ -228,7 +228,7 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
             borderRadius: BorderRadius.circular(16),
           ),
           elevation: 8,
-          shadowColor: const Color(0xFF00D9FF).withOpacity(0.5),
+          shadowColor: const Color(0xFFffffff).withOpacity(0.5),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

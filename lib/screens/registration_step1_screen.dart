@@ -89,12 +89,12 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFF00D9FF).withOpacity(0.2),
+              color: Colors.white10,
               borderRadius: BorderRadius.circular(12),
             ),
             child: const Icon(
               Icons.store,
-              color: Color(0xFF00D9FF),
+              color: Color(0xFFffffff),
               size: 32,
             ),
           ),
@@ -145,7 +145,7 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
       height: 12,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: active ? const Color(0xFF00D9FF) : Colors.white30,
+        color: active ? const Color(0xFFffffff) : Colors.white30,
       ),
     );
   }
@@ -154,7 +154,7 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
     return Expanded(
       child: Container(
         height: 2,
-        color: active ? const Color(0xFF00D9FF) : Colors.white30,
+        color: active ? const Color(0xFFffffff) : Colors.white30,
       ),
     );
   }
@@ -193,13 +193,13 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
           children: [
             DropdownButtonFormField<String>(
               value: _selectedStoreType,
-              dropdownColor: const Color(0xFF1A1F3A),
+              dropdownColor: Colors.black,
               style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
                 labelText: 'Store Type *',
                 labelStyle: const TextStyle(color: Colors.white60),
                 prefixIcon:
-                const Icon(Icons.category, color: Color(0xFF00D9FF)),
+                const Icon(Icons.category, color: Color(0xFFffffff)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: Colors.white30),
@@ -211,7 +211,7 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide:
-                  const BorderSide(color: Color(0xFF00D9FF), width: 2),
+                  const BorderSide(color: Color(0xFFffffff), width: 2),
                 ),
               ),
               items: _storeTypes.map((type) {
@@ -238,7 +238,7 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
                 labelText: 'Store Name *',
                 labelStyle: const TextStyle(color: Colors.white60),
                 prefixIcon:
-                const Icon(Icons.storefront, color: Color(0xFF00D9FF)),
+                const Icon(Icons.storefront, color: Color(0xFFffffff)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: Colors.white30),
@@ -250,7 +250,7 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide:
-                  const BorderSide(color: Color(0xFF00D9FF), width: 2),
+                  const BorderSide(color: Color(0xFFffffff), width: 2),
                 ),
               ),
               validator: (value) {
@@ -268,7 +268,7 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
               decoration: InputDecoration(
                 labelText: 'Hotline *',
                 labelStyle: const TextStyle(color: Colors.white60),
-                prefixIcon: const Icon(Icons.phone, color: Color(0xFF00D9FF)),
+                prefixIcon: const Icon(Icons.phone, color: Color(0xFFffffff)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: Colors.white30),
@@ -280,7 +280,7 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide:
-                  const BorderSide(color: Color(0xFF00D9FF), width: 2),
+                  const BorderSide(color: Color(0xFFffffff), width: 2),
                 ),
               ),
               validator: (value) {
@@ -303,14 +303,14 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
     return ElevatedButton(
       onPressed: _handleNext,
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF00D9FF),
+        backgroundColor: const Color(0xFFffffff),
         foregroundColor: Colors.black,
         padding: const EdgeInsets.symmetric(vertical: 16),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        elevation: 8,
-        shadowColor: const Color(0xFF00D9FF).withOpacity(0.5),
+        // elevation: 8,
+        // shadowColor: const Color(0xFF00D9FF).withOpacity(0.5),
       ),
       child: const Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -351,7 +351,7 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
             TextSpan(
               text: 'Login',
               style: TextStyle(
-                color: Color(0xFF00D9FF),
+                color: Color(0xFFffffff),
                 fontWeight: FontWeight.bold,
                 decoration: TextDecoration.underline,
               ),

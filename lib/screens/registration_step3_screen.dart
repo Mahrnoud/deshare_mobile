@@ -94,12 +94,12 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFF00D9FF).withOpacity(0.2),
+              color: const Color(0xFFffffff).withOpacity(0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: const Icon(
               Icons.person,
-              color: Color(0xFF00D9FF),
+              color: Color(0xFFffffff),
               size: 32,
             ),
           ),
@@ -150,7 +150,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
       height: 12,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: active ? const Color(0xFF00D9FF) : Colors.white30,
+        color: active ? const Color(0xFFffffff) : Colors.white30,
       ),
     );
   }
@@ -159,7 +159,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
     return Expanded(
       child: Container(
         height: 2,
-        color: active ? const Color(0xFF00D9FF) : Colors.white30,
+        color: active ? const Color(0xFFffffff) : Colors.white30,
       ),
     );
   }
@@ -203,7 +203,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
                 labelText: 'Manager Name *',
                 labelStyle: const TextStyle(color: Colors.white60),
                 prefixIcon:
-                const Icon(Icons.person, color: Color(0xFF00D9FF)),
+                const Icon(Icons.person, color: Color(0xFFffffff)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: Colors.white30),
@@ -215,7 +215,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide:
-                  const BorderSide(color: Color(0xFF00D9FF), width: 2),
+                  const BorderSide(color: Color(0xFFffffff), width: 2),
                 ),
               ),
               validator: (value) {
@@ -233,7 +233,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
               decoration: InputDecoration(
                 labelText: 'Mobile Number *',
                 labelStyle: const TextStyle(color: Colors.white60),
-                prefixIcon: const Icon(Icons.phone, color: Color(0xFF00D9FF)),
+                prefixIcon: const Icon(Icons.phone, color: Color(0xFFffffff)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: Colors.white30),
@@ -245,7 +245,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide:
-                  const BorderSide(color: Color(0xFF00D9FF), width: 2),
+                  const BorderSide(color: Color(0xFFffffff), width: 2),
                 ),
               ),
               validator: (value) {
@@ -266,7 +266,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
               decoration: InputDecoration(
                 labelText: 'Password *',
                 labelStyle: const TextStyle(color: Colors.white60),
-                prefixIcon: const Icon(Icons.lock, color: Color(0xFF00D9FF)),
+                prefixIcon: const Icon(Icons.lock, color: Color(0xFFffffff)),
                 suffixIcon: IconButton(
                   icon: Icon(
                     _obscurePassword
@@ -289,7 +289,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide:
-                  const BorderSide(color: Color(0xFF00D9FF), width: 2),
+                  const BorderSide(color: Color(0xFFffffff), width: 2),
                 ),
               ),
               validator: (value) {
@@ -311,7 +311,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
                 labelText: 'Confirm Password *',
                 labelStyle: const TextStyle(color: Colors.white60),
                 prefixIcon:
-                const Icon(Icons.lock_outline, color: Color(0xFF00D9FF)),
+                const Icon(Icons.lock_outline, color: Color(0xFFffffff)),
                 suffixIcon: IconButton(
                   icon: Icon(
                     _obscureConfirmPassword
@@ -335,7 +335,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide:
-                  const BorderSide(color: Color(0xFF00D9FF), width: 2),
+                  const BorderSide(color: Color(0xFFffffff), width: 2),
                 ),
               ),
               validator: (value) {
@@ -383,14 +383,14 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
           child: ElevatedButton(
             onPressed: _isLoading ? null : _handleComplete,
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF00FF88),
+              backgroundColor: const Color(0xFFffffff),
               foregroundColor: Colors.black,
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              elevation: 8,
-              shadowColor: const Color(0xFF00FF88).withOpacity(0.5),
+              // elevation: 8,
+              // shadowColor: const Color(0xFFffffff).withOpacity(0.5),
             ),
             child: _isLoading
                 ? const SizedBox(
@@ -449,7 +449,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
               style: TextStyle(
                 color: _isLoading
                     ? Colors.white30
-                    : const Color(0xFF00D9FF),
+                    : const Color(0xFFffffff),
                 fontWeight: FontWeight.bold,
                 decoration: TextDecoration.underline,
               ),
@@ -501,7 +501,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
           SnackBar(
             content: const Row(
               children: [
-                Icon(Icons.check_circle, color: Color(0xFF00FF88)),
+                Icon(Icons.check_circle, color: Color(0xFFffffff)),
                 SizedBox(width: 12),
                 Expanded(
                   child: Text('Registration completed successfully!'),

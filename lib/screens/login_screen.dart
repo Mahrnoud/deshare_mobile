@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
         //   child: const Icon(
         //     Icons.delivery_dining,
         //     size: 64,
-        //     color: Color(0xFF00D9FF),
+        //     color: Color(0xFFffffff),
         //   ),
         // ),
         const SizedBox(height: 24),
@@ -128,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
               decoration: InputDecoration(
                 labelText: 'Mobile Number',
                 labelStyle: const TextStyle(color: Colors.white60),
-                prefixIcon: const Icon(Icons.phone, color: Color(0xFF00D9FF)),
+                prefixIcon: const Icon(Icons.phone, color: Color(0xFFffffff)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: Colors.white30),
@@ -139,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFF00D9FF), width: 2),
+                  borderSide: const BorderSide(color: Color(0xFFffffff), width: 2),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -164,7 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
               decoration: InputDecoration(
                 labelText: 'Password',
                 labelStyle: const TextStyle(color: Colors.white60),
-                prefixIcon: const Icon(Icons.lock, color: Color(0xFF00D9FF)),
+                prefixIcon: const Icon(Icons.lock, color: Color(0xFFffffff)),
                 suffixIcon: IconButton(
                   icon: Icon(
                     _obscurePassword ? Icons.visibility_off : Icons.visibility,
@@ -184,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFF00D9FF), width: 2),
+                  borderSide: const BorderSide(color: Color(0xFFffffff), width: 2),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -210,7 +210,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 // elevation: 8,
-                // shadowColor: const Color(0xFF00D9FF).withOpacity(0.5),
+                // shadowColor: const Color(0xFFffffff).withOpacity(0.5),
               ),
               child: _isLoading
                   ? const SizedBox(
@@ -272,7 +272,7 @@ class _LoginScreenState extends State<LoginScreen> {
               },
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                side: const BorderSide(color: Color(0xFF00D9FF), width: 2),
+                side: const BorderSide(color: Color(0xFFffffff), width: 2),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -282,7 +282,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   const Icon(
                     Icons.person_add_outlined,
-                    color: Color(0xFF00D9FF),
+                    color: Color(0xFFffffff),
                     size: 20,
                   ),
                   const SizedBox(width: 8),
@@ -291,7 +291,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: _isLoading ? Colors.white38 : const Color(0xFF00D9FF),
+                      color: _isLoading ? Colors.white38 : const Color(0xFFffffff),
                     ),
                   ),
                 ],

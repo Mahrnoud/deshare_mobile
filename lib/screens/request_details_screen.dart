@@ -110,12 +110,12 @@ class RequestDetailsScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF00D9FF).withOpacity(0.2),
+                    color: const Color(0xFFffffff).withOpacity(0.2),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(
                     Icons.person,
-                    color: Color(0xFF00D9FF),
+                    color: Color(0xFFffffff),
                     size: 24,
                   ),
                 ),
@@ -144,7 +144,7 @@ class RequestDetailsScreen extends StatelessWidget {
                           const Icon(
                             Icons.star,
                             size: 14,
-                            color: Color(0xFFFFD600),
+                            color: Color(0xFFffffff),
                           ),
                           const SizedBox(width: 4),
                           Text(
@@ -250,14 +250,14 @@ class RequestDetailsScreen extends StatelessWidget {
                     width: 32,
                     height: 32,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF00D9FF).withOpacity(0.2),
+                      color: const Color(0xFFffffff).withOpacity(0.2),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Center(
                       child: Text(
                         '${index + 1}',
                         style: const TextStyle(
-                          color: Color(0xFF00D9FF),
+                          color: Color(0xFFffffff),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -273,7 +273,7 @@ class RequestDetailsScreen extends StatelessWidget {
                             const Icon(
                               Icons.location_on,
                               size: 14,
-                              color: Color(0xFF00D9FF),
+                              color: Color(0xFFffffff),
                             ),
                             const SizedBox(width: 4),
                             Expanded(
@@ -296,7 +296,7 @@ class RequestDetailsScreen extends StatelessWidget {
                                 vertical: 4,
                               ),
                               decoration: BoxDecoration(
-                                color: const Color(0xFF00FF88).withOpacity(0.2),
+                                color: const Color(0xFFffffff).withOpacity(0.2),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Row(
@@ -305,14 +305,14 @@ class RequestDetailsScreen extends StatelessWidget {
                                   const Icon(
                                     Icons.shopping_bag,
                                     size: 12,
-                                    color: Color(0xFF00FF88),
+                                    color: Color(0xFFffffff),
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
                                     '\$${stop.orderAmount.toStringAsFixed(2)}',
                                     style: const TextStyle(
                                       fontSize: 12,
-                                      color: Color(0xFF00FF88),
+                                      color: Color(0xFFffffff),
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -326,7 +326,7 @@ class RequestDetailsScreen extends StatelessWidget {
                                 vertical: 4,
                               ),
                               decoration: BoxDecoration(
-                                color: const Color(0xFFFFD600).withOpacity(0.2),
+                                color: const Color(0xFFffffff).withOpacity(0.2),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Row(
@@ -335,14 +335,14 @@ class RequestDetailsScreen extends StatelessWidget {
                                   const Icon(
                                     Icons.local_shipping,
                                     size: 12,
-                                    color: Color(0xFFFFD600),
+                                    color: Color(0xFFffffff),
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
                                     '\$${stop.deliveryFee.toStringAsFixed(2)}',
                                     style: const TextStyle(
                                       fontSize: 12,
-                                      color: Color(0xFFFFD600),
+                                      color: Color(0xFFffffff),
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -410,19 +410,19 @@ class RequestDetailsScreen extends StatelessWidget {
           _buildSummaryRow(
             'Orders Subtotal',
             request.subtotalOrders,
-            const Color(0xFF00FF88),
+            const Color(0xFFffffff),
           ),
           const SizedBox(height: 8),
           _buildSummaryRow(
             'Delivery Fees',
             request.totalDeliveryFees,
-            const Color(0xFFFFD600),
+            const Color(0xFFffffff),
           ),
           const Divider(color: Colors.white30, height: 24),
           _buildSummaryRow(
             'Grand Total',
             request.grandTotal,
-            const Color(0xFF00D9FF),
+            const Color(0xFFffffff),
             isTotal: true,
           ),
         ],
@@ -488,7 +488,7 @@ class RequestDetailsScreen extends StatelessWidget {
                     height: 8,
                     margin: const EdgeInsets.only(top: 6),
                     decoration: const BoxDecoration(
-                      color: Color(0xFF00D9FF),
+                      color: Color(0xFFffffff),
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -528,7 +528,7 @@ class RequestDetailsScreen extends StatelessWidget {
     return GlassCard(
       child: Column(
         children: [
-          const Icon(Icons.refresh, size: 32, color: Color(0xFF00D9FF)),
+          const Icon(Icons.refresh, size: 32, color: Color(0xFFffffff)),
           const SizedBox(height: 12),
           const Text(
             'Request Again?',
@@ -551,7 +551,7 @@ class RequestDetailsScreen extends StatelessWidget {
           ElevatedButton(
             onPressed: () => _reRequestDelivery(context),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF00D9FF),
+              backgroundColor: const Color(0xFFffffff),
               foregroundColor: Colors.black,
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
               shape: RoundedRectangleBorder(

@@ -122,12 +122,12 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFF00D9FF).withOpacity(0.2),
+              color: const Color(0xFFffffff).withOpacity(0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: const Icon(
               Icons.location_city,
-              color: Color(0xFF00D9FF),
+              color: Color(0xFFffffff),
               size: 32,
             ),
           ),
@@ -178,7 +178,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
       height: 12,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: active ? const Color(0xFF00D9FF) : Colors.white30,
+        color: active ? const Color(0xFFffffff) : Colors.white30,
       ),
     );
   }
@@ -187,7 +187,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
     return Expanded(
       child: Container(
         height: 2,
-        color: active ? const Color(0xFF00D9FF) : Colors.white30,
+        color: active ? const Color(0xFFffffff) : Colors.white30,
       ),
     );
   }
@@ -312,7 +312,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
                   'Location: ${_locationService.formatCoordinates(_latitude!, _longitude!)}',
                   style: const TextStyle(
                     fontSize: 12,
-                    color: Color(0xFF00FF88),
+                    color: Color(0xFFffffff),
                   ),
                 ),
               ),
@@ -381,7 +381,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
       decoration: InputDecoration(
         labelText: label,
         labelStyle: const TextStyle(color: Colors.white60),
-        prefixIcon: Icon(icon, color: const Color(0xFF00D9FF)),
+        prefixIcon: Icon(icon, color: const Color(0xFFffffff)),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: Colors.white30),
@@ -392,7 +392,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Color(0xFF00D9FF), width: 2),
+          borderSide: const BorderSide(color: Color(0xFFffffff), width: 2),
         ),
       ),
       validator: validator,
@@ -409,12 +409,12 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
   }) {
     return DropdownButtonFormField<String>(
       value: value,
-      dropdownColor: const Color(0xFF1A1F3A),
+      dropdownColor: Colors.black,
       style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
         labelText: label,
         labelStyle: const TextStyle(color: Colors.white60),
-        prefixIcon: Icon(icon, color: const Color(0xFF00D9FF)),
+        prefixIcon: Icon(icon, color: const Color(0xFFffffff)),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: Colors.white30),
@@ -425,7 +425,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Color(0xFF00D9FF), width: 2),
+          borderSide: const BorderSide(color: Color(0xFFffffff), width: 2),
         ),
         disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -501,14 +501,14 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
           child: ElevatedButton(
             onPressed: _handleNext,
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF00D9FF),
+              backgroundColor: const Color(0xFFffffff),
               foregroundColor: Colors.black,
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              elevation: 8,
-              shadowColor: const Color(0xFF00D9FF).withOpacity(0.5),
+              // elevation: 8,
+              // shadowColor: const Color(0xFFffffff).withOpacity(0.5),
             ),
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -553,7 +553,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
             TextSpan(
               text: 'Login',
               style: TextStyle(
-                color: Color(0xFF00D9FF),
+                color: Color(0xFFffffff),
                 fontWeight: FontWeight.bold,
                 decoration: TextDecoration.underline,
               ),

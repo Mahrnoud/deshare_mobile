@@ -57,6 +57,7 @@ class ActiveRequestScreen extends StatelessWidget {
                         const SizedBox(height: 16),
                         if (activeRequest.status == RequestStatus.expired)
                           _buildExpiredCard(context, activeRequest),
+                        const SizedBox(height: 10),
                         _buildStopsCard(activeRequest),
                         const SizedBox(height: 16),
                         _buildTimelineCard(activeRequest),
@@ -168,7 +169,7 @@ class ActiveRequestScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.timer, color: Color(0xFFFF006E), size: 28),
+              const Icon(Icons.timer, color: Color(0xFFffffff), size: 28),
               const SizedBox(width: 12),
               const Text(
                 'Request Expires In',
@@ -183,7 +184,7 @@ class ActiveRequestScreen extends StatelessWidget {
           const SizedBox(height: 12),
           CountdownTimer(
             duration: request.remainingTime!,
-            color: const Color(0xFFFF006E),
+            color: const Color(0xFFffffff),
           ),
         ],
       ),
@@ -220,13 +221,13 @@ class ActiveRequestScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: const Color(0xFF00D9FF).withOpacity(0.2),
+              color: const Color(0xFFffffff).withOpacity(0.2),
               shape: BoxShape.circle,
             ),
             child: const Icon(
               Icons.search,
               size: 48,
-              color: Color(0xFF00D9FF),
+              color: Color(0xFFffffff),
             ),
           ),
           const SizedBox(height: 16),
@@ -259,13 +260,13 @@ class ActiveRequestScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: const Color(0xFFFF006E).withOpacity(0.2),
+              color: const Color(0xFFffffff).withOpacity(0.2),
               shape: BoxShape.circle,
             ),
             child: const Icon(
               Icons.timer_off,
               size: 48,
-              color: Color(0xFFFF006E),
+              color: Color(0xFFffffff),
             ),
           ),
           const SizedBox(height: 16),
@@ -339,14 +340,14 @@ class ActiveRequestScreen extends StatelessWidget {
                     width: 32,
                     height: 32,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF00D9FF).withOpacity(0.2),
+                      color: const Color(0xFFffffff).withOpacity(0.2),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Center(
                       child: Text(
                         '${index + 1}',
                         style: const TextStyle(
-                          color: Color(0xFF00D9FF),
+                          color: Color(0xFFffffff),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -396,7 +397,7 @@ class ActiveRequestScreen extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF00D9FF),
+                  color: Color(0xFFffffff),
                 ),
               ),
             ],
@@ -437,7 +438,7 @@ class ActiveRequestScreen extends StatelessWidget {
                     height: 8,
                     margin: const EdgeInsets.only(top: 6),
                     decoration: const BoxDecoration(
-                      color: Color(0xFF00D9FF),
+                      color: Color(0xFFffffff),
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -494,14 +495,14 @@ class ActiveRequestScreen extends StatelessWidget {
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.cancel, color: Color(0xFFFF006E)),
+            Icon(Icons.cancel, color: Color(0xFFffffff)),
             SizedBox(width: 8),
             Text(
               'Cancel Request',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFFFF006E),
+                color: Color(0xFFffffff),
               ),
             ),
           ],
@@ -519,12 +520,12 @@ class ActiveRequestScreen extends StatelessWidget {
         SnackBar(
           content: Row(
             children: [
-              const Icon(Icons.check_circle, color: Color(0xFF00FF88)),
+              const Icon(Icons.check_circle, color: Color(0xFFffffff)),
               const SizedBox(width: 12),
-              Text('Offer from ${offer.driverName} accepted!'),
+              Text('Offer from ${offer.driverName} accepted!', style: const TextStyle(color: Colors.white),),
             ],
           ),
-          backgroundColor: const Color(0xFF1A1F3A),
+          backgroundColor: Colors.black,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -575,7 +576,7 @@ class ActiveRequestScreen extends StatelessWidget {
             },
             child: const Text(
               'Yes, Cancel',
-              style: TextStyle(color: Color(0xFFFF006E)),
+              style: TextStyle(color: Color(0xFFffffff)),
             ),
           ),
         ],

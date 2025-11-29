@@ -58,13 +58,13 @@ class _StopInputCardState extends State<StopInputCard> {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF00D9FF).withOpacity(0.2),
+                      color: const Color(0xFFffffff).withOpacity(0.2),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       '${widget.index + 1}',
                       style: const TextStyle(
-                        color: Color(0xFF00D9FF),
+                        color: Color(0xFFffffff),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -84,7 +84,7 @@ class _StopInputCardState extends State<StopInputCard> {
                 IconButton(
                   onPressed: widget.onRemove,
                   icon: const Icon(Icons.delete_outline),
-                  color: const Color(0xFFFF006E),
+                  color: const Color(0xFFffffff),
                 ),
             ],
           ),
@@ -97,7 +97,7 @@ class _StopInputCardState extends State<StopInputCard> {
             decoration: InputDecoration(
               labelText: 'Delivery Address',
               labelStyle: const TextStyle(color: Colors.white60),
-              prefixIcon: const Icon(Icons.location_on, color: Color(0xFF00D9FF)),
+              prefixIcon: const Icon(Icons.location_on, color: Color(0xFFffffff)),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: const BorderSide(color: Colors.white30),
@@ -108,7 +108,7 @@ class _StopInputCardState extends State<StopInputCard> {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFF00D9FF), width: 2),
+                borderSide: const BorderSide(color: Color(0xFFffffff), width: 2),
               ),
             ),
             onChanged: _onAddressChanged,
@@ -118,7 +118,7 @@ class _StopInputCardState extends State<StopInputCard> {
             Container(
               margin: const EdgeInsets.only(top: 8),
               decoration: BoxDecoration(
-                color: const Color(0xFF1A1F3A),
+                color: Colors.black,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: Colors.white30),
               ),
@@ -128,7 +128,7 @@ class _StopInputCardState extends State<StopInputCard> {
                 itemBuilder: (context, index) {
                   final suggestion = _suggestions[index];
                   return ListTile(
-                    leading: const Icon(Icons.place, color: Color(0xFF00D9FF)),
+                    leading: const Icon(Icons.place, color: Color(0xFFffffff)),
                     title: Text(
                       suggestion.addressText,
                       style: const TextStyle(color: Colors.white),
@@ -151,7 +151,7 @@ class _StopInputCardState extends State<StopInputCard> {
                     labelText: 'Order Amount',
                     labelStyle: const TextStyle(color: Colors.white60),
                     prefixText: '\$ ',
-                    prefixStyle: const TextStyle(color: Color(0xFF00FF88)),
+                    prefixStyle: const TextStyle(color: Color(0xFFffffff)),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(color: Colors.white30),
@@ -174,7 +174,7 @@ class _StopInputCardState extends State<StopInputCard> {
                     labelText: 'Delivery Fee',
                     labelStyle: const TextStyle(color: Colors.white60),
                     prefixText: '\$ ',
-                    prefixStyle: const TextStyle(color: Color(0xFFFFD600)),
+                    prefixStyle: const TextStyle(color: Color(0xFFffffff)),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(color: Colors.white30),

@@ -52,7 +52,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
 
   @override
   Widget build(BuildContext context) {
-    final color = widget.color ?? const Color(0xFF00D9FF);
+    final color = widget.color ?? const Color(0xFFffffff);
     final minutes = _remaining.inMinutes;
     final seconds = _remaining.inSeconds % 60;
 

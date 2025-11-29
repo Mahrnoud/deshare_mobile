@@ -22,9 +22,7 @@ class RequestConfirmationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xFF000000)
-        ),
+        decoration: const BoxDecoration(color: Color(0xFF000000)),
         child: SafeArea(
           child: Column(
             children: [
@@ -74,10 +72,7 @@ class RequestConfirmationScreen extends StatelessWidget {
               ),
               const Text(
                 'Review before sending',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.white60,
-                ),
+                style: TextStyle(fontSize: 14, color: Colors.white60),
               ),
             ],
           ),
@@ -93,10 +88,14 @@ class RequestConfirmationScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFF00D9FF).withOpacity(0.2),
+              color: const Color(0xFFffffff).withOpacity(0.2),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(Icons.info_outline, color: Color(0xFF00D9FF), size: 24),
+            child: const Icon(
+              Icons.info_outline,
+              color: Color(0xFFffffff),
+              size: 24,
+            ),
           ),
           const SizedBox(width: 16),
           const Expanded(
@@ -130,13 +129,13 @@ class RequestConfirmationScreen extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF00D9FF).withOpacity(0.2),
+                      color: const Color(0xFFffffff).withOpacity(0.2),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       '${index + 1}',
                       style: const TextStyle(
-                        color: Color(0xFF00D9FF),
+                        color: Color(0xFFffffff),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -155,15 +154,16 @@ class RequestConfirmationScreen extends StatelessWidget {
               const SizedBox(height: 12),
               Row(
                 children: [
-                  const Icon(Icons.location_on, size: 16, color: Color(0xFF00D9FF)),
+                  const Icon(
+                    Icons.location_on,
+                    size: 16,
+                    color: Color(0xFFffffff),
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       stop.addressText,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                      ),
+                      style: const TextStyle(fontSize: 14, color: Colors.white),
                     ),
                   ),
                 ],
@@ -174,7 +174,11 @@ class RequestConfirmationScreen extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.shopping_bag, size: 16, color: Color(0xFF00FF88)),
+                      const Icon(
+                        Icons.shopping_bag,
+                        size: 16,
+                        color: Color(0xFFffffff),
+                      ),
                       const SizedBox(width: 8),
                       Text(
                         'Order: \$${stop.orderAmount.toStringAsFixed(2)}',
@@ -187,7 +191,11 @@ class RequestConfirmationScreen extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      const Icon(Icons.local_shipping, size: 16, color: Color(0xFFFFD600)),
+                      const Icon(
+                        Icons.local_shipping,
+                        size: 16,
+                        color: Color(0xFFffffff),
+                      ),
                       const SizedBox(width: 8),
                       Text(
                         'Fee: \$${stop.deliveryFee.toStringAsFixed(2)}',
@@ -247,17 +255,35 @@ class RequestConfirmationScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          _buildSummaryRow('Orders Subtotal', _subtotal, const Color(0xFF00FF88)),
+          _buildSummaryRow(
+            'Orders Subtotal',
+            _subtotal,
+            const Color(0xFFffffff),
+          ),
           const SizedBox(height: 8),
-          _buildSummaryRow('Delivery Fees', _totalFees, const Color(0xFFFFD600)),
+          _buildSummaryRow(
+            'Delivery Fees',
+            _totalFees,
+            const Color(0xFFffffff),
+          ),
           const Divider(color: Colors.white30, height: 24),
-          _buildSummaryRow('Grand Total', _grandTotal, const Color(0xFF00D9FF), isTotal: true),
+          _buildSummaryRow(
+            'Grand Total',
+            _grandTotal,
+            const Color(0xFFffffff),
+            isTotal: true,
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildSummaryRow(String label, double amount, Color color, {bool isTotal = false}) {
+  Widget _buildSummaryRow(
+    String label,
+    double amount,
+    Color color, {
+    bool isTotal = false,
+  }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -323,7 +349,7 @@ class RequestConfirmationScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   elevation: 8,
-                  shadowColor: const Color(0xFF00D9FF).withOpacity(0.5),
+                  shadowColor: const Color(0xFFffffff).withOpacity(0.5),
                 ),
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -356,8 +382,14 @@ class RequestConfirmationScreen extends StatelessWidget {
       timeline: [],
     );
 
-    final requestProvider = Provider.of<RequestProvider>(context, listen: false);
-    final historyProvider = Provider.of<HistoryProvider>(context, listen: false);
+    final requestProvider = Provider.of<RequestProvider>(
+      context,
+      listen: false,
+    );
+    final historyProvider = Provider.of<HistoryProvider>(
+      context,
+      listen: false,
+    );
 
     await requestProvider.createRequest(request);
     await historyProvider.addToHistory(request);
@@ -369,12 +401,15 @@ class RequestConfirmationScreen extends StatelessWidget {
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.check_circle, color: Color(0xFF00FF88)),
+              Icon(Icons.check_circle, color: Color(0xFFffffff),),
               SizedBox(width: 12),
-              Text('Request sent! Searching for drivers...'),
+              Text(
+                'Request sent! Searching for drivers...',
+                style: TextStyle(color: Colors.white),
+              ),
             ],
           ),
-          backgroundColor: const Color(0xFF1A1F3A),
+          backgroundColor: Colors.white10,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),

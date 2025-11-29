@@ -140,11 +140,11 @@ class _ReportsScreenState extends State<ReportsScreen> {
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFF00D9FF).withOpacity(0.2)
+              ? const Color(0xFFffffff).withOpacity(0.2)
               : Colors.white.withOpacity(0.05),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? const Color(0xFF00D9FF) : Colors.white30,
+            color: isSelected ? const Color(0xFFffffff) : Colors.white30,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -152,7 +152,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
           children: [
             Icon(
               icon,
-              color: isSelected ? const Color(0xFF00D9FF) : Colors.white60,
+              color: isSelected ? const Color(0xFFffffff) : Colors.white60,
               size: 20,
             ),
             const SizedBox(height: 4),
@@ -161,7 +161,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                color: isSelected ? const Color(0xFF00D9FF) : Colors.white60,
+                color: isSelected ? const Color(0xFFffffff) : Colors.white60,
               ),
             ),
           ],
@@ -180,7 +180,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
           children: [
             IconButton(
               onPressed: _previousPeriod,
-              icon: const Icon(Icons.chevron_left, color: Color(0xFF00D9FF)),
+              icon: const Icon(Icons.chevron_left, color: Color(0xFFffffff)),
             ),
             Expanded(
               child: Center(
@@ -198,7 +198,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               onPressed: _canGoNext() ? _nextPeriod : null,
               icon: Icon(
                 Icons.chevron_right,
-                color: _canGoNext() ? const Color(0xFF00D9FF) : Colors.white30,
+                color: _canGoNext() ? const Color(0xFFffffff) : Colors.white30,
               ),
             ),
           ],
@@ -214,7 +214,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
         children: [
           const Row(
             children: [
-              Icon(Icons.assessment, color: Color(0xFF00D9FF), size: 20),
+              Icon(Icons.assessment, color: Color(0xFFffffff), size: 20),
               SizedBox(width: 8),
               Text(
                 'Overview',
@@ -234,7 +234,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                   'Total Requests',
                   '${stats.totalRequests}',
                   Icons.all_inbox,
-                  const Color(0xFF00D9FF),
+                  const Color(0xFFffffff),
                 ),
               ),
               Container(
@@ -247,7 +247,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                   'Delivered',
                   '${stats.deliveredCount}',
                   Icons.check_circle,
-                  const Color(0xFF00FF88),
+                  const Color(0xFFffffff),
                 ),
               ),
             ],
@@ -260,7 +260,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                   'Expired',
                   '${stats.expiredCount}',
                   Icons.timer_off,
-                  const Color(0xFFFFD600),
+                  const Color(0xFFffffff),
                 ),
               ),
               Container(
@@ -273,7 +273,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                   'Cancelled',
                   '${stats.cancelledCount}',
                   Icons.cancel,
-                  const Color(0xFFFF006E),
+                  const Color(0xFFffffff),
                 ),
               ),
             ],
@@ -318,12 +318,12 @@ class _ReportsScreenState extends State<ReportsScreen> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF00FF88).withOpacity(0.2),
+                  color: const Color(0xFFffffff).withOpacity(0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(
                   Icons.check_circle,
-                  color: Color(0xFF00FF88),
+                  color: Color(0xFFffffff),
                   size: 20,
                 ),
               ),
@@ -343,14 +343,14 @@ class _ReportsScreenState extends State<ReportsScreen> {
             'Total Orders',
             '${stats.deliveredCount}',
             Icons.shopping_bag,
-            const Color(0xFF00FF88),
+            const Color(0xFFffffff),
           ),
           const Divider(color: Colors.white30, height: 24),
           _buildReportRow(
             'Orders Amount',
             '\$${stats.deliveredOrdersAmount.toStringAsFixed(2)}',
             Icons.attach_money,
-            const Color(0xFF00D9FF),
+            const Color(0xFFffffff),
             subtitle: 'Excluding delivery fees',
           ),
           const Divider(color: Colors.white30, height: 24),
@@ -358,7 +358,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
             'Delivery Fees',
             '\$${stats.deliveredDeliveryFees.toStringAsFixed(2)}',
             Icons.local_shipping,
-            const Color(0xFFFFD600),
+            const Color(0xFFffffff),
             subtitle: 'Total fees collected',
           ),
         ],
@@ -376,12 +376,12 @@ class _ReportsScreenState extends State<ReportsScreen> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFD600).withOpacity(0.2),
+                  color: const Color(0xFFffffff).withOpacity(0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(
                   Icons.timer_off,
-                  color: Color(0xFFFFD600),
+                  color: Color(0xFFffffff),
                   size: 20,
                 ),
               ),
@@ -401,7 +401,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
             'Total Expired',
             '${stats.expiredCount}',
             Icons.timer_off_outlined,
-            const Color(0xFFFFD600),
+            const Color(0xFFffffff),
             subtitle: stats.expiredCount > 0
                 ? '${((stats.expiredCount / stats.totalRequests) * 100).toStringAsFixed(1)}% of total'
                 : 'No expired requests',
@@ -421,12 +421,12 @@ class _ReportsScreenState extends State<ReportsScreen> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFF006E).withOpacity(0.2),
+                  color: const Color(0xFFffffff).withOpacity(0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(
                   Icons.cancel,
-                  color: Color(0xFFFF006E),
+                  color: Color(0xFFffffff),
                   size: 20,
                 ),
               ),
@@ -446,7 +446,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
             'Total Cancelled',
             '${stats.cancelledCount}',
             Icons.cancel_outlined,
-            const Color(0xFFFF006E),
+            const Color(0xFFffffff),
             subtitle: stats.cancelledCount > 0
                 ? '${((stats.cancelledCount / stats.totalRequests) * 100).toStringAsFixed(1)}% of total'
                 : 'Great job!',
@@ -466,12 +466,12 @@ class _ReportsScreenState extends State<ReportsScreen> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF00D9FF).withOpacity(0.2),
+                  color: const Color(0xFFffffff).withOpacity(0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(
                   Icons.summarize,
-                  color: Color(0xFF00D9FF),
+                  color: Color(0xFFffffff),
                   size: 20,
                 ),
               ),
@@ -492,12 +492,12 @@ class _ReportsScreenState extends State<ReportsScreen> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  const Color(0xFF00D9FF).withOpacity(0.1),
-                  const Color(0xFF00FF88).withOpacity(0.1),
+                  const Color(0xFFffffff).withOpacity(0.1),
+                  const Color(0xFFffffff).withOpacity(0.1),
                 ],
               ),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFF00D9FF).withOpacity(0.3)),
+              border: Border.all(color: const Color(0xFFffffff).withOpacity(0.3)),
             ),
             child: Column(
               children: [
@@ -559,7 +559,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF00FF88),
+                        color: Color(0xFFffffff),
                       ),
                     ),
                   ],

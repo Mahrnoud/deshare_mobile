@@ -91,7 +91,7 @@ class _OnboardingOverlayState extends State<OnboardingOverlay> {
                         height: 8,
                         decoration: BoxDecoration(
                           color: _currentPage == index
-                              ? const Color(0xFF00D9FF)
+                              ? const Color(0xFFffffff)
                               : Colors.white30,
                           borderRadius: BorderRadius.circular(4),
                         ),
@@ -129,7 +129,7 @@ class _OnboardingOverlayState extends State<OnboardingOverlay> {
                             curve: Curves.easeInOut,
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF00D9FF),
+                            backgroundColor: const Color(0xFFffffff),
                             foregroundColor: Colors.black,
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             shape: RoundedRectangleBorder(
@@ -178,7 +178,7 @@ class _OnboardingPage extends StatelessWidget {
               shape: BoxShape.circle,
               color: Color(0xFFffffff).withOpacity(0.1), // <-- fixed color here
             ),
-            child: Icon(icon, size: 80, color: const Color(0xFF00D9FF)),
+            child: Icon(icon, size: 80, color: const Color(0xFFffffff)),
           ),
           const SizedBox(height: 48),
           Text(

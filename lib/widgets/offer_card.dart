@@ -88,7 +88,7 @@ class OfferCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: offer.isCounterOffer
                           ? const Color(0xFFFF006E)
-                          : const Color(0xFF00FF88),
+                          : const Color(0xFFffffff),
                     ),
                   ),
                   if (offer.isCounterOffer)
@@ -132,7 +132,7 @@ class OfferCard extends StatelessWidget {
               ElevatedButton(
                 onPressed: onAccept,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF00FF88),
+                  backgroundColor: const Color(0xFFffffff),
                   foregroundColor: Colors.black,
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   shape: RoundedRectangleBorder(

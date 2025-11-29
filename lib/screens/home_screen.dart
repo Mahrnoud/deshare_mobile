@@ -118,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const Icon(
                   Icons.check_circle_outline,
                   size: 48,
-                  color: Color(0xFF00FF88),
+                  color: Color(0xFFffffff),
                 ),
                 const SizedBox(height: 12),
                 const Text(
@@ -179,14 +179,14 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 8),
               Row(
                 children: [
-                  const Icon(Icons.location_on, size: 16, color: Color(0xFF00D9FF)),
+                  const Icon(Icons.location_on, size: 16, color: Color(0xFFffffff)),
                   const SizedBox(width: 4),
                   Text(
                     '${request.stops.length} stop(s)',
                     style: const TextStyle(color: Colors.white70),
                   ),
                   const SizedBox(width: 16),
-                  const Icon(Icons.attach_money, size: 16, color: Color(0xFF00FF88)),
+                  const Icon(Icons.attach_money, size: 16, color: Color(0xFFffffff)),
                   const SizedBox(width: 4),
                   Text(
                     '\$${request.grandTotal.toStringAsFixed(2)}',
@@ -240,26 +240,25 @@ class _HomeScreenState extends State<HomeScreen> {
         MaterialPageRoute(builder: (_) => const CreateRequestScreen()),
       ),
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF065067),
+        backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         padding: const EdgeInsets.symmetric(vertical: 20),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
         // elevation: 8,
-        // shadowColor: const Color(0xFF00D9FF).withOpacity(0.5),
+        // shadowColor: const Color(0xFFffffff).withOpacity(0.5),
       ),
       child: const Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.add_circle_outline, size: 28, color: Colors.white,),
+          Icon(Icons.add_circle_outline, size: 28,),
           SizedBox(width: 12),
           Text(
             'Create New Delivery Request',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.white
             ),
           ),
         ],
@@ -290,7 +289,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: const Column(
                   children: [
-                    Icon(Icons.history, size: 32, color: Color(0xFF00D9FF)),
+                    Icon(Icons.history, size: 32, color: Color(0xFFffffff)),
                     SizedBox(height: 8),
                     Text(
                       'History',
@@ -313,7 +312,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: const Column(
                   children: [
-                    Icon(Icons.analytics, size: 32, color: Color(0xFF00FF88)),
+                    Icon(Icons.analytics, size: 32, color: Color(0xFFffffff)),
                     SizedBox(height: 8),
                     Text(
                       'Reports',
@@ -334,13 +333,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _showSettingsDialog(BuildContext context) {
-    final settings = Provider.of<SettingsProvider>(context, listen: false);
     final history = Provider.of<HistoryProvider>(context, listen: false);
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF1A1F3A),
+        backgroundColor: const Color(0xFF000000),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: const Text('Debug Settings', style: TextStyle(color: Colors.white)),
         content: Consumer<SettingsProvider>(
@@ -355,7 +353,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 value: settings.fastTimers,
                 onChanged: settings.setFastTimers,
-                activeColor: const Color(0xFF00D9FF),
+                activeColor: const Color(0xFFffffff),
               ),
               SwitchListTile(
                 title: const Text('Force No Drivers', style: TextStyle(color: Colors.white)),
@@ -365,7 +363,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 value: settings.forceNoDrivers,
                 onChanged: settings.setForceNoDrivers,
-                activeColor: const Color(0xFF00D9FF),
+                activeColor: const Color(0xFFffffff),
               ),
               const Divider(color: Colors.white30),
               ListTile(
@@ -386,7 +384,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
-                      backgroundColor: const Color(0xFF1A1F3A),
+                      backgroundColor: const Color(0xFF000000),
                       title: const Text('Confirm', style: TextStyle(color: Colors.white)),
                       content: const Text(
                         'This will clear all requests and settings',
@@ -428,7 +426,7 @@ class _HomeScreenState extends State<HomeScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: const Color(0xFF1A1F3A),
+        backgroundColor: const Color(0xFF000000),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
