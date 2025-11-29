@@ -49,7 +49,7 @@ class ActiveRequestScreen extends StatelessWidget {
                           _buildTimerCard(activeRequest),
                         const SizedBox(height: 16),
                         if (activeRequest.offers.isNotEmpty &&
-                            activeRequest.status != RequestStatus.accepted)
+                            activeRequest.status == RequestStatus.offerReceived)
                           ..._buildOffersList(context, activeRequest),
                         if (activeRequest.status == RequestStatus.searching &&
                             activeRequest.offers.isEmpty)
