@@ -9,7 +9,7 @@ import 'providers/history_provider.dart';
 import 'providers/settings_provider.dart';
 import 'providers/auth_provider.dart';
 import 'providers/registration_provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../l10n/app_localizations.dart';
 import 'providers/theme_provider.dart'; // NEW
 import 'screens/splash_screen.dart';
 import 'utils/theme.dart';
