@@ -3,7 +3,9 @@
 // ============================================================================
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../l10n/app_localizations.dart';
 import '../providers/request_provider.dart';
+import '../providers/language_provider.dart';
 import '../providers/history_provider.dart';
 import '../providers/settings_provider.dart';
 import '../providers/auth_provider.dart';
@@ -81,7 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: (context, authProvider, _) {
                   final user = authProvider.currentUser;
                   return Text(
-                    user != null ? 'Welcome, ${user['name']}' : 'Store Manager',
+                    user != null
+                        ? AppLocalizations.of(context)!.welcome(user['name'] ?? '...')
+                        : AppLocalizations.of(context)!.storeManager,
                     style: TextStyle(
                       fontSize: 14,
                       color: AppTheme.getSecondaryTextColor(context),
@@ -123,8 +127,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: AppTheme.getTextColor(context),
                 ),
                 const SizedBox(height: 12),
-                 Text(
-                  'No Active Deliveries',
+                Text(
+                  AppLocalizations.of(context)!.noActiveDeliveries,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -133,7 +137,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Create a new delivery request to get started',
+                  AppLocalizations.of(context)!
+                      .createNewDeliveryRequestToGetStarted,
                   style: TextStyle(
                     fontSize: 14,
                     color: AppTheme.getTextColor(context).withOpacity(0.6),
@@ -158,8 +163,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                   Text(
-                    'Active Request',
+                  Text(
+                    AppLocalizations.of(context)!.activeRequest,
                     style: TextStyle(
                       fontSize: 12,
                       color: AppTheme.getSecondaryTextColor(context),
@@ -184,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
                    Icon(Icons.location_on, size: 16, color: AppTheme.getTextColor(context)),
                   const SizedBox(width: 4),
                   Text(
-                    '${request.stops.length} stop(s)',
+                    AppLocalizations.of(context)!.stops(request.stops.length),
                     style:  TextStyle(color: AppTheme.getTextColor(context)),
                   ),
                   const SizedBox(width: 16),
@@ -210,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       const Icon(Icons.local_offer, size: 16, color: AppTheme.accentYellow),
                       const SizedBox(width: 8),
                       Text(
-                        '${request.offers.length} offer(s) available',
+                        AppLocalizations.of(context)!.offersAvailable(request.offers.length),
                         style: TextStyle(
                           color: AppTheme.getTextColor(context),
                           fontWeight: FontWeight.w600,
@@ -257,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Icon(Icons.add_circle_outline, size: 28, color: AppTheme.getBackgroundColor(context),),
           SizedBox(width: 12),
           Text(
-            'Create New Delivery Request',
+            AppLocalizations.of(context)!.createNewDeliveryRequest,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -273,8 +278,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-         Text(
-          'Quick Actions',
+        Text(
+          AppLocalizations.of(context)!.quickActions,
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
@@ -293,9 +298,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   children: [
                     Icon(Icons.history, size: 32, color: AppTheme.getTextColor(context)),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
-                      'History',
+                      AppLocalizations.of(context)!.history,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -316,9 +321,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   children: [
                     Icon(Icons.analytics, size: 32, color: AppTheme.getTextColor(context)),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
-                      'Reports',
+                      AppLocalizations.of(context)!.reports,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -346,7 +351,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: AppTheme.getSurfaceColor(context),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
-          'Settings',
+          AppLocalizations.of(context)!.settings,
           style: TextStyle(color: AppTheme.getTextColor(context)),
         ),
         content: Consumer2<SettingsProvider, ThemeProvider>(
@@ -356,11 +361,11 @@ class _HomeScreenState extends State<HomeScreen> {
               // Theme Toggle
               SwitchListTile(
                 title: Text(
-                  'Dark Mode',
+                  AppLocalizations.of(context)!.darkMode,
                   style: TextStyle(color: AppTheme.getTextColor(context)),
                 ),
                 subtitle: Text(
-                  'Toggle between light and dark theme',
+                  AppLocalizations.of(context)!.toggleTheme,
                   style: TextStyle(
                     color: AppTheme.getSecondaryTextColor(context),
                     fontSize: 12,
@@ -372,12 +377,36 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 activeColor: AppTheme.getAccentColor(context),
               ),
+              Consumer<LanguageProvider>(
+                builder: (context, languageProvider, _) => SwitchListTile(
+                  title: Text(
+                    AppLocalizations.of(context)!.language,
+                    style: TextStyle(color: AppTheme.getTextColor(context)),
+                  ),
+                  subtitle: Text(
+                    AppLocalizations.of(context)!.toggleLanguage,
+                    style: TextStyle(
+                      color: AppTheme.getSecondaryTextColor(context),
+                      fontSize: 12,
+                    ),
+                  ),
+                  value: languageProvider.appLocale == const Locale('ar'),
+                  onChanged: (value) {
+                    if (value) {
+                      languageProvider.changeLanguage(const Locale('ar'));
+                    } else {
+                      languageProvider.changeLanguage(const Locale('en'));
+                    }
+                  },
+                  activeColor: AppTheme.getAccentColor(context),
+                ),
+              ),
               const Divider(),
               // Debug Settings Header
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Text(
-                  'Debug Settings',
+                  AppLocalizations.of(context)!.debugSettings,
                   style: TextStyle(
                     color: AppTheme.getSecondaryTextColor(context),
                     fontSize: 12,
@@ -387,11 +416,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SwitchListTile(
                 title: Text(
-                  'Fast Timers',
+                  AppLocalizations.of(context)!.fastTimers,
                   style: TextStyle(color: AppTheme.getTextColor(context)),
                 ),
                 subtitle: Text(
-                  '10min → 1min, 30s → 5s',
+                  AppLocalizations.of(context)!.fastTimersDescription,
                   style: TextStyle(
                     color: AppTheme.getSecondaryTextColor(context),
                     fontSize: 12,
@@ -403,11 +432,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SwitchListTile(
                 title: Text(
-                  'Force No Drivers',
+                  AppLocalizations.of(context)!.forceNoDrivers,
                   style: TextStyle(color: AppTheme.getTextColor(context)),
                 ),
                 subtitle: Text(
-                  'Simulate no available drivers',
+                  AppLocalizations.of(context)!.forceNoDriversDescription,
                   style: TextStyle(
                     color: AppTheme.getSecondaryTextColor(context),
                     fontSize: 12,
@@ -424,7 +453,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: AppTheme.accentYellow,
                 ),
                 title: Text(
-                  'Seed Fake Data',
+                  AppLocalizations.of(context)!.seedFakeData,
                   style: TextStyle(color: AppTheme.getTextColor(context)),
                 ),
                 onTap: () {
@@ -432,7 +461,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: const Text('Added 5 fake requests'),
+                      content: Text(AppLocalizations.of(context)!.addedFakeRequests),
                       backgroundColor: AppTheme.getSurfaceColor(context),
                     ),
                   );
@@ -444,7 +473,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: AppTheme.accentRed,
                 ),
                 title: Text(
-                  'Clear All Data',
+                  AppLocalizations.of(context)!.clearAllData,
                   style: TextStyle(color: AppTheme.getTextColor(context)),
                 ),
                 onTap: () {
@@ -453,11 +482,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     builder: (ctx) => AlertDialog(
                       backgroundColor: AppTheme.getSurfaceColor(context),
                       title: Text(
-                        'Confirm',
+                        AppLocalizations.of(context)!.confirm,
                         style: TextStyle(color: AppTheme.getTextColor(context)),
                       ),
                       content: Text(
-                        'This will clear all requests and settings',
+                        AppLocalizations.of(context)!.confirmClearAllData,
                         style: TextStyle(
                           color: AppTheme.getSecondaryTextColor(context),
                         ),
@@ -465,7 +494,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(ctx),
-                          child: const Text('Cancel'),
+                          child: Text(AppLocalizations.of(context)!.cancel),
                         ),
                         TextButton(
                           onPressed: () {
@@ -475,7 +504,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.pop(context);
                           },
                           child: Text(
-                            'Clear',
+                            AppLocalizations.of(context)!.clear,
                             style: TextStyle(color: AppTheme.accentRed),
                           ),
                         ),
@@ -490,7 +519,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
+            child: Text(AppLocalizations.of(context)!.close),
           ),
         ],
       ),
@@ -506,33 +535,34 @@ class _HomeScreenState extends State<HomeScreen> {
           borderRadius: BorderRadius.circular(20),
         ),
         title: Text(
-          'Logout',
+          AppLocalizations.of(context)!.logout,
           style: TextStyle(color: AppTheme.getTextColor(context)),
         ),
         content: Text(
-          'Are you sure you want to logout?',
+          AppLocalizations.of(context)!.confirmLogout,
           style: TextStyle(color: AppTheme.getTextColor(context)),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancel'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           TextButton(
             onPressed: () async {
-              final authProvider = Provider.of<AuthProvider>(context, listen: false);
+              final authProvider =
+                  Provider.of<AuthProvider>(context, listen: false);
               await authProvider.logout();
 
               if (context.mounted) {
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (_) => const LoginScreen()),
-                      (route) => false,
+                  (route) => false,
                 );
               }
             },
-            child: const Text(
-              'Logout',
-              style: TextStyle(color: Color(0xFFFF006E)),
+            child: Text(
+              AppLocalizations.of(context)!.logout,
+              style: const TextStyle(color: Color(0xFFFF006E)),
             ),
           ),
         ],

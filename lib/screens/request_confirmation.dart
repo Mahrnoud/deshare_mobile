@@ -3,6 +3,7 @@
 // ============================================================================
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../l10n/app_localizations.dart';
 import '../models/delivery_request.dart';
 import '../models/delivery_stop.dart';
 import '../providers/request_provider.dart';
@@ -66,7 +67,7 @@ class RequestConfirmationScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Confirm Request',
+                AppLocalizations.of(context)!.confirmRequest,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -74,7 +75,7 @@ class RequestConfirmationScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                'Review before sending',
+                AppLocalizations.of(context)!.reviewBeforeSending,
                 style: TextStyle(
                   fontSize: 14,
                   color: AppTheme.getSecondaryTextColor(context),
@@ -106,7 +107,7 @@ class RequestConfirmationScreen extends StatelessWidget {
           SizedBox(width: 16),
           Expanded(
             child: Text(
-              'Your request will be sent to nearby drivers. You\'ll receive offers within minutes.',
+              AppLocalizations.of(context)!.infoMessage,
               style: TextStyle(
                 fontSize: 14,
                 color: AppTheme.getTextColor(context).withOpacity(0.7),
@@ -148,7 +149,7 @@ class RequestConfirmationScreen extends StatelessWidget {
                   ),
                   SizedBox(width: 12),
                   Text(
-                    'Stop',
+                    AppLocalizations.of(context)!.stop(index + 1),
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -182,7 +183,7 @@ class RequestConfirmationScreen extends StatelessWidget {
                       Icon(Icons.shopping_bag, size: 16, color: AppTheme.getTextColor(context)),
                       SizedBox(width: 8),
                       Text(
-                        'Order: \$${stop.orderAmount.toStringAsFixed(2)}',
+                        AppLocalizations.of(context)!.order(stop.orderAmount.toStringAsFixed(2)),
                         style: TextStyle(
                           fontSize: 14,
                           color: AppTheme.getTextColor(context).withOpacity(0.7),
@@ -195,7 +196,7 @@ class RequestConfirmationScreen extends StatelessWidget {
                       Icon(Icons.local_shipping, size: 16, color: AppTheme.getTextColor(context)),
                       SizedBox(width: 8),
                       Text(
-                        'Fee: \$${stop.deliveryFee.toStringAsFixed(2)}',
+                        AppLocalizations.of(context)!.feeWithAmount(stop.deliveryFee.toStringAsFixed(2)),
                         style: TextStyle(
                           fontSize: 14,
                           color: AppTheme.getTextColor(context).withOpacity(0.7),
@@ -244,7 +245,7 @@ class RequestConfirmationScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Payment Summary',
+            AppLocalizations.of(context)!.paymentSummary,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -252,14 +253,18 @@ class RequestConfirmationScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 16),
-          _buildSummaryRow(context, 'Orders Subtotal', _subtotal),
+          _buildSummaryRow(
+              context, AppLocalizations.of(context)!.ordersSubtotal, _subtotal),
           SizedBox(height: 8),
-          _buildSummaryRow(context, 'Delivery Fees', _totalFees),
+          _buildSummaryRow(
+              context, AppLocalizations.of(context)!.deliveryFees, _totalFees),
           Divider(
             color: AppTheme.getBorderColor(context),
             height: 24,
           ),
-          _buildSummaryRow(context, 'Grand Total', _grandTotal, isTotal: true),
+          _buildSummaryRow(
+              context, AppLocalizations.of(context)!.grandTotal, _grandTotal,
+              isTotal: true),
         ],
       ),
     );
@@ -315,7 +320,7 @@ class RequestConfirmationScreen extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'Edit',
+                  AppLocalizations.of(context)!.edit,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -347,7 +352,7 @@ class RequestConfirmationScreen extends StatelessWidget {
                     Icon(Icons.send, size: 20),
                     SizedBox(width: 8),
                     Text(
-                      'Send Request',
+                      AppLocalizations.of(context)!.sendRequest,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -388,7 +393,7 @@ class RequestConfirmationScreen extends StatelessWidget {
               Icon(Icons.check_circle, color: AppTheme.getTextColor(context)),
               SizedBox(width: 12),
               Text(
-                'Request sent! Searching for drivers...',
+                AppLocalizations.of(context)!.requestSent,
                 style: TextStyle(color: AppTheme.getTextColor(context)),
               ),
             ],

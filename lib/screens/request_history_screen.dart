@@ -3,6 +3,7 @@
 // ============================================================================
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../l10n/app_localizations.dart';
 import '../models/delivery_request.dart';
 import '../providers/history_provider.dart';
 import '../utils/theme.dart';
@@ -82,7 +83,7 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Request History',
+                AppLocalizations.of(context)!.requestHistory,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -90,7 +91,7 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
                 ),
               ),
               Text(
-                'All your past deliveries',
+                AppLocalizations.of(context)!.allPastDeliveries,
                 style: TextStyle(
                   fontSize: 14,
                   color: AppTheme.getSecondaryTextColor(context),
@@ -109,12 +110,12 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
-          _buildFilterChip('All', null),
+          _buildFilterChip(AppLocalizations.of(context)!.all, null),
           const SizedBox(width: 8),
           ..._filterOptions.map((status) => Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: _buildFilterChip(_getStatusLabel(status), status),
-          )),
+                padding: const EdgeInsets.only(right: 8),
+                child: _buildFilterChip(_getStatusLabel(status), status),
+              )),
         ],
       ),
     );
@@ -168,7 +169,8 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Request #${request.id.substring(request.id.length - 6)}',
+                AppLocalizations.of(context)!
+                    .request(request.id.substring(request.id.length - 6)),
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -185,7 +187,7 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
                   size: 14, color: AppTheme.getSecondaryTextColor(context)),
               const SizedBox(width: 8),
               Text(
-                _formatDate(request.createdAt),
+                _formatDate(context, request.createdAt),
                 style: TextStyle(
                   fontSize: 13,
                   color: AppTheme.getTextColor(context).withOpacity(0.7),
@@ -244,8 +246,9 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
             const SizedBox(height: 24),
             Text(
               _selectedFilter == null
-                  ? 'No requests yet'
-                  : 'No ${_getStatusLabel(_selectedFilter!).toLowerCase()} requests',
+                  ? AppLocalizations.of(context)!.noRequestsYet
+                  : AppLocalizations.of(context)!.noRequestsOfType(
+                      _getStatusLabel(_selectedFilter!).toLowerCase()),
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -255,8 +258,8 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
             const SizedBox(height: 8),
             Text(
               _selectedFilter == null
-                  ? 'Create your first delivery request to get started'
-                  : 'Try selecting a different filter',
+                  ? AppLocalizations.of(context)!.createFirstRequest
+                  : AppLocalizations.of(context)!.tryDifferentFilter,
               style: TextStyle(
                 fontSize: 14,
                 color: AppTheme.getTextColor(context).withOpacity(0.6),
@@ -272,26 +275,28 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
   String _getStatusLabel(RequestStatus status) {
     switch (status) {
       case RequestStatus.delivered:
-        return 'Delivered';
+        return AppLocalizations.of(context)!.delivered;
       case RequestStatus.expired:
-        return 'Expired';
+        return AppLocalizations.of(context)!.expired;
       case RequestStatus.cancelled:
-        return 'Cancelled';
+        return AppLocalizations.of(context)!.cancelled;
       default:
         return status.name;
     }
   }
 
-  String _formatDate(DateTime date) {
+  String _formatDate(BuildContext context, DateTime date) {
     final now = DateTime.now();
     final diff = now.difference(date);
 
     if (diff.inDays == 0) {
-      return 'Today at ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
+      return AppLocalizations.of(context)!.todayAt(
+          '${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}');
     } else if (diff.inDays == 1) {
-      return 'Yesterday at ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
+      return AppLocalizations.of(context)!.yesterdayAt(
+          '${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}');
     } else if (diff.inDays < 7) {
-      return '${diff.inDays} days ago';
+      return AppLocalizations.of(context)!.daysAgoFormatted(diff.inDays);
     } else {
       return '${date.day}/${date.month}/${date.year}';
     }

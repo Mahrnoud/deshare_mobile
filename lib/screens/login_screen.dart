@@ -3,6 +3,7 @@
 // ============================================================================
 import 'package:deshare/screens/registration_step1_screen.dart';
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../utils/theme.dart';
@@ -72,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         const SizedBox(height: 5),
          Text(
-          'Store Manager Login',
+          AppLocalizations.of(context)!.storeManagerLogin,
           style: TextStyle(
             fontSize: 16,
             color: AppTheme.getSecondaryTextColor(context),
@@ -91,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Welcome Back',
+              AppLocalizations.of(context)!.welcomeBack,
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -101,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              'Sign in to continue',
+              AppLocalizations.of(context)!.signInToContinue,
               style: TextStyle(
                 fontSize: 14,
                 color: AppTheme.getTextColor(context).withOpacity(0.6),
@@ -114,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
               keyboardType: TextInputType.phone,
               style: TextStyle(color: AppTheme.getTextColor(context)),
               decoration: InputDecoration(
-                labelText: 'Mobile Number',
+                labelText: AppLocalizations.of(context)!.mobileNumber,
                 labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
                 prefixIcon: Icon(Icons.phone, color: AppTheme.getTextColor(context)),
                 border: OutlineInputBorder(
@@ -136,10 +137,10 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter your mobile number';
+                  return AppLocalizations.of(context)!.pleaseEnterMobile;
                 }
                 if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                  return 'Mobile number must contain only digits';
+                  return AppLocalizations.of(context)!.invalidMobile;
                 }
                 return null;
               },
@@ -150,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
               obscureText: _obscurePassword,
               style: TextStyle(color: AppTheme.getTextColor(context)),
               decoration: InputDecoration(
-                labelText: 'Password',
+                labelText: AppLocalizations.of(context)!.password,
                 labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
                 prefixIcon: Icon(Icons.lock, color: AppTheme.getTextColor(context)),
                 suffixIcon: IconButton(
@@ -181,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter your password';
+                  return AppLocalizations.of(context)!.pleaseEnterPassword;
                 }
                 return null;
               },
@@ -209,13 +210,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   valueColor: AlwaysStoppedAnimation<Color>(AppTheme.getBackgroundColor(context)),
                 ),
               )
-                  : const Text(
-                'Login',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+                  : Text(
+                      AppLocalizations.of(context)!.login,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
             ),
             const SizedBox(height: 16),
             // Divider with "OR"
@@ -228,9 +229,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
-                    'OR',
+                    AppLocalizations.of(context)!.or,
                     style: TextStyle(
                       color: AppTheme.getSecondaryTextColor(context),
                       fontSize: 12,
@@ -252,15 +253,16 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: _isLoading
                   ? null
                   : () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => const RegistrationStep1Screen()),
-                );
-              },
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const RegistrationStep1Screen()),
+                      );
+                    },
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                side: BorderSide(color: AppTheme.getTextColor(context), width: 2),
+                side:
+                    BorderSide(color: AppTheme.getTextColor(context), width: 2),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -268,18 +270,20 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   Icon(
+                  Icon(
                     Icons.person_add_outlined,
                     color: AppTheme.getTextColor(context),
                     size: 20,
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'Create New Account',
+                    AppLocalizations.of(context)!.createNewAccount,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: _isLoading ? AppTheme.getTextColor(context) : AppTheme.getTextColor(context),
+                      color: _isLoading
+                          ? AppTheme.getTextColor(context)
+                          : AppTheme.getTextColor(context),
                     ),
                   ),
                 ],
@@ -347,7 +351,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } else {
       setState(() {
-        _errorMessage = 'Invalid mobile number or password';
+        _errorMessage = AppLocalizations.of(context)!.invalidCredentials;
       });
     }
   }

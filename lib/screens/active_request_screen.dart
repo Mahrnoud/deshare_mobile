@@ -3,6 +3,7 @@
 // ============================================================================
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../l10n/app_localizations.dart';
 import '../models/delivery_request.dart';
 import '../providers/request_provider.dart';
 import '../utils/theme.dart';
@@ -34,7 +35,7 @@ class ActiveRequestScreen extends StatelessWidget {
                     if (activeRequest == null) {
                       return Center(
                         child: Text(
-                          'Request not found',
+                          AppLocalizations.of(context)!.requestNotFound,
                           style: TextStyle(
                             color: AppTheme.getTextColor(context).withOpacity(0.70),
                           ),
@@ -98,7 +99,8 @@ class ActiveRequestScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Request #${request.id.substring(request.id.length - 6)}',
+                  AppLocalizations.of(context)!
+                      .request(request.id.substring(request.id.length - 6)),
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -106,7 +108,7 @@ class ActiveRequestScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  _getTimeAgo(request.createdAt),
+                  _getTimeAgo(context, request.createdAt),
                   style: TextStyle(
                     fontSize: 14,
                     color: AppTheme.getSecondaryTextColor(context),
@@ -133,7 +135,7 @@ class ActiveRequestScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Current Status',
+                AppLocalizations.of(context)!.currentStatus,
                 style: TextStyle(
                   fontSize: 12,
                   color: AppTheme.getSecondaryTextColor(context),
@@ -149,7 +151,7 @@ class ActiveRequestScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  'Driver',
+                  AppLocalizations.of(context)!.driver,
                   style: TextStyle(
                     fontSize: 12,
                     color: AppTheme.getSecondaryTextColor(context),
@@ -189,7 +191,7 @@ class ActiveRequestScreen extends StatelessWidget {
                Icon(Icons.timer, color: AppTheme.getTextColor(context), size: 28),
               const SizedBox(width: 12),
               Text(
-                'Request Expires In',
+                AppLocalizations.of(context)!.requestExpiresIn,
                 style: TextStyle(
                   fontSize: 16,
                   color: AppTheme.getTextColor(context),
@@ -217,7 +219,7 @@ class ActiveRequestScreen extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 16),
         child: Text(
-          'Available Offers',
+          AppLocalizations.of(context)!.availableOffers,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -259,7 +261,7 @@ class ActiveRequestScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Searching for Drivers',
+            AppLocalizations.of(context)!.searchingForDrivers,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -268,7 +270,7 @@ class ActiveRequestScreen extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'We\'re notifying nearby drivers about your request',
+            AppLocalizations.of(context)!.notifyingDrivers,
             style: TextStyle(
               fontSize: 14,
               color: AppTheme.getTextColor(context).withOpacity(0.6),
@@ -302,7 +304,7 @@ class ActiveRequestScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Request Expired',
+            AppLocalizations.of(context)!.requestExpired,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -311,7 +313,7 @@ class ActiveRequestScreen extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'No drivers accepted within the time limit',
+            AppLocalizations.of(context)!.noDriversAccepted,
             style: TextStyle(
               fontSize: 14,
               color: AppTheme.getTextColor(context).withOpacity(0.6),
@@ -325,19 +327,19 @@ class ActiveRequestScreen extends StatelessWidget {
               backgroundColor: AppTheme.getTextColor(context),
               foregroundColor: AppTheme.getBackgroundColor(context),
               padding:
-              const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              children: const [
-                Icon(Icons.refresh),
-                SizedBox(width: 8),
+              children: [
+                const Icon(Icons.refresh),
+                const SizedBox(width: 8),
                 Text(
-                  'Retry Request',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  AppLocalizations.of(context)!.retryRequest,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -357,7 +359,7 @@ class ActiveRequestScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Delivery Stops',
+            AppLocalizations.of(context)!.deliveryStops,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -405,7 +407,7 @@ class ActiveRequestScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            '\$${stop.orderAmount.toStringAsFixed(2)} + \$${stop.deliveryFee.toStringAsFixed(2)} fee',
+                            '\$${stop.orderAmount.toStringAsFixed(2)} + \$${stop.deliveryFee.toStringAsFixed(2)} ${AppLocalizations.of(context)!.fee}',
                             style: TextStyle(
                               fontSize: 12,
                               color: AppTheme.getSecondaryTextColor(context),
@@ -424,7 +426,7 @@ class ActiveRequestScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Grand Total',
+                AppLocalizations.of(context)!.grandTotal,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -458,7 +460,7 @@ class ActiveRequestScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Timeline',
+            AppLocalizations.of(context)!.timeline,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -548,7 +550,7 @@ class ActiveRequestScreen extends StatelessWidget {
             Icon(Icons.cancel, color: AppTheme.getBackgroundColor(context)),
             SizedBox(width: 8),
             Text(
-              'Cancel Request',
+              AppLocalizations.of(context)!.cancelRequest,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -577,7 +579,7 @@ class ActiveRequestScreen extends StatelessWidget {
                Icon(Icons.check_circle, color: AppTheme.getTextColor(context)),
               const SizedBox(width: 12),
               Text(
-                'Offer from ${offer.driverName} accepted!',
+                AppLocalizations.of(context)!.offerAccepted(offer.driverName),
                 style: TextStyle(color: AppTheme.getTextColor(context)),
               ),
             ],
@@ -610,11 +612,11 @@ class ActiveRequestScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
         ),
         title: Text(
-          'Cancel Request?',
+          AppLocalizations.of(context)!.confirmCancel,
           style: TextStyle(color: AppTheme.getTextColor(context)),
         ),
         content: Text(
-          'Are you sure you want to cancel this delivery request?',
+          AppLocalizations.of(context)!.confirmCancelMessage,
           style: TextStyle(
             color: AppTheme.getTextColor(context).withOpacity(0.70),
           ),
@@ -622,12 +624,13 @@ class ActiveRequestScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: Text('No', style: TextStyle(color: AppTheme.getTextColor(context))),
+            child: Text(AppLocalizations.of(context)!.no,
+                style: TextStyle(color: AppTheme.getTextColor(context))),
           ),
           TextButton(
             onPressed: () async {
               final provider =
-              Provider.of<RequestProvider>(context, listen: false);
+                  Provider.of<RequestProvider>(context, listen: false);
               await provider.cancelRequest();
               if (context.mounted) {
                 Navigator.pop(ctx);
@@ -635,7 +638,7 @@ class ActiveRequestScreen extends StatelessWidget {
               }
             },
             child: Text(
-              'Yes, Cancel',
+              AppLocalizations.of(context)!.yesCancel,
               style: TextStyle(color: AppTheme.getTextColor(context)),
             ),
           ),
@@ -648,12 +651,14 @@ class ActiveRequestScreen extends StatelessWidget {
   // Helpers
   // ---------------------------------------------------------------------------
 
-  String _getTimeAgo(DateTime time) {
+  String _getTimeAgo(BuildContext context, DateTime time) {
     final diff = DateTime.now().difference(time);
-    if (diff.inMinutes < 1) return 'Just now';
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-    if (diff.inHours < 24) return '${diff.inHours}h ago';
-    return '${diff.inDays}d ago';
+    if (diff.inMinutes < 1) return AppLocalizations.of(context)!.justNow;
+    if (diff.inMinutes < 60)
+      return AppLocalizations.of(context)!.minutesAgo(diff.inMinutes);
+    if (diff.inHours < 24)
+      return AppLocalizations.of(context)!.hoursAgo(diff.inHours);
+    return AppLocalizations.of(context)!.daysAgo(diff.inDays);
   }
 
   String _formatTime(DateTime time) {
