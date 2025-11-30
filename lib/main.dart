@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: lib/main.dart
+// FILE: lib/main.dart (UPDATED)
 // ============================================================================
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +8,7 @@ import 'providers/history_provider.dart';
 import 'providers/settings_provider.dart';
 import 'providers/auth_provider.dart';
 import 'providers/registration_provider.dart';
+import 'providers/theme_provider.dart'; // NEW
 import 'screens/splash_screen.dart';
 import 'utils/theme.dart';
 
@@ -23,6 +24,7 @@ class DeShareApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()..init()), // NEW
         ChangeNotifierProvider(create: (_) => AuthProvider()..init()),
         ChangeNotifierProvider(create: (_) => RegistrationProvider()),
         ChangeNotifierProvider(create: (_) => SettingsProvider()..init()),
@@ -35,11 +37,17 @@ class DeShareApp extends StatelessWidget {
           previous ?? RequestProvider(settings)..init(),
         ),
       ],
-      child: MaterialApp(
-        title: 'DeShare',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.darkTheme,
-        home: const SplashScreen(),
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, _) {
+          return MaterialApp(
+            title: 'DeShare',
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.lightTheme, // Light theme
+            darkTheme: AppTheme.darkTheme, // Dark theme
+            themeMode: themeProvider.themeMode, // Use provider's theme mode
+            home: const SplashScreen(),
+          );
+        },
       ),
     );
   }

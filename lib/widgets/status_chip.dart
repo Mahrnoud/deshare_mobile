@@ -3,6 +3,7 @@
 // ============================================================================
 import 'package:flutter/material.dart';
 import '../models/delivery_request.dart';
+import '../utils/theme.dart';
 
 class StatusChip extends StatelessWidget {
   final RequestStatus status;
@@ -23,12 +24,12 @@ class StatusChip extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(config.icon, size: 14, color: config.color),
+          Icon(config.icon, size: 14, color: AppTheme.getTextColor(context)),
           const SizedBox(width: 4),
           Text(
             config.label,
             style: TextStyle(
-              color: config.color,
+              color: AppTheme.getTextColor(context),
               fontSize: 12,
               fontWeight: FontWeight.w600,
             ),

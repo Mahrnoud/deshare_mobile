@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/delivery_stop.dart';
 import '../services/geocoding_service.dart';
+import '../utils/theme.dart';
 import 'glass_card.dart';
 
 class StopInputCard extends StatefulWidget {
@@ -56,26 +57,26 @@ class _StopInputCardState extends State<StopInputCard> {
               Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFffffff).withOpacity(0.2),
+                      color: AppTheme.getTextColor(context).withOpacity(0.2),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       '${widget.index + 1}',
-                      style: const TextStyle(
-                        color: Color(0xFFffffff),
+                      style: TextStyle(
+                        color: AppTheme.getTextColor(context),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  const Text(
+                  SizedBox(width: 8),
+                  Text(
                     'Stop',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                      color: AppTheme.getTextColor(context),
                     ),
                   ),
                 ],
@@ -83,32 +84,33 @@ class _StopInputCardState extends State<StopInputCard> {
               if (widget.index > 0)
                 IconButton(
                   onPressed: widget.onRemove,
-                  icon: const Icon(Icons.delete_outline),
-                  color: const Color(0xFFffffff),
+                  icon: Icon(Icons.delete_outline),
+                  color: AppTheme.getTextColor(context),
                 ),
             ],
           ),
-          const SizedBox(height: 12),
+
+          SizedBox(height: 12),
 
           // Address input with autocomplete
           TextField(
             controller: _addressController,
-            style: const TextStyle(color: Colors.white),
+            style: TextStyle(color: AppTheme.getTextColor(context)),
             decoration: InputDecoration(
               labelText: 'Delivery Address',
-              labelStyle: const TextStyle(color: Colors.white60),
-              prefixIcon: const Icon(Icons.location_on, color: Color(0xFFffffff)),
+              labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
+              prefixIcon: Icon(Icons.location_on, color: AppTheme.getTextColor(context)),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Colors.white30),
+                borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Colors.white30),
+                borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFFffffff), width: 2),
+                borderSide: BorderSide(color: AppTheme.getTextColor(context), width: 2),
               ),
             ),
             onChanged: _onAddressChanged,
@@ -116,11 +118,11 @@ class _StopInputCardState extends State<StopInputCard> {
 
           if (_showSuggestions && _suggestions.isNotEmpty)
             Container(
-              margin: const EdgeInsets.only(top: 8),
+              margin: EdgeInsets.only(top: 8),
               decoration: BoxDecoration(
-                color: Colors.black,
+                color: AppTheme.getBackgroundColor(context),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.white30),
+                border: Border.all(color: AppTheme.getBorderColor(context)),
               ),
               child: ListView.builder(
                 shrinkWrap: true,
@@ -128,10 +130,10 @@ class _StopInputCardState extends State<StopInputCard> {
                 itemBuilder: (context, index) {
                   final suggestion = _suggestions[index];
                   return ListTile(
-                    leading: const Icon(Icons.place, color: Color(0xFFffffff)),
+                    leading: Icon(Icons.place, color: AppTheme.getTextColor(context)),
                     title: Text(
                       suggestion.addressText,
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(color: AppTheme.getTextColor(context)),
                     ),
                     onTap: () => _selectAddress(suggestion),
                   );
@@ -139,49 +141,50 @@ class _StopInputCardState extends State<StopInputCard> {
               ),
             ),
 
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
+
           Row(
             children: [
               Expanded(
                 child: TextField(
                   controller: _orderController,
                   keyboardType: TextInputType.number,
-                  style: const TextStyle(color: Colors.white),
+                  style: TextStyle(color: AppTheme.getTextColor(context)),
                   decoration: InputDecoration(
                     labelText: 'Order Amount',
-                    labelStyle: const TextStyle(color: Colors.white60),
+                    labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
                     prefixText: '\$ ',
-                    prefixStyle: const TextStyle(color: Color(0xFFffffff)),
+                    prefixStyle: TextStyle(color: AppTheme.getTextColor(context)),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Colors.white30),
+                      borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Colors.white30),
+                      borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
                     ),
                   ),
                   onChanged: (_) => _updateStop(),
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(
                 child: TextField(
                   controller: _feeController,
                   keyboardType: TextInputType.number,
-                  style: const TextStyle(color: Colors.white),
+                  style: TextStyle(color: AppTheme.getTextColor(context)),
                   decoration: InputDecoration(
                     labelText: 'Delivery Fee',
-                    labelStyle: const TextStyle(color: Colors.white60),
+                    labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
                     prefixText: '\$ ',
-                    prefixStyle: const TextStyle(color: Color(0xFFffffff)),
+                    prefixStyle: TextStyle(color: AppTheme.getTextColor(context)),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Colors.white30),
+                      borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Colors.white30),
+                      borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
                     ),
                   ),
                   onChanged: (_) => _updateStop(),
@@ -190,21 +193,22 @@ class _StopInputCardState extends State<StopInputCard> {
             ],
           ),
 
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
+
           TextField(
             controller: _notesController,
-            style: const TextStyle(color: Colors.white),
+            style: TextStyle(color: AppTheme.getTextColor(context)),
             maxLines: 2,
             decoration: InputDecoration(
               labelText: 'Notes (optional)',
-              labelStyle: const TextStyle(color: Colors.white60),
+              labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Colors.white30),
+                borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Colors.white30),
+                borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
               ),
             ),
             onChanged: (_) => _updateStop(),

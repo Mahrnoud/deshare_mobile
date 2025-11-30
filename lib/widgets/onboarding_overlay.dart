@@ -3,6 +3,7 @@
 // ============================================================================
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../utils/theme.dart';
 import 'glass_card.dart';
 import '../providers/auth_provider.dart';
 import '../screens/login_screen.dart';
@@ -63,8 +64,8 @@ class _OnboardingOverlayState extends State<OnboardingOverlay> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        color: Color(0xFF000000),
+      decoration: BoxDecoration(
+        color: AppTheme.getBackgroundColor(context),
       ),
       child: SafeArea(
         child: Column(
@@ -91,8 +92,8 @@ class _OnboardingOverlayState extends State<OnboardingOverlay> {
                         height: 8,
                         decoration: BoxDecoration(
                           color: _currentPage == index
-                              ? const Color(0xFFffffff)
-                              : Colors.white30,
+                              ? AppTheme.getTextColor(context)
+                              : AppTheme.getBorderColor(context),
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
@@ -110,7 +111,7 @@ class _OnboardingOverlayState extends State<OnboardingOverlay> {
                             ),
                             style: OutlinedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 16),
-                              side: const BorderSide(color: Colors.white30),
+                              side: BorderSide(color: AppTheme.getBorderColor(context)),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
@@ -129,8 +130,8 @@ class _OnboardingOverlayState extends State<OnboardingOverlay> {
                             curve: Curves.easeInOut,
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFffffff),
-                            foregroundColor: Colors.black,
+                            backgroundColor: AppTheme.getTextColor(context),
+                            foregroundColor: AppTheme.getBackgroundColor(context),
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -176,26 +177,26 @@ class _OnboardingPage extends StatelessWidget {
             padding: const EdgeInsets.all(32),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Color(0xFFffffff).withOpacity(0.1), // <-- fixed color here
+              color: AppTheme.getTextColor(context).withOpacity(0.1), // <-- fixed color here
             ),
-            child: Icon(icon, size: 80, color: const Color(0xFFffffff)),
+            child: Icon(icon, size: 80, color: AppTheme.getTextColor(context)),
           ),
           const SizedBox(height: 48),
           Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: AppTheme.getTextColor(context),
             ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
           Text(
             description,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
-              color: Colors.white70,
+              color: AppTheme.getTextColor(context),
               height: 1.5,
             ),
             textAlign: TextAlign.center,

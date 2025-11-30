@@ -1,10 +1,11 @@
 // ============================================================================
-// FILE: lib/screens/reports_screen.dart (UPDATED)
+// FILE: lib/screens/reports_screen.dart (CLEANED)
 // ============================================================================
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/history_provider.dart';
 import '../models/delivery_request.dart';
+import '../utils/theme.dart';
 import '../widgets/glass_card.dart';
 
 enum ReportPeriod { daily, weekly, monthly }
@@ -24,8 +25,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xFF000000)
+        decoration: BoxDecoration(
+          color: AppTheme.getBackgroundColor(context),
         ),
         child: SafeArea(
           child: Column(
@@ -68,10 +69,10 @@ class _ReportsScreenState extends State<ReportsScreen> {
         children: [
           IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            icon: Icon(Icons.arrow_back, color: AppTheme.getTextColor(context)),
           ),
           const SizedBox(width: 12),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -80,14 +81,14 @@ class _ReportsScreenState extends State<ReportsScreen> {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: AppTheme.getTextColor(context),
                   ),
                 ),
                 Text(
                   'Track your delivery performance',
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.white60,
+                    color: AppTheme.getSecondaryTextColor(context),
                   ),
                 ),
               ],
@@ -103,29 +104,11 @@ class _ReportsScreenState extends State<ReportsScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
-          Expanded(
-            child: _buildPeriodButton(
-              'Daily',
-              ReportPeriod.daily,
-              Icons.today,
-            ),
-          ),
+          Expanded(child: _buildPeriodButton('Daily', ReportPeriod.daily, Icons.today)),
           const SizedBox(width: 8),
-          Expanded(
-            child: _buildPeriodButton(
-              'Weekly',
-              ReportPeriod.weekly,
-              Icons.view_week,
-            ),
-          ),
+          Expanded(child: _buildPeriodButton('Weekly', ReportPeriod.weekly, Icons.view_week)),
           const SizedBox(width: 8),
-          Expanded(
-            child: _buildPeriodButton(
-              'Monthly',
-              ReportPeriod.monthly,
-              Icons.calendar_month,
-            ),
-          ),
+          Expanded(child: _buildPeriodButton('Monthly', ReportPeriod.monthly, Icons.calendar_month)),
         ],
       ),
     );
@@ -140,11 +123,13 @@ class _ReportsScreenState extends State<ReportsScreen> {
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFFffffff).withOpacity(0.2)
-              : Colors.white.withOpacity(0.05),
+              ? AppTheme.getTextColor(context).withOpacity(0.2)
+              : AppTheme.getTextColor(context).withOpacity(0.05),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? const Color(0xFFffffff) : Colors.white30,
+            color: isSelected
+                ? const Color(0xFFFFFFFF)
+                : AppTheme.getBorderColor(context),
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -152,7 +137,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
           children: [
             Icon(
               icon,
-              color: isSelected ? const Color(0xFFffffff) : Colors.white60,
+              color: isSelected ? const Color(0xFFFFFFFF) : AppTheme.getSecondaryTextColor(context),
               size: 20,
             ),
             const SizedBox(height: 4),
@@ -161,7 +146,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                color: isSelected ? const Color(0xFFffffff) : Colors.white60,
+                color: isSelected ? const Color(0xFFFFFFFF) : AppTheme.getSecondaryTextColor(context),
               ),
             ),
           ],
@@ -180,16 +165,16 @@ class _ReportsScreenState extends State<ReportsScreen> {
           children: [
             IconButton(
               onPressed: _previousPeriod,
-              icon: const Icon(Icons.chevron_left, color: Color(0xFFffffff)),
+              icon: Icon(Icons.chevron_left, color: AppTheme.getTextColor(context)),
             ),
             Expanded(
               child: Center(
                 child: Text(
                   _getDateRangeText(),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                    color: AppTheme.getTextColor(context),
                   ),
                 ),
               ),
@@ -198,7 +183,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               onPressed: _canGoNext() ? _nextPeriod : null,
               icon: Icon(
                 Icons.chevron_right,
-                color: _canGoNext() ? const Color(0xFFffffff) : Colors.white30,
+                color: _canGoNext() ? AppTheme.getTextColor(context) : AppTheme.getBorderColor(context),
               ),
             ),
           ],
@@ -212,16 +197,16 @@ class _ReportsScreenState extends State<ReportsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(Icons.assessment, color: Color(0xFFffffff), size: 20),
-              SizedBox(width: 8),
+              Icon(Icons.assessment, color: AppTheme.getTextColor(context), size: 20),
+              const SizedBox(width: 8),
               Text(
                 'Overview',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppTheme.getTextColor(context),
                 ),
               ),
             ],
@@ -234,20 +219,20 @@ class _ReportsScreenState extends State<ReportsScreen> {
                   'Total Requests',
                   '${stats.totalRequests}',
                   Icons.all_inbox,
-                  const Color(0xFFffffff),
+                  AppTheme.getTextColor(context),
                 ),
               ),
               Container(
                 width: 1,
                 height: 60,
-                color: Colors.white30,
+                color: AppTheme.getBorderColor(context),
               ),
               Expanded(
                 child: _buildStatItem(
                   'Delivered',
                   '${stats.deliveredCount}',
                   Icons.check_circle,
-                  const Color(0xFFffffff),
+                  AppTheme.getTextColor(context),
                 ),
               ),
             ],
@@ -260,20 +245,20 @@ class _ReportsScreenState extends State<ReportsScreen> {
                   'Expired',
                   '${stats.expiredCount}',
                   Icons.timer_off,
-                  const Color(0xFFffffff),
+                  AppTheme.getTextColor(context),
                 ),
               ),
               Container(
                 width: 1,
                 height: 60,
-                color: Colors.white30,
+                color: AppTheme.getBorderColor(context),
               ),
               Expanded(
                 child: _buildStatItem(
                   'Cancelled',
                   '${stats.cancelledCount}',
                   Icons.cancel,
-                  const Color(0xFFffffff),
+                  AppTheme.getTextColor(context),
                 ),
               ),
             ],
@@ -286,7 +271,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
   Widget _buildStatItem(String label, String value, IconData icon, Color color) {
     return Column(
       children: [
-        Icon(icon, color: color, size: 24),
+        Icon(icon, color: AppTheme.getBorderColor(context), size: 24),
         const SizedBox(height: 8),
         Text(
           value,
@@ -298,15 +283,17 @@ class _ReportsScreenState extends State<ReportsScreen> {
         ),
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 12,
-            color: Colors.white60,
+            color: AppTheme.getSecondaryTextColor(context),
           ),
           textAlign: TextAlign.center,
         ),
       ],
     );
   }
+
+  // --- Delivered Orders ------------------------------------------------------
 
   Widget _buildDeliveredOrdersCard(ReportStats stats) {
     return GlassCard(
@@ -318,22 +305,18 @@ class _ReportsScreenState extends State<ReportsScreen> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFffffff).withOpacity(0.2),
+                  color: AppTheme.getTextColor(context).withOpacity(0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Icon(
-                  Icons.check_circle,
-                  color: Color(0xFFffffff),
-                  size: 20,
-                ),
+                child: Icon(Icons.check_circle, color: AppTheme.getTextColor(context), size: 20),
               ),
               const SizedBox(width: 12),
-              const Text(
+              Text(
                 'Delivered Orders',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppTheme.getTextColor(context),
                 ),
               ),
             ],
@@ -343,28 +326,30 @@ class _ReportsScreenState extends State<ReportsScreen> {
             'Total Orders',
             '${stats.deliveredCount}',
             Icons.shopping_bag,
-            const Color(0xFFffffff),
+            AppTheme.getTextColor(context),
           ),
-          const Divider(color: Colors.white30, height: 24),
+          Divider(color: AppTheme.getBorderColor(context), height: 24),
           _buildReportRow(
             'Orders Amount',
             '\$${stats.deliveredOrdersAmount.toStringAsFixed(2)}',
             Icons.attach_money,
-            const Color(0xFFffffff),
+            AppTheme.getTextColor(context),
             subtitle: 'Excluding delivery fees',
           ),
-          const Divider(color: Colors.white30, height: 24),
+          Divider(color: AppTheme.getBorderColor(context), height: 24),
           _buildReportRow(
             'Delivery Fees',
             '\$${stats.deliveredDeliveryFees.toStringAsFixed(2)}',
             Icons.local_shipping,
-            const Color(0xFFffffff),
+            AppTheme.getTextColor(context),
             subtitle: 'Total fees collected',
           ),
         ],
       ),
     );
   }
+
+  // --- Expired Orders --------------------------------------------------------
 
   Widget _buildExpiredOrdersCard(ReportStats stats) {
     return GlassCard(
@@ -376,22 +361,18 @@ class _ReportsScreenState extends State<ReportsScreen> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFffffff).withOpacity(0.2),
+                  color: AppTheme.getTextColor(context).withOpacity(0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Icon(
-                  Icons.timer_off,
-                  color: Color(0xFFffffff),
-                  size: 20,
-                ),
+                child: Icon(Icons.timer_off, color: AppTheme.getTextColor(context), size: 20),
               ),
               const SizedBox(width: 12),
-              const Text(
+              Text(
                 'Expired Orders',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppTheme.getTextColor(context),
                 ),
               ),
             ],
@@ -401,7 +382,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
             'Total Expired',
             '${stats.expiredCount}',
             Icons.timer_off_outlined,
-            const Color(0xFFffffff),
+            AppTheme.getTextColor(context),
             subtitle: stats.expiredCount > 0
                 ? '${((stats.expiredCount / stats.totalRequests) * 100).toStringAsFixed(1)}% of total'
                 : 'No expired requests',
@@ -410,6 +391,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
       ),
     );
   }
+
+  // --- Cancelled Orders ------------------------------------------------------
 
   Widget _buildCancelledOrdersCard(ReportStats stats) {
     return GlassCard(
@@ -421,22 +404,18 @@ class _ReportsScreenState extends State<ReportsScreen> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFffffff).withOpacity(0.2),
+                  color: AppTheme.getTextColor(context).withOpacity(0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Icon(
-                  Icons.cancel,
-                  color: Color(0xFFffffff),
-                  size: 20,
-                ),
+                child: Icon(Icons.cancel, color: AppTheme.getTextColor(context), size: 20),
               ),
               const SizedBox(width: 12),
-              const Text(
+              Text(
                 'Cancelled Orders',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppTheme.getTextColor(context),
                 ),
               ),
             ],
@@ -446,7 +425,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
             'Total Cancelled',
             '${stats.cancelledCount}',
             Icons.cancel_outlined,
-            const Color(0xFFffffff),
+            AppTheme.getTextColor(context),
             subtitle: stats.cancelledCount > 0
                 ? '${((stats.cancelledCount / stats.totalRequests) * 100).toStringAsFixed(1)}% of total'
                 : 'Great job!',
@@ -455,6 +434,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
       ),
     );
   }
+
+  // --- Summary ---------------------------------------------------------------
 
   Widget _buildSummaryCard(ReportStats stats) {
     return GlassCard(
@@ -466,22 +447,18 @@ class _ReportsScreenState extends State<ReportsScreen> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFffffff).withOpacity(0.2),
+                  color: AppTheme.getTextColor(context).withOpacity(0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Icon(
-                  Icons.summarize,
-                  color: Color(0xFFffffff),
-                  size: 20,
-                ),
+                child: Icon(Icons.summarize, color: AppTheme.getTextColor(context), size: 20),
               ),
               const SizedBox(width: 12),
-              const Text(
+              Text(
                 'Financial Summary',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppTheme.getTextColor(context),
                 ),
               ),
             ],
@@ -492,74 +469,44 @@ class _ReportsScreenState extends State<ReportsScreen> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  const Color(0xFFffffff).withOpacity(0.1),
-                  const Color(0xFFffffff).withOpacity(0.1),
+                  AppTheme.getTextColor(context).withOpacity(0.1),
+                  AppTheme.getTextColor(context).withOpacity(0.1),
                 ],
               ),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFFffffff).withOpacity(0.3)),
+              border: Border.all(
+                color: AppTheme.getTextColor(context).withOpacity(0.3),
+              ),
             ),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Orders Amount',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white70,
-                      ),
-                    ),
-                    Text(
-                      '\$${stats.deliveredOrdersAmount.toStringAsFixed(2)}',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
+                _summaryRow(
+                  'Orders Amount',
+                  '\$${stats.deliveredOrdersAmount.toStringAsFixed(2)}',
                 ),
                 const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Delivery Fees',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white70,
-                      ),
-                    ),
-                    Text(
-                      '\$${stats.deliveredDeliveryFees.toStringAsFixed(2)}',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
+                _summaryRow(
+                  'Delivery Fees',
+                  '\$${stats.deliveredDeliveryFees.toStringAsFixed(2)}',
                 ),
-                const Divider(color: Colors.white30, height: 24),
+                Divider(color: AppTheme.getBorderColor(context), height: 24),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
+                    Text(
                       'Total Revenue',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: AppTheme.getTextColor(context),
                       ),
                     ),
                     Text(
                       '\$${stats.totalRevenue.toStringAsFixed(2)}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFFffffff),
+                        color: AppTheme.getTextColor(context),
                       ),
                     ),
                   ],
@@ -570,14 +517,14 @@ class _ReportsScreenState extends State<ReportsScreen> {
           const SizedBox(height: 12),
           Row(
             children: [
-              const Icon(Icons.info_outline, size: 14, color: Colors.white54),
+              Icon(Icons.info_outline, size: 14, color: AppTheme.getTextColor(context).withOpacity(0.54)),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   'Based on ${stats.deliveredCount} delivered order${stats.deliveredCount != 1 ? 's' : ''}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
-                    color: Colors.white54,
+                    color: AppTheme.getTextColor(context).withOpacity(0.54),
                     fontStyle: FontStyle.italic,
                   ),
                 ),
@@ -586,6 +533,29 @@ class _ReportsScreenState extends State<ReportsScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _summaryRow(String label, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 14,
+            color: AppTheme.getTextColor(context).withOpacity(0.70),
+          ),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: AppTheme.getTextColor(context),
+          ),
+        ),
+      ],
     );
   }
 
@@ -613,18 +583,18 @@ class _ReportsScreenState extends State<ReportsScreen> {
             children: [
               Text(
                 label,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
-                  color: Colors.white70,
+                  color: AppTheme.getTextColor(context).withOpacity(0.70),
                 ),
               ),
               if (subtitle != null) ...[
                 const SizedBox(height: 2),
                 Text(
                   subtitle,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 11,
-                    color: Colors.white54,
+                    color: AppTheme.getTextColor(context).withOpacity(0.54),
                   ),
                 ),
               ],
@@ -643,6 +613,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
     );
   }
 
+  // ==========================================================================
+
   ReportStats _calculateStats(List<DeliveryRequest> allRequests) {
     final now = DateTime.now();
     DateTime startDate;
@@ -653,11 +625,13 @@ class _ReportsScreenState extends State<ReportsScreen> {
         startDate = DateTime(_selectedDate.year, _selectedDate.month, _selectedDate.day);
         endDate = DateTime(_selectedDate.year, _selectedDate.month, _selectedDate.day, 23, 59, 59);
         break;
+
       case ReportPeriod.weekly:
         final weekStart = _selectedDate.subtract(Duration(days: _selectedDate.weekday - 1));
         startDate = DateTime(weekStart.year, weekStart.month, weekStart.day);
         endDate = startDate.add(const Duration(days: 6, hours: 23, minutes: 59, seconds: 59));
         break;
+
       case ReportPeriod.monthly:
         startDate = DateTime(_selectedDate.year, _selectedDate.month, 1);
         endDate = DateTime(_selectedDate.year, _selectedDate.month + 1, 0, 23, 59, 59);
@@ -665,37 +639,30 @@ class _ReportsScreenState extends State<ReportsScreen> {
     }
 
     final filteredRequests = allRequests.where((request) {
-      return request.createdAt.isAfter(startDate) && request.createdAt.isBefore(endDate);
+      return request.createdAt.isAfter(startDate) &&
+          request.createdAt.isBefore(endDate);
     }).toList();
 
-    final deliveredRequests = filteredRequests
-        .where((r) => r.status == RequestStatus.delivered)
-        .toList();
+    final delivered = filteredRequests.where((r) => r.status == RequestStatus.delivered).toList();
+    final expired = filteredRequests.where((r) => r.status == RequestStatus.expired).toList();
+    final cancelled = filteredRequests.where((r) => r.status == RequestStatus.cancelled).toList();
 
-    final expiredRequests = filteredRequests
-        .where((r) => r.status == RequestStatus.expired)
-        .toList();
+    double ordersAmount = 0;
+    double deliveryFees = 0;
 
-    final cancelledRequests = filteredRequests
-        .where((r) => r.status == RequestStatus.cancelled)
-        .toList();
-
-    double totalOrdersAmount = 0;
-    double totalDeliveryFees = 0;
-
-    for (final request in deliveredRequests) {
-      totalOrdersAmount += request.subtotalOrders;
-      totalDeliveryFees += request.totalDeliveryFees;
+    for (final r in delivered) {
+      ordersAmount += r.subtotalOrders;
+      deliveryFees += r.totalDeliveryFees;
     }
 
     return ReportStats(
       totalRequests: filteredRequests.length,
-      deliveredCount: deliveredRequests.length,
-      expiredCount: expiredRequests.length,
-      cancelledCount: cancelledRequests.length,
-      deliveredOrdersAmount: totalOrdersAmount,
-      deliveredDeliveryFees: totalDeliveryFees,
-      totalRevenue: totalOrdersAmount + totalDeliveryFees,
+      deliveredCount: delivered.length,
+      expiredCount: expired.length,
+      cancelledCount: cancelled.length,
+      deliveredOrdersAmount: ordersAmount,
+      deliveredDeliveryFees: deliveryFees,
+      totalRevenue: ordersAmount + deliveryFees,
     );
   }
 
@@ -703,18 +670,18 @@ class _ReportsScreenState extends State<ReportsScreen> {
     switch (_selectedPeriod) {
       case ReportPeriod.daily:
         return _formatDate(_selectedDate);
+
       case ReportPeriod.weekly:
-        final weekStart = _selectedDate.subtract(Duration(days: _selectedDate.weekday - 1));
-        final weekEnd = weekStart.add(const Duration(days: 6));
-        return '${_formatDate(weekStart)} - ${_formatDate(weekEnd)}';
+        final start = _selectedDate.subtract(Duration(days: _selectedDate.weekday - 1));
+        final end = start.add(const Duration(days: 6));
+        return '${_formatDate(start)} - ${_formatDate(end)}';
+
       case ReportPeriod.monthly:
-        return _getMonthName(_selectedDate.month) + ' ${_selectedDate.year}';
+        return '${_getMonthName(_selectedDate.month)} ${_selectedDate.year}';
     }
   }
 
-  String _formatDate(DateTime date) {
-    return '${date.day}/${date.month}/${date.year}';
-  }
+  String _formatDate(DateTime date) => '${date.day}/${date.month}/${date.year}';
 
   String _getMonthName(int month) {
     const months = [
@@ -761,15 +728,19 @@ class _ReportsScreenState extends State<ReportsScreen> {
     switch (_selectedPeriod) {
       case ReportPeriod.daily:
         return _selectedDate.isBefore(DateTime(now.year, now.month, now.day));
+
       case ReportPeriod.weekly:
         final weekStart = _selectedDate.subtract(Duration(days: _selectedDate.weekday - 1));
-        final currentWeekStart = now.subtract(Duration(days: now.weekday - 1));
-        return weekStart.isBefore(currentWeekStart);
+        final currentStart = now.subtract(Duration(days: now.weekday - 1));
+        return weekStart.isBefore(currentStart);
+
       case ReportPeriod.monthly:
         return _selectedDate.isBefore(DateTime(now.year, now.month));
     }
   }
 }
+
+// ============================================================================
 
 class ReportStats {
   final int totalRequests;

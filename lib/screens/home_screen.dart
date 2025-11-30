@@ -8,6 +8,8 @@ import '../providers/history_provider.dart';
 import '../providers/settings_provider.dart';
 import '../providers/auth_provider.dart';
 import '../models/delivery_request.dart';
+import '../providers/theme_provider.dart';
+import '../utils/theme.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/status_chip.dart';
 import '../widgets/countdown_timer.dart';
@@ -29,8 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xFF000000),
+        decoration: BoxDecoration(
+          color: AppTheme.getBackgroundColor(context),
         ),
         child: SafeArea(
           child: Column(
@@ -67,12 +69,12 @@ class _HomeScreenState extends State<HomeScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+               Text(
                 'DeShare',
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppTheme.getTextColor(context),
                 ),
               ),
               Consumer<AuthProvider>(
@@ -80,9 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   final user = authProvider.currentUser;
                   return Text(
                     user != null ? 'Welcome, ${user['name']}' : 'Store Manager',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
-                      color: Colors.white60,
+                      color: AppTheme.getSecondaryTextColor(context),
                     ),
                   );
                 },
@@ -93,11 +95,11 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               IconButton(
                 onPressed: () => _showSettingsDialog(context),
-                icon: const Icon(Icons.settings, color: Colors.white),
+                icon: Icon(Icons.settings, color: AppTheme.getTextColor(context)),
               ),
               IconButton(
                 onPressed: () => _showLogoutDialog(context),
-                icon: const Icon(Icons.logout, color: Colors.white),
+                icon: Icon(Icons.logout, color: AppTheme.getTextColor(context)),
               ),
             ],
           ),
@@ -115,18 +117,18 @@ class _HomeScreenState extends State<HomeScreen> {
           return GlassCard(
             child: Column(
               children: [
-                const Icon(
+                Icon(
                   Icons.check_circle_outline,
                   size: 48,
-                  color: Color(0xFFffffff),
+                  color: AppTheme.getTextColor(context),
                 ),
                 const SizedBox(height: 12),
-                const Text(
+                 Text(
                   'No Active Deliveries',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                    color: AppTheme.getTextColor(context),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -134,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   'Create a new delivery request to get started',
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.white.withOpacity(0.6),
+                    color: AppTheme.getTextColor(context).withOpacity(0.6),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -156,11 +158,11 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                   Text(
                     'Active Request',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Colors.white60,
+                      color: AppTheme.getSecondaryTextColor(context),
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -170,27 +172,27 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 12),
               Text(
                 'Request #${request.id.substring(request.id.length - 6)}',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppTheme.getTextColor(context),
                 ),
               ),
               const SizedBox(height: 8),
               Row(
                 children: [
-                  const Icon(Icons.location_on, size: 16, color: Color(0xFFffffff)),
+                   Icon(Icons.location_on, size: 16, color: AppTheme.getTextColor(context)),
                   const SizedBox(width: 4),
                   Text(
                     '${request.stops.length} stop(s)',
-                    style: const TextStyle(color: Colors.white70),
+                    style:  TextStyle(color: AppTheme.getTextColor(context)),
                   ),
                   const SizedBox(width: 16),
-                  const Icon(Icons.attach_money, size: 16, color: Color(0xFFffffff)),
+                   Icon(Icons.attach_money, size: 16, color: AppTheme.getTextColor(context)),
                   const SizedBox(width: 4),
                   Text(
                     '\$${request.grandTotal.toStringAsFixed(2)}',
-                    style: const TextStyle(color: Colors.white70),
+                    style: TextStyle(color: AppTheme.getTextColor(context)),
                   ),
                 ],
               ),
@@ -199,18 +201,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFFD600).withOpacity(0.1),
+                    color: AppTheme.accentYellow.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: const Color(0xFFFFD600)),
+                    border: Border.all(color: AppTheme.accentYellow),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.local_offer, size: 16, color: Color(0xFFFFD600)),
+                      const Icon(Icons.local_offer, size: 16, color: AppTheme.accentYellow),
                       const SizedBox(width: 8),
                       Text(
                         '${request.offers.length} offer(s) available',
-                        style: const TextStyle(
-                          color: Color(0xFFFFD600),
+                        style: TextStyle(
+                          color: AppTheme.getTextColor(context),
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -223,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.only(top: 8),
                   child: CountdownTimer(
                     duration: request.remainingTime!,
-                    color: Colors.orange,
+                    color: AppTheme.accentOrange,
                   ),
                 ),
             ],
@@ -240,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
         MaterialPageRoute(builder: (_) => const CreateRequestScreen()),
       ),
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.white,
+        backgroundColor: AppTheme.getTextColor(context),
         foregroundColor: Colors.black,
         padding: const EdgeInsets.symmetric(vertical: 20),
         shape: RoundedRectangleBorder(
@@ -249,16 +251,17 @@ class _HomeScreenState extends State<HomeScreen> {
         // elevation: 8,
         // shadowColor: const Color(0xFFffffff).withOpacity(0.5),
       ),
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.add_circle_outline, size: 28,),
+          Icon(Icons.add_circle_outline, size: 28, color: AppTheme.getBackgroundColor(context),),
           SizedBox(width: 12),
           Text(
             'Create New Delivery Request',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
+              color: AppTheme.getBackgroundColor(context),
             ),
           ),
         ],
@@ -270,12 +273,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+         Text(
           'Quick Actions',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppTheme.getTextColor(context),
           ),
         ),
         const SizedBox(height: 12),
@@ -287,16 +290,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   context,
                   MaterialPageRoute(builder: (_) => const RequestHistoryScreen()),
                 ),
-                child: const Column(
+                child: Column(
                   children: [
-                    Icon(Icons.history, size: 32, color: Color(0xFFffffff)),
+                    Icon(Icons.history, size: 32, color: AppTheme.getTextColor(context)),
                     SizedBox(height: 8),
                     Text(
                       'History',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
-                        color: Colors.white,
+                        color: AppTheme.getTextColor(context),
                       ),
                     ),
                   ],
@@ -310,16 +313,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   context,
                   MaterialPageRoute(builder: (_) => const ReportsScreen()),
                 ),
-                child: const Column(
+                child: Column(
                   children: [
-                    Icon(Icons.analytics, size: 32, color: Color(0xFFffffff)),
+                    Icon(Icons.analytics, size: 32, color: AppTheme.getTextColor(context)),
                     SizedBox(height: 8),
                     Text(
                       'Reports',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
-                        color: Colors.white,
+                        color: AppTheme.getTextColor(context),
                       ),
                     ),
                   ],
@@ -332,63 +335,132 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+
   void _showSettingsDialog(BuildContext context) {
     final history = Provider.of<HistoryProvider>(context, listen: false);
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF000000),
+        backgroundColor: AppTheme.getSurfaceColor(context),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Text('Debug Settings', style: TextStyle(color: Colors.white)),
-        content: Consumer<SettingsProvider>(
-          builder: (context, settings, _) => Column(
+        title: Text(
+          'Settings',
+          style: TextStyle(color: AppTheme.getTextColor(context)),
+        ),
+        content: Consumer2<SettingsProvider, ThemeProvider>(
+          builder: (context, settings, theme, _) => Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // Theme Toggle
               SwitchListTile(
-                title: const Text('Fast Timers', style: TextStyle(color: Colors.white)),
-                subtitle: const Text(
+                title: Text(
+                  'Dark Mode',
+                  style: TextStyle(color: AppTheme.getTextColor(context)),
+                ),
+                subtitle: Text(
+                  'Toggle between light and dark theme',
+                  style: TextStyle(
+                    color: AppTheme.getSecondaryTextColor(context),
+                    fontSize: 12,
+                  ),
+                ),
+                value: theme.isDarkMode,
+                onChanged: (value) {
+                  theme.toggleTheme();
+                },
+                activeColor: AppTheme.getAccentColor(context),
+              ),
+              const Divider(),
+              // Debug Settings Header
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Text(
+                  'Debug Settings',
+                  style: TextStyle(
+                    color: AppTheme.getSecondaryTextColor(context),
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              SwitchListTile(
+                title: Text(
+                  'Fast Timers',
+                  style: TextStyle(color: AppTheme.getTextColor(context)),
+                ),
+                subtitle: Text(
                   '10min → 1min, 30s → 5s',
-                  style: TextStyle(color: Colors.white60, fontSize: 12),
+                  style: TextStyle(
+                    color: AppTheme.getSecondaryTextColor(context),
+                    fontSize: 12,
+                  ),
                 ),
                 value: settings.fastTimers,
                 onChanged: settings.setFastTimers,
-                activeColor: const Color(0xFFffffff),
+                activeColor: AppTheme.getAccentColor(context),
               ),
               SwitchListTile(
-                title: const Text('Force No Drivers', style: TextStyle(color: Colors.white)),
-                subtitle: const Text(
+                title: Text(
+                  'Force No Drivers',
+                  style: TextStyle(color: AppTheme.getTextColor(context)),
+                ),
+                subtitle: Text(
                   'Simulate no available drivers',
-                  style: TextStyle(color: Colors.white60, fontSize: 12),
+                  style: TextStyle(
+                    color: AppTheme.getSecondaryTextColor(context),
+                    fontSize: 12,
+                  ),
                 ),
                 value: settings.forceNoDrivers,
                 onChanged: settings.setForceNoDrivers,
-                activeColor: const Color(0xFFffffff),
+                activeColor: AppTheme.getAccentColor(context),
               ),
-              const Divider(color: Colors.white30),
+              Divider(color: AppTheme.getBorderColor(context)),
               ListTile(
-                leading: const Icon(Icons.data_object, color: Color(0xFFFFD600)),
-                title: const Text('Seed Fake Data', style: TextStyle(color: Colors.white)),
+                leading: Icon(
+                  Icons.data_object,
+                  color: AppTheme.accentYellow,
+                ),
+                title: Text(
+                  'Seed Fake Data',
+                  style: TextStyle(color: AppTheme.getTextColor(context)),
+                ),
                 onTap: () {
                   history.seedFakeData();
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Added 5 fake requests')),
+                    SnackBar(
+                      content: const Text('Added 5 fake requests'),
+                      backgroundColor: AppTheme.getSurfaceColor(context),
+                    ),
                   );
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.delete_forever, color: Color(0xFFFF006E)),
-                title: const Text('Clear All Data', style: TextStyle(color: Colors.white)),
+                leading: Icon(
+                  Icons.delete_forever,
+                  color: AppTheme.accentRed,
+                ),
+                title: Text(
+                  'Clear All Data',
+                  style: TextStyle(color: AppTheme.getTextColor(context)),
+                ),
                 onTap: () {
                   showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
-                      backgroundColor: const Color(0xFF000000),
-                      title: const Text('Confirm', style: TextStyle(color: Colors.white)),
-                      content: const Text(
+                      backgroundColor: AppTheme.getSurfaceColor(context),
+                      title: Text(
+                        'Confirm',
+                        style: TextStyle(color: AppTheme.getTextColor(context)),
+                      ),
+                      content: Text(
                         'This will clear all requests and settings',
-                        style: TextStyle(color: Colors.white70),
+                        style: TextStyle(
+                          color: AppTheme.getSecondaryTextColor(context),
+                        ),
                       ),
                       actions: [
                         TextButton(
@@ -402,7 +474,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.pop(ctx);
                             Navigator.pop(context);
                           },
-                          child: const Text('Clear', style: TextStyle(color: Colors.red)),
+                          child: Text(
+                            'Clear',
+                            style: TextStyle(color: AppTheme.accentRed),
+                          ),
                         ),
                       ],
                     ),
@@ -426,17 +501,17 @@ class _HomeScreenState extends State<HomeScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: const Color(0xFF000000),
+        backgroundColor: AppTheme.getBackgroundColor(context),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
-        title: const Text(
+        title: Text(
           'Logout',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: AppTheme.getTextColor(context)),
         ),
-        content: const Text(
+        content: Text(
           'Are you sure you want to logout?',
-          style: TextStyle(color: Colors.white70),
+          style: TextStyle(color: AppTheme.getTextColor(context)),
         ),
         actions: [
           TextButton(

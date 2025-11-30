@@ -7,6 +7,7 @@ import '../models/delivery_request.dart';
 import '../models/delivery_stop.dart';
 import '../providers/request_provider.dart';
 import '../providers/history_provider.dart';
+import '../utils/theme.dart';
 import '../widgets/glass_card.dart';
 
 class RequestConfirmationScreen extends StatelessWidget {
@@ -22,21 +23,23 @@ class RequestConfirmationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(color: Color(0xFF000000)),
+        decoration: BoxDecoration(
+          color: AppTheme.getBackgroundColor(context),
+        ),
         child: SafeArea(
           child: Column(
             children: [
               _buildHeader(context),
               Expanded(
                 child: ListView(
-                  padding: const EdgeInsets.all(20),
+                  padding: EdgeInsets.all(20),
                   children: [
-                    _buildInfoCard(),
-                    const SizedBox(height: 16),
-                    ..._buildStopCards(),
-                    const SizedBox(height: 16),
-                    _buildSummaryCard(),
-                    const SizedBox(height: 100),
+                    _buildInfoCard(context),
+                    SizedBox(height: 16),
+                    ..._buildStopCards(context),
+                    SizedBox(height: 16),
+                    _buildSummaryCard(context),
+                    SizedBox(height: 100),
                   ],
                 ),
               ),
@@ -51,28 +54,31 @@ class RequestConfirmationScreen extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20),
       child: Row(
         children: [
           IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            icon: Icon(Icons.arrow_back, color: AppTheme.getTextColor(context)),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Confirm Request',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppTheme.getTextColor(context),
                 ),
               ),
-              const Text(
+              Text(
                 'Review before sending',
-                style: TextStyle(fontSize: 14, color: Colors.white60),
+                style: TextStyle(
+                  fontSize: 14,
+                  color: AppTheme.getSecondaryTextColor(context),
+                ),
               ),
             ],
           ),
@@ -81,29 +87,29 @@ class RequestConfirmationScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoCard() {
+  Widget _buildInfoCard(BuildContext context) {
     return GlassCard(
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(12),
+            padding: EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFFffffff).withOpacity(0.2),
+              color: AppTheme.getTextColor(context).withOpacity(0.2),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.info_outline,
-              color: Color(0xFFffffff),
+              color: AppTheme.getTextColor(context),
               size: 24,
             ),
           ),
-          const SizedBox(width: 16),
-          const Expanded(
+          SizedBox(width: 16),
+          Expanded(
             child: Text(
               'Your request will be sent to nearby drivers. You\'ll receive offers within minutes.',
               style: TextStyle(
                 fontSize: 14,
-                color: Colors.white70,
+                color: AppTheme.getTextColor(context).withOpacity(0.7),
                 height: 1.4,
               ),
             ),
@@ -113,13 +119,13 @@ class RequestConfirmationScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildStopCards() {
+  List<Widget> _buildStopCards(BuildContext context) {
     return stops.asMap().entries.map((entry) {
       final index = entry.key;
       final stop = entry.value;
 
       return Padding(
-        padding: const EdgeInsets.only(bottom: 12),
+        padding: EdgeInsets.only(bottom: 12),
         child: GlassCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,81 +133,72 @@ class RequestConfirmationScreen extends StatelessWidget {
               Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFffffff).withOpacity(0.2),
+                      color: AppTheme.getTextColor(context).withOpacity(0.2),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       '${index + 1}',
-                      style: const TextStyle(
-                        color: Color(0xFFffffff),
+                      style: TextStyle(
+                        color: AppTheme.getTextColor(context),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
-                  const Text(
+                  SizedBox(width: 12),
+                  Text(
                     'Stop',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                      color: AppTheme.getTextColor(context),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               Row(
                 children: [
-                  const Icon(
-                    Icons.location_on,
-                    size: 16,
-                    color: Color(0xFFffffff),
-                  ),
-                  const SizedBox(width: 8),
+                  Icon(Icons.location_on, size: 16, color: AppTheme.getTextColor(context)),
+                  SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       stop.addressText,
-                      style: const TextStyle(fontSize: 14, color: Colors.white),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppTheme.getTextColor(context),
+                      ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
-                      const Icon(
-                        Icons.shopping_bag,
-                        size: 16,
-                        color: Color(0xFFffffff),
-                      ),
-                      const SizedBox(width: 8),
+                      Icon(Icons.shopping_bag, size: 16, color: AppTheme.getTextColor(context)),
+                      SizedBox(width: 8),
                       Text(
                         'Order: \$${stop.orderAmount.toStringAsFixed(2)}',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14,
-                          color: Colors.white70,
+                          color: AppTheme.getTextColor(context).withOpacity(0.7),
                         ),
                       ),
                     ],
                   ),
                   Row(
                     children: [
-                      const Icon(
-                        Icons.local_shipping,
-                        size: 16,
-                        color: Color(0xFFffffff),
-                      ),
-                      const SizedBox(width: 8),
+                      Icon(Icons.local_shipping, size: 16, color: AppTheme.getTextColor(context)),
+                      SizedBox(width: 8),
                       Text(
                         'Fee: \$${stop.deliveryFee.toStringAsFixed(2)}',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14,
-                          color: Colors.white70,
+                          color: AppTheme.getTextColor(context).withOpacity(0.7),
                         ),
                       ),
                     ],
@@ -209,23 +206,23 @@ class RequestConfirmationScreen extends StatelessWidget {
                 ],
               ),
               if (stop.notes.isNotEmpty) ...[
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
+                    color: AppTheme.getTextColor(context).withOpacity(0.05),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.note, size: 14, color: Colors.white54),
-                      const SizedBox(width: 8),
+                      Icon(Icons.note, size: 14, color: AppTheme.getTextColor(context).withOpacity(0.54)),
+                      SizedBox(width: 8),
                       Expanded(
                         child: Text(
                           stop.notes,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
-                            color: Colors.white54,
+                            color: AppTheme.getTextColor(context).withOpacity(0.54),
                             fontStyle: FontStyle.italic,
                           ),
                         ),
@@ -241,49 +238,39 @@ class RequestConfirmationScreen extends StatelessWidget {
     }).toList();
   }
 
-  Widget _buildSummaryCard() {
+  Widget _buildSummaryCard(BuildContext context) {
     return GlassCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Payment Summary',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: AppTheme.getTextColor(context),
             ),
           ),
-          const SizedBox(height: 16),
-          _buildSummaryRow(
-            'Orders Subtotal',
-            _subtotal,
-            const Color(0xFFffffff),
+          SizedBox(height: 16),
+          _buildSummaryRow(context, 'Orders Subtotal', _subtotal),
+          SizedBox(height: 8),
+          _buildSummaryRow(context, 'Delivery Fees', _totalFees),
+          Divider(
+            color: AppTheme.getBorderColor(context),
+            height: 24,
           ),
-          const SizedBox(height: 8),
-          _buildSummaryRow(
-            'Delivery Fees',
-            _totalFees,
-            const Color(0xFFffffff),
-          ),
-          const Divider(color: Colors.white30, height: 24),
-          _buildSummaryRow(
-            'Grand Total',
-            _grandTotal,
-            const Color(0xFFffffff),
-            isTotal: true,
-          ),
+          _buildSummaryRow(context, 'Grand Total', _grandTotal, isTotal: true),
         ],
       ),
     );
   }
 
   Widget _buildSummaryRow(
-    String label,
-    double amount,
-    Color color, {
-    bool isTotal = false,
-  }) {
+      BuildContext context,
+      String label,
+      double amount, {
+        bool isTotal = false,
+      }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -292,7 +279,7 @@ class RequestConfirmationScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: isTotal ? 18 : 14,
             fontWeight: isTotal ? FontWeight.bold : FontWeight.w500,
-            color: Colors.white70,
+            color: AppTheme.getTextColor(context).withOpacity(0.7),
           ),
         ),
         Text(
@@ -300,7 +287,7 @@ class RequestConfirmationScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: isTotal ? 22 : 16,
             fontWeight: FontWeight.bold,
-            color: color,
+            color: AppTheme.getTextColor(context),
           ),
         ),
       ],
@@ -309,27 +296,30 @@ class RequestConfirmationScreen extends StatelessWidget {
 
   Widget _buildActionButtons(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
           Expanded(
             child: Container(
               height: 56,
-              margin: const EdgeInsets.only(right: 8),
+              margin: EdgeInsets.only(right: 8),
               child: OutlinedButton(
                 onPressed: () => Navigator.pop(context),
                 style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Colors.white30, width: 2),
+                  side: BorderSide(
+                    color: AppTheme.getBorderColor(context),
+                    width: 2,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'Edit',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                    color: AppTheme.getTextColor(context),
                   ),
                 ),
               ),
@@ -339,19 +329,19 @@ class RequestConfirmationScreen extends StatelessWidget {
             flex: 2,
             child: Container(
               height: 56,
-              margin: const EdgeInsets.only(left: 8),
+              margin: EdgeInsets.only(left: 8),
               child: ElevatedButton(
                 onPressed: () => _confirmRequest(context),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black,
+                  backgroundColor: AppTheme.getTextColor(context),
+                  foregroundColor: AppTheme.getBackgroundColor(context),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                   elevation: 8,
-                  shadowColor: const Color(0xFFffffff).withOpacity(0.5),
+                  shadowColor: AppTheme.getTextColor(context).withOpacity(0.5),
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.send, size: 20),
@@ -382,14 +372,8 @@ class RequestConfirmationScreen extends StatelessWidget {
       timeline: [],
     );
 
-    final requestProvider = Provider.of<RequestProvider>(
-      context,
-      listen: false,
-    );
-    final historyProvider = Provider.of<HistoryProvider>(
-      context,
-      listen: false,
-    );
+    final requestProvider = Provider.of<RequestProvider>(context, listen: false);
+    final historyProvider = Provider.of<HistoryProvider>(context, listen: false);
 
     await requestProvider.createRequest(request);
     await historyProvider.addToHistory(request);
@@ -399,17 +383,17 @@ class RequestConfirmationScreen extends StatelessWidget {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Row(
+          content: Row(
             children: [
-              Icon(Icons.check_circle, color: Color(0xFFffffff),),
+              Icon(Icons.check_circle, color: AppTheme.getTextColor(context)),
               SizedBox(width: 12),
               Text(
                 'Request sent! Searching for drivers...',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: AppTheme.getTextColor(context)),
               ),
             ],
           ),
-          backgroundColor: Colors.white10,
+          backgroundColor: AppTheme.getBorderColor(context),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/delivery_request.dart';
 import '../providers/history_provider.dart';
+import '../utils/theme.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/status_chip.dart';
 import 'request_details_screen.dart';
@@ -29,8 +30,8 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xFF000000)
+        decoration: BoxDecoration(
+          color: AppTheme.getBackgroundColor(context),
         ),
         child: SafeArea(
           child: Column(
@@ -74,10 +75,10 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
         children: [
           IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            icon: Icon(Icons.arrow_back, color: AppTheme.getTextColor(context)),
           ),
           const SizedBox(width: 12),
-          const Column(
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -85,14 +86,14 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppTheme.getTextColor(context),
                 ),
               ),
               Text(
                 'All your past deliveries',
                 style: TextStyle(
                   fontSize: 14,
-                  color: Colors.white60,
+                  color: AppTheme.getSecondaryTextColor(context),
                 ),
               ),
             ],
@@ -128,11 +129,13 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFFffffff).withOpacity(0.2)
-              : Colors.white.withOpacity(0.05),
+              ? AppTheme.getSecondaryTextColor(context)
+              : AppTheme.getTextColor(context).withOpacity(0.05),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? const Color(0xFFffffff) : Colors.white30,
+            color: isSelected
+                ? const Color(0xFFFFFFFF)
+                : AppTheme.getBorderColor(context),
             width: 1,
           ),
         ),
@@ -141,7 +144,9 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
-            color: isSelected ? const Color(0xFFffffff) : Colors.white70,
+            color: isSelected
+                ? const Color(0xFFFFFFFF)
+                : AppTheme.getTextColor(context).withOpacity(0.7),
           ),
         ),
       ),
@@ -164,10 +169,10 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
             children: [
               Text(
                 'Request #${request.id.substring(request.id.length - 6)}',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppTheme.getTextColor(context),
                 ),
               ),
               StatusChip(status: request.status),
@@ -176,13 +181,14 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
           const SizedBox(height: 12),
           Row(
             children: [
-              const Icon(Icons.calendar_today, size: 14, color: Colors.white60),
+              Icon(Icons.calendar_today,
+                  size: 14, color: AppTheme.getSecondaryTextColor(context)),
               const SizedBox(width: 8),
               Text(
                 _formatDate(request.createdAt),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
-                  color: Colors.white70,
+                  color: AppTheme.getTextColor(context).withOpacity(0.7),
                 ),
               ),
             ],
@@ -190,23 +196,23 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
           const SizedBox(height: 8),
           Row(
             children: [
-              const Icon(Icons.location_on, size: 14, color: Color(0xFFffffff)),
+              const Icon(Icons.location_on, size: 14, color: Color(0xFFFFFFFF)),
               const SizedBox(width: 8),
               Text(
                 '${request.stops.length} stop(s)',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
-                  color: Colors.white70,
+                  color: AppTheme.getTextColor(context).withOpacity(0.7),
                 ),
               ),
               const SizedBox(width: 16),
-              const Icon(Icons.attach_money, size: 14, color: Color(0xFFffffff)),
+              const Icon(Icons.attach_money, size: 14, color: Color(0xFFFFFFFF)),
               const SizedBox(width: 8),
               Text(
                 '\$${request.grandTotal.toStringAsFixed(2)}',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
-                  color: Colors.white70,
+                  color: AppTheme.getTextColor(context).withOpacity(0.7),
                 ),
               ),
             ],
@@ -226,13 +232,13 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.05),
+                color: AppTheme.getTextColor(context).withOpacity(0.05),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.history,
                 size: 64,
-                color: Colors.white30,
+                color: AppTheme.getBorderColor(context),
               ),
             ),
             const SizedBox(height: 24),
@@ -240,10 +246,10 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
               _selectedFilter == null
                   ? 'No requests yet'
                   : 'No ${_getStatusLabel(_selectedFilter!).toLowerCase()} requests',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
-                color: Colors.white,
+                color: AppTheme.getTextColor(context),
               ),
             ),
             const SizedBox(height: 8),
@@ -253,7 +259,7 @@ class _RequestHistoryScreenState extends State<RequestHistoryScreen> {
                   : 'Try selecting a different filter',
               style: TextStyle(
                 fontSize: 14,
-                color: Colors.white.withOpacity(0.6),
+                color: AppTheme.getTextColor(context).withOpacity(0.6),
               ),
               textAlign: TextAlign.center,
             ),

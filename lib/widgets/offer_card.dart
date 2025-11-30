@@ -3,6 +3,7 @@
 // ============================================================================
 import 'package:flutter/material.dart';
 import '../models/offer.dart';
+import '../utils/theme.dart';
 import 'glass_card.dart';
 import 'countdown_timer.dart';
 
@@ -30,21 +31,21 @@ class OfferCard extends StatelessWidget {
                 children: [
                   Text(
                     offer.driverName,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: AppTheme.getTextColor(context),
                     ),
                   ),
                   Row(
                     children: [
-                      const Icon(Icons.star, size: 16, color: Color(0xFFFFD600)),
+                      const Icon(Icons.star, size: 16, color: AppTheme.accentYellow),
                       const SizedBox(width: 4),
                       Text(
                         offer.driverRating.toStringAsFixed(1),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14,
-                          color: Colors.white70,
+                          color: AppTheme.getTextColor(context),
                         ),
                       ),
                     ],
@@ -55,15 +56,15 @@ class OfferCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFF006E).withOpacity(0.2),
+                    color: AppTheme.accentRed.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: const Color(0xFFFF006E)),
+                    border: Border.all(color: AppTheme.accentRed),
                   ),
                   child: const Text(
                     'COUNTER',
                     style: TextStyle(
                       fontSize: 10,
-                      color: Color(0xFFFF006E),
+                      color: AppTheme.accentRed,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -77,9 +78,9 @@ class OfferCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                   Text(
                     'Proposed Fee',
-                    style: TextStyle(fontSize: 12, color: Colors.white60),
+                    style: TextStyle(fontSize: 12, color: AppTheme.getSecondaryTextColor(context)),
                   ),
                   Text(
                     '\$${offer.proposedFee.toStringAsFixed(2)}',
@@ -87,16 +88,16 @@ class OfferCard extends StatelessWidget {
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: offer.isCounterOffer
-                          ? const Color(0xFFFF006E)
-                          : const Color(0xFFffffff),
+                          ? AppTheme.accentRed
+                          : AppTheme.getTextColor(context),
                     ),
                   ),
                   if (offer.isCounterOffer)
                     Text(
                       'Original: \$${offer.originalDeliveryFee.toStringAsFixed(2)}',
-                      style: const TextStyle(
+                      style:  TextStyle(
                         fontSize: 11,
-                        color: Colors.white54,
+                        color: AppTheme.getTextColor(context),
                         decoration: TextDecoration.lineThrough,
                       ),
                     ),
@@ -105,16 +106,16 @@ class OfferCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const Text(
+                   Text(
                     'ETA',
-                    style: TextStyle(fontSize: 12, color: Colors.white60),
+                    style: TextStyle(fontSize: 12, color: AppTheme.getSecondaryTextColor(context)),
                   ),
                   Text(
                     '${offer.etaMinutes} min',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                      color: AppTheme.getTextColor(context),
                     ),
                   ),
                 ],
@@ -127,13 +128,13 @@ class OfferCard extends StatelessWidget {
             children: [
               CountdownTimer(
                 duration: offer.remainingTime,
-                color: Colors.orange,
+                color: AppTheme.accentOrange,
               ),
               ElevatedButton(
                 onPressed: onAccept,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFffffff),
-                  foregroundColor: Colors.black,
+                  backgroundColor: AppTheme.getTextColor(context),
+                  foregroundColor: AppTheme.getBackgroundColor(context),
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/delivery_request.dart';
 import '../providers/request_provider.dart';
+import '../utils/theme.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/status_chip.dart';
 import '../widgets/countdown_timer.dart';
@@ -19,8 +20,8 @@ class ActiveRequestScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xFF000000),
+        decoration: BoxDecoration(
+          color: AppTheme.getBackgroundColor(context),
         ),
         child: SafeArea(
           child: Column(
@@ -31,10 +32,12 @@ class ActiveRequestScreen extends StatelessWidget {
                   builder: (context, provider, _) {
                     final activeRequest = provider.activeRequest;
                     if (activeRequest == null) {
-                      return const Center(
+                      return Center(
                         child: Text(
                           'Request not found',
-                          style: TextStyle(color: Colors.white70),
+                          style: TextStyle(
+                            color: AppTheme.getTextColor(context).withOpacity(0.70),
+                          ),
                         ),
                       );
                     }
@@ -42,25 +45,25 @@ class ActiveRequestScreen extends StatelessWidget {
                     return ListView(
                       padding: const EdgeInsets.all(20),
                       children: [
-                        _buildStatusCard(activeRequest),
+                        _buildStatusCard(context, activeRequest),
                         const SizedBox(height: 16),
                         if (activeRequest.status == RequestStatus.searching ||
                             activeRequest.status == RequestStatus.offerReceived)
-                          _buildTimerCard(activeRequest),
+                          _buildTimerCard(context, activeRequest),
                         const SizedBox(height: 16),
                         if (activeRequest.offers.isNotEmpty &&
                             activeRequest.status == RequestStatus.offerReceived)
                           ..._buildOffersList(context, activeRequest),
                         if (activeRequest.status == RequestStatus.searching &&
                             activeRequest.offers.isEmpty)
-                          _buildSearchingCard(),
+                          _buildSearchingCard(context),
                         const SizedBox(height: 16),
                         if (activeRequest.status == RequestStatus.expired)
                           _buildExpiredCard(context, activeRequest),
                         const SizedBox(height: 10),
-                        _buildStopsCard(activeRequest),
+                        _buildStopsCard(context, activeRequest),
                         const SizedBox(height: 16),
-                        _buildTimelineCard(activeRequest),
+                        _buildTimelineCard(context, activeRequest),
                         const SizedBox(height: 100),
                       ],
                     );
@@ -76,6 +79,10 @@ class ActiveRequestScreen extends StatelessWidget {
     );
   }
 
+  // ---------------------------------------------------------------------------
+  // Header
+  // ---------------------------------------------------------------------------
+
   Widget _buildHeader(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -83,7 +90,7 @@ class ActiveRequestScreen extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            icon: Icon(Icons.arrow_back, color: AppTheme.getTextColor(context)),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -92,17 +99,17 @@ class ActiveRequestScreen extends StatelessWidget {
               children: [
                 Text(
                   'Request #${request.id.substring(request.id.length - 6)}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: AppTheme.getTextColor(context),
                   ),
                 ),
                 Text(
                   _getTimeAgo(request.createdAt),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
-                    color: Colors.white60,
+                    color: AppTheme.getSecondaryTextColor(context),
                   ),
                 ),
               ],
@@ -113,7 +120,11 @@ class ActiveRequestScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusCard(DeliveryRequest request) {
+  // ---------------------------------------------------------------------------
+  // Status Card
+  // ---------------------------------------------------------------------------
+
+  Widget _buildStatusCard(BuildContext context, DeliveryRequest request) {
     return GlassCard(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -121,11 +132,11 @@ class ActiveRequestScreen extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Current Status',
                 style: TextStyle(
                   fontSize: 12,
-                  color: Colors.white60,
+                  color: AppTheme.getSecondaryTextColor(context),
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -137,20 +148,22 @@ class ActiveRequestScreen extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                const Text(
+                Text(
                   'Driver',
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.white60,
+                    color: AppTheme.getSecondaryTextColor(context),
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  request.offers.firstWhere((o) => o.id == request.acceptedOfferId).driverName,
-                  style: const TextStyle(
+                  request.offers
+                      .firstWhere((o) => o.id == request.acceptedOfferId)
+                      .driverName,
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: AppTheme.getTextColor(context),
                   ),
                 ),
               ],
@@ -160,7 +173,11 @@ class ActiveRequestScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTimerCard(DeliveryRequest request) {
+  // ---------------------------------------------------------------------------
+  // Timer Card
+  // ---------------------------------------------------------------------------
+
+  Widget _buildTimerCard(BuildContext context, DeliveryRequest request) {
     if (request.remainingTime == null) return const SizedBox.shrink();
 
     return GlassCard(
@@ -169,13 +186,13 @@ class ActiveRequestScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.timer, color: Color(0xFFffffff), size: 28),
+               Icon(Icons.timer, color: AppTheme.getTextColor(context), size: 28),
               const SizedBox(width: 12),
-              const Text(
+              Text(
                 'Request Expires In',
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.white,
+                  color: AppTheme.getTextColor(context),
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -184,59 +201,69 @@ class ActiveRequestScreen extends StatelessWidget {
           const SizedBox(height: 12),
           CountdownTimer(
             duration: request.remainingTime!,
-            color: const Color(0xFFffffff),
+            color: AppTheme.getTextColor(context),
           ),
         ],
       ),
     );
   }
 
+  // ---------------------------------------------------------------------------
+  // Offers List
+  // ---------------------------------------------------------------------------
+
   List<Widget> _buildOffersList(BuildContext context, DeliveryRequest request) {
     return [
-      const Padding(
-        padding: EdgeInsets.symmetric(vertical: 16),
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16),
         child: Text(
           'Available Offers',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppTheme.getTextColor(context),
           ),
         ),
       ),
-      ...request.offers.map((offer) => Padding(
-        padding: const EdgeInsets.only(bottom: 12),
-        child: OfferCard(
-          offer: offer,
-          onAccept: () => _acceptOffer(context, offer),
+      ...request.offers.map(
+            (offer) => Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: OfferCard(
+            offer: offer,
+            onAccept: () => _acceptOffer(context, offer),
+          ),
         ),
-      )),
+      ),
     ];
   }
 
-  Widget _buildSearchingCard() {
+  // ---------------------------------------------------------------------------
+  // Searching Card
+  // ---------------------------------------------------------------------------
+
+  Widget _buildSearchingCard(BuildContext context) {
     return GlassCard(
       child: Column(
         children: [
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: const Color(0xFFffffff).withOpacity(0.2),
+              color: AppTheme.getTextColor(context).withOpacity(0.2),
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.search,
               size: 48,
-              color: Color(0xFFffffff),
+              color: AppTheme.getTextColor(context),
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             'Searching for Drivers',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: AppTheme.getTextColor(context),
             ),
           ),
           const SizedBox(height: 8),
@@ -244,7 +271,7 @@ class ActiveRequestScreen extends StatelessWidget {
             'We\'re notifying nearby drivers about your request',
             style: TextStyle(
               fontSize: 14,
-              color: Colors.white.withOpacity(0.6),
+              color: AppTheme.getTextColor(context).withOpacity(0.6),
             ),
             textAlign: TextAlign.center,
           ),
@@ -252,6 +279,10 @@ class ActiveRequestScreen extends StatelessWidget {
       ),
     );
   }
+
+  // ---------------------------------------------------------------------------
+  // Expired Card
+  // ---------------------------------------------------------------------------
 
   Widget _buildExpiredCard(BuildContext context, DeliveryRequest request) {
     return GlassCard(
@@ -260,22 +291,22 @@ class ActiveRequestScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: const Color(0xFFffffff).withOpacity(0.2),
+              color: AppTheme.getTextColor(context).withOpacity(0.2),
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.timer_off,
               size: 48,
-              color: Color(0xFFffffff),
+              color: AppTheme.getTextColor(context),
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             'Request Expired',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: AppTheme.getTextColor(context),
             ),
           ),
           const SizedBox(height: 8),
@@ -283,7 +314,7 @@ class ActiveRequestScreen extends StatelessWidget {
             'No drivers accepted within the time limit',
             style: TextStyle(
               fontSize: 14,
-              color: Colors.white.withOpacity(0.6),
+              color: AppTheme.getTextColor(context).withOpacity(0.6),
             ),
             textAlign: TextAlign.center,
           ),
@@ -291,16 +322,17 @@ class ActiveRequestScreen extends StatelessWidget {
           ElevatedButton(
             onPressed: () => _retryRequest(context, request),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.black,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              backgroundColor: AppTheme.getTextColor(context),
+              foregroundColor: AppTheme.getBackgroundColor(context),
+              padding:
+              const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: const Row(
+            child: Row(
               mainAxisSize: MainAxisSize.min,
-              children: [
+              children: const [
                 Icon(Icons.refresh),
                 SizedBox(width: 8),
                 Text(
@@ -315,89 +347,96 @@ class ActiveRequestScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStopsCard(DeliveryRequest request) {
+  // ---------------------------------------------------------------------------
+  // Stops Card
+  // ---------------------------------------------------------------------------
+
+  Widget _buildStopsCard(BuildContext context, DeliveryRequest request) {
     return GlassCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Delivery Stops',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: AppTheme.getTextColor(context),
             ),
           ),
           const SizedBox(height: 16),
-          ...request.stops.asMap().entries.map((entry) {
-            final index = entry.key;
-            final stop = entry.value;
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Row(
-                children: [
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFffffff).withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Center(
-                      child: Text(
-                        '${index + 1}',
-                        style: const TextStyle(
-                          color: Color(0xFFffffff),
-                          fontWeight: FontWeight.bold,
+          ...request.stops.asMap().entries.map(
+                (entry) {
+              final index = entry.key;
+              final stop = entry.value;
+
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 32,
+                      height: 32,
+                      decoration: BoxDecoration(
+                        color: AppTheme.getTextColor(context).withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '${index + 1}',
+                          style: TextStyle(
+                            color: AppTheme.getTextColor(context),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          stop.addressText,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.white,
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            stop.addressText,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: AppTheme.getTextColor(context),
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          '\$${stop.orderAmount.toStringAsFixed(2)} + \$${stop.deliveryFee.toStringAsFixed(2)} fee',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.white60,
+                          const SizedBox(height: 4),
+                          Text(
+                            '\$${stop.orderAmount.toStringAsFixed(2)} + \$${stop.deliveryFee.toStringAsFixed(2)} fee',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: AppTheme.getSecondaryTextColor(context),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          }),
-          const Divider(color: Colors.white30, height: 24),
+                  ],
+                ),
+              );
+            },
+          ),
+          Divider(color: AppTheme.getBorderColor(context), height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'Grand Total',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppTheme.getTextColor(context),
                 ),
               ),
               Text(
                 '\$${request.grandTotal.toStringAsFixed(2)}',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFFffffff),
+                  color: AppTheme.getTextColor(context),
                 ),
               ),
             ],
@@ -407,72 +446,83 @@ class ActiveRequestScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTimelineCard(DeliveryRequest request) {
+  // ---------------------------------------------------------------------------
+  // Timeline Card
+  // ---------------------------------------------------------------------------
+
+  Widget _buildTimelineCard(BuildContext context, DeliveryRequest request) {
     if (request.timeline.isEmpty) return const SizedBox.shrink();
 
     return GlassCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Timeline',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: AppTheme.getTextColor(context),
             ),
           ),
           const SizedBox(height: 16),
-          ...request.timeline.map((event) {
-            final parts = event.split('|');
-            final time = DateTime.parse(parts[0]);
-            final message = parts[1];
+          ...request.timeline.map(
+                (event) {
+              final parts = event.split('|');
+              final time = DateTime.parse(parts[0]);
+              final message = parts[1];
 
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 8,
-                    height: 8,
-                    margin: const EdgeInsets.only(top: 6),
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFffffff),
-                      shape: BoxShape.circle,
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 8,
+                      height: 8,
+                      margin: const EdgeInsets.only(top: 6),
+                      decoration: BoxDecoration(
+                        color: AppTheme.getBorderColor(context),
+                        shape: BoxShape.circle,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          message,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.white,
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            message,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: AppTheme.getTextColor(context),
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          _formatTime(time),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.white54,
+                          const SizedBox(height: 4),
+                          Text(
+                            _formatTime(time),
+                            style: TextStyle(
+                              fontSize: 12,
+                              color:
+                              AppTheme.getTextColor(context).withOpacity(0.54),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          }),
+                  ],
+                ),
+              );
+            },
+          ),
         ],
       ),
     );
   }
+
+  // ---------------------------------------------------------------------------
+  // Floating Action Button
+  // ---------------------------------------------------------------------------
 
   Widget? _buildFloatingActions(BuildContext context) {
     if (request.status == RequestStatus.delivered ||
@@ -487,22 +537,22 @@ class ActiveRequestScreen extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () => _showCancelDialog(context),
         style: OutlinedButton.styleFrom(
-          side: const BorderSide(color: Colors.white, width: 1),
+          side: BorderSide(color: AppTheme.getTextColor(context), width: 1),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
         ),
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.cancel, color: Color(0xFFffffff)),
+            Icon(Icons.cancel, color: AppTheme.getBackgroundColor(context)),
             SizedBox(width: 8),
             Text(
               'Cancel Request',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFFffffff),
+                color: AppTheme.getBackgroundColor(context),
               ),
             ),
           ],
@@ -510,6 +560,10 @@ class ActiveRequestScreen extends StatelessWidget {
       ),
     );
   }
+
+  // ---------------------------------------------------------------------------
+  // Actions
+  // ---------------------------------------------------------------------------
 
   void _acceptOffer(BuildContext context, offer) async {
     final provider = Provider.of<RequestProvider>(context, listen: false);
@@ -520,12 +574,15 @@ class ActiveRequestScreen extends StatelessWidget {
         SnackBar(
           content: Row(
             children: [
-              const Icon(Icons.check_circle, color: Color(0xFFffffff)),
+               Icon(Icons.check_circle, color: AppTheme.getTextColor(context)),
               const SizedBox(width: 12),
-              Text('Offer from ${offer.driverName} accepted!', style: const TextStyle(color: Colors.white),),
+              Text(
+                'Offer from ${offer.driverName} accepted!',
+                style: TextStyle(color: AppTheme.getTextColor(context)),
+              ),
             ],
           ),
-          backgroundColor: Colors.black,
+          backgroundColor: AppTheme.getBackgroundColor(context),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -548,41 +605,48 @@ class ActiveRequestScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: Colors.black,
+        backgroundColor: AppTheme.getBorderColor(context),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
-        title: const Text(
+        title: Text(
           'Cancel Request?',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: AppTheme.getTextColor(context)),
         ),
-        content: const Text(
+        content: Text(
           'Are you sure you want to cancel this delivery request?',
-          style: TextStyle(color: Colors.white70),
+          style: TextStyle(
+            color: AppTheme.getTextColor(context).withOpacity(0.70),
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('No'),
+            child: Text('No', style: TextStyle(color: AppTheme.getTextColor(context))),
           ),
           TextButton(
             onPressed: () async {
-              final provider = Provider.of<RequestProvider>(context, listen: false);
+              final provider =
+              Provider.of<RequestProvider>(context, listen: false);
               await provider.cancelRequest();
               if (context.mounted) {
                 Navigator.pop(ctx);
                 Navigator.pop(context);
               }
             },
-            child: const Text(
+            child: Text(
               'Yes, Cancel',
-              style: TextStyle(color: Color(0xFFffffff)),
+              style: TextStyle(color: AppTheme.getTextColor(context)),
             ),
           ),
         ],
       ),
     );
   }
+
+  // ---------------------------------------------------------------------------
+  // Helpers
+  // ---------------------------------------------------------------------------
 
   String _getTimeAgo(DateTime time) {
     final diff = DateTime.now().difference(time);

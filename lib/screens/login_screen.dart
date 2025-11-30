@@ -5,6 +5,7 @@ import 'package:deshare/screens/registration_step1_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
+import '../utils/theme.dart';
 import '../widgets/glass_card.dart';
 import 'home_screen.dart';
 
@@ -34,8 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xFF000000),
+        decoration: BoxDecoration(
+          color: AppTheme.getBackgroundColor(context),
         ),
         child: SafeArea(
           child: Center(
@@ -61,33 +62,20 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildLogo() {
     return Column(
       children: [
-        // Container(
-        //   padding: const EdgeInsets.all(24),
-        //   decoration: BoxDecoration(
-        //     shape: BoxShape.circle,
-        //     color: Color(0xFFffffff).withOpacity(0.1),
-        //   ),
-        //   child: const Icon(
-        //     Icons.delivery_dining,
-        //     size: 64,
-        //     color: Color(0xFFffffff),
-        //   ),
-        // ),
-        const SizedBox(height: 24),
-        const Text(
+         Text(
           'DeShare',
           style: TextStyle(
             fontSize: 42,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppTheme.getTextColor(context),
           ),
         ),
         const SizedBox(height: 5),
-        const Text(
+         Text(
           'Store Manager Login',
           style: TextStyle(
             fontSize: 16,
-            color: Colors.white60,
+            color: AppTheme.getSecondaryTextColor(context),
           ),
         ),
       ],
@@ -102,12 +90,12 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
+            Text(
               'Welcome Back',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: AppTheme.getTextColor(context),
               ),
               textAlign: TextAlign.center,
             ),
@@ -116,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
               'Sign in to continue',
               style: TextStyle(
                 fontSize: 14,
-                color: Colors.white.withOpacity(0.6),
+                color: AppTheme.getTextColor(context).withOpacity(0.6),
               ),
               textAlign: TextAlign.center,
             ),
@@ -124,26 +112,26 @@ class _LoginScreenState extends State<LoginScreen> {
             TextFormField(
               controller: _mobileController,
               keyboardType: TextInputType.phone,
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: AppTheme.getTextColor(context)),
               decoration: InputDecoration(
                 labelText: 'Mobile Number',
-                labelStyle: const TextStyle(color: Colors.white60),
-                prefixIcon: const Icon(Icons.phone, color: Color(0xFFffffff)),
+                labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
+                prefixIcon: Icon(Icons.phone, color: AppTheme.getTextColor(context)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.white30),
+                  borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.white30),
+                  borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFFffffff), width: 2),
+                  borderSide: BorderSide(color: AppTheme.getTextColor(context), width: 2),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFFFF006E)),
+                  borderSide: const BorderSide(color: AppTheme.accentRed),
                 ),
               ),
               validator: (value) {
@@ -160,15 +148,15 @@ class _LoginScreenState extends State<LoginScreen> {
             TextFormField(
               controller: _passwordController,
               obscureText: _obscurePassword,
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: AppTheme.getTextColor(context)),
               decoration: InputDecoration(
                 labelText: 'Password',
-                labelStyle: const TextStyle(color: Colors.white60),
-                prefixIcon: const Icon(Icons.lock, color: Color(0xFFffffff)),
+                labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
+                prefixIcon: Icon(Icons.lock, color: AppTheme.getTextColor(context)),
                 suffixIcon: IconButton(
                   icon: Icon(
                     _obscurePassword ? Icons.visibility_off : Icons.visibility,
-                    color: Colors.white60,
+                    color: AppTheme.getSecondaryTextColor(context),
                   ),
                   onPressed: () {
                     setState(() => _obscurePassword = !_obscurePassword);
@@ -176,19 +164,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.white30),
+                  borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.white30),
+                  borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFFffffff), width: 2),
+                  borderSide: BorderSide(color: AppTheme.getTextColor(context), width: 2),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFFFF006E)),
+                  borderSide: BorderSide(color: AppTheme.getTextColor(context)),
                 ),
               ),
               validator: (value) {
@@ -203,8 +191,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ElevatedButton(
               onPressed: _isLoading ? null : _handleLogin,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
+                backgroundColor: AppTheme.getTextColor(context),
+                foregroundColor: AppTheme.getBackgroundColor(context),
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -213,12 +201,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 // shadowColor: const Color(0xFFffffff).withOpacity(0.5),
               ),
               child: _isLoading
-                  ? const SizedBox(
+                  ? SizedBox(
                 height: 20,
                 width: 20,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                  valueColor: AlwaysStoppedAnimation<Color>(AppTheme.getBackgroundColor(context)),
                 ),
               )
                   : const Text(
@@ -236,15 +224,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 Expanded(
                   child: Container(
                     height: 1,
-                    color: Colors.white30,
+                    color: AppTheme.getBorderColor(context),
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
                     'OR',
                     style: TextStyle(
-                      color: Colors.white60,
+                      color: AppTheme.getSecondaryTextColor(context),
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                     ),
@@ -253,7 +241,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Expanded(
                   child: Container(
                     height: 1,
-                    color: Colors.white30,
+                    color: AppTheme.getBorderColor(context),
                   ),
                 ),
               ],
@@ -272,7 +260,7 @@ class _LoginScreenState extends State<LoginScreen> {
               },
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                side: const BorderSide(color: Color(0xFFffffff), width: 2),
+                side: BorderSide(color: AppTheme.getTextColor(context), width: 2),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -280,9 +268,9 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
+                   Icon(
                     Icons.person_add_outlined,
-                    color: Color(0xFFffffff),
+                    color: AppTheme.getTextColor(context),
                     size: 20,
                   ),
                   const SizedBox(width: 8),
@@ -291,7 +279,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: _isLoading ? Colors.white38 : const Color(0xFFffffff),
+                      color: _isLoading ? AppTheme.getTextColor(context) : AppTheme.getTextColor(context),
                     ),
                   ),
                 ],
@@ -307,19 +295,19 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFFF006E).withOpacity(0.2),
+        color: AppTheme.accentRed.withOpacity(0.2),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFFF006E)),
+        border: Border.all(color: AppTheme.accentRed),
       ),
       child: Row(
         children: [
-          const Icon(Icons.error_outline, color: Color(0xFFFF006E)),
+          const Icon(Icons.error_outline, color: AppTheme.accentRed),
           const SizedBox(width: 12),
           Expanded(
             child: Text(
               _errorMessage!,
               style: const TextStyle(
-                color: Color(0xFFFF006E),
+                color: AppTheme.accentRed,
                 fontSize: 14,
               ),
             ),

@@ -5,6 +5,7 @@ import 'package:deshare/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/registration_provider.dart';
+import '../utils/theme.dart';
 import '../widgets/glass_card.dart';
 import 'registration_step2_screen.dart';
 
@@ -49,8 +50,8 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xFF000000),
+        decoration: BoxDecoration(
+          color: AppTheme.getBackgroundColor(context),
         ),
         child: SafeArea(
           child: Column(
@@ -89,17 +90,17 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white10,
+              color: AppTheme.getTextColor(context).withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.store,
-              color: Color(0xFFffffff),
+              color: AppTheme.getTextColor(context),
               size: 32,
             ),
           ),
           const SizedBox(width: 16),
-          const Column(
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -107,14 +108,14 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppTheme.getTextColor(context),
                 ),
               ),
               Text(
                 'Step 1 of 3',
                 style: TextStyle(
                   fontSize: 14,
-                  color: Colors.white60,
+                  color: AppTheme.getSecondaryTextColor(context),
                 ),
               ),
             ],
@@ -145,7 +146,7 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
       height: 12,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: active ? const Color(0xFFffffff) : Colors.white30,
+        color: active ? AppTheme.getTextColor(context) : AppTheme.getBorderColor(context),
       ),
     );
   }
@@ -154,13 +155,13 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
     return Expanded(
       child: Container(
         height: 2,
-        color: active ? const Color(0xFFffffff) : Colors.white30,
+        color: active ? AppTheme.getTextColor(context) : AppTheme.getBorderColor(context),
       ),
     );
   }
 
   Widget _buildTitle() {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -168,15 +169,15 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppTheme.getTextColor(context),
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Text(
           'Let\'s start by setting up your store',
           style: TextStyle(
             fontSize: 16,
-            color: Colors.white60,
+            color: AppTheme.getSecondaryTextColor(context),
           ),
         ),
       ],
@@ -193,25 +194,23 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
           children: [
             DropdownButtonFormField<String>(
               value: _selectedStoreType,
-              dropdownColor: Colors.black,
-              style: const TextStyle(color: Colors.white),
+              dropdownColor: AppTheme.getBackgroundColor(context),
+              style: TextStyle(color: AppTheme.getTextColor(context)),
               decoration: InputDecoration(
                 labelText: 'Store Type *',
-                labelStyle: const TextStyle(color: Colors.white60),
-                prefixIcon:
-                const Icon(Icons.category, color: Color(0xFFffffff)),
+                labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
+                prefixIcon: Icon(Icons.category, color: AppTheme.getTextColor(context)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.white30),
+                  borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.white30),
+                  borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide:
-                  const BorderSide(color: Color(0xFFffffff), width: 2),
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                  borderSide: BorderSide(color: AppTheme.getTextColor(context), width: 2),
                 ),
               ),
               items: _storeTypes.map((type) {
@@ -223,64 +222,57 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
               onChanged: (value) {
                 setState(() => _selectedStoreType = value);
               },
-              validator: (value) {
-                if (value == null) {
-                  return 'Please select a store type';
-                }
-                return null;
-              },
+              validator: (value) =>
+              value == null ? 'Please select a store type' : null,
             ),
+
             const SizedBox(height: 20),
+
             TextFormField(
               controller: _storeNameController,
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: AppTheme.getTextColor(context)),
               decoration: InputDecoration(
                 labelText: 'Store Name *',
-                labelStyle: const TextStyle(color: Colors.white60),
-                prefixIcon:
-                const Icon(Icons.storefront, color: Color(0xFFffffff)),
+                labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
+                prefixIcon: Icon(Icons.storefront, color: AppTheme.getTextColor(context)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.white30),
+                  borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.white30),
+                  borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide:
-                  const BorderSide(color: Color(0xFFffffff), width: 2),
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                  borderSide: BorderSide(color: AppTheme.getTextColor(context), width: 2),
                 ),
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter store name';
-                }
-                return null;
-              },
+              validator: (value) =>
+              value == null || value.isEmpty ? 'Please enter store name' : null,
             ),
+
             const SizedBox(height: 20),
+
             TextFormField(
               controller: _hotlineController,
               keyboardType: TextInputType.phone,
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: AppTheme.getTextColor(context)),
               decoration: InputDecoration(
                 labelText: 'Hotline *',
-                labelStyle: const TextStyle(color: Colors.white60),
-                prefixIcon: const Icon(Icons.phone, color: Color(0xFFffffff)),
+                labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
+                prefixIcon: Icon(Icons.phone, color: AppTheme.getTextColor(context)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.white30),
+                  borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.white30),
+                  borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide:
-                  const BorderSide(color: Color(0xFFffffff), width: 2),
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                  borderSide: BorderSide(color: AppTheme.getTextColor(context), width: 2),
                 ),
               ),
               validator: (value) {
@@ -303,24 +295,19 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
     return ElevatedButton(
       onPressed: _handleNext,
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFFffffff),
-        foregroundColor: Colors.black,
+        backgroundColor: AppTheme.getTextColor(context),
+        foregroundColor: AppTheme.getBackgroundColor(context),
         padding: const EdgeInsets.symmetric(vertical: 16),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        // elevation: 8,
-        // shadowColor: const Color(0xFF00D9FF).withOpacity(0.5),
       ),
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: const [
           Text(
             'Next',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SizedBox(width: 8),
           Icon(Icons.arrow_forward),
@@ -337,21 +324,18 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
           MaterialPageRoute(builder: (_) => const LoginScreen()),
         );
       },
-      style: TextButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-      ),
       child: RichText(
-        text: const TextSpan(
+        text: TextSpan(
           style: TextStyle(
             fontSize: 14,
-            color: Colors.white60,
+            color: AppTheme.getSecondaryTextColor(context),
           ),
           children: [
             TextSpan(text: 'Already have an account? '),
             TextSpan(
               text: 'Login',
               style: TextStyle(
-                color: Color(0xFFffffff),
+                color: AppTheme.getTextColor(context),
                 fontWeight: FontWeight.bold,
                 decoration: TextDecoration.underline,
               ),
@@ -366,11 +350,13 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
     if (_formKey.currentState!.validate()) {
       final provider =
       Provider.of<RegistrationProvider>(context, listen: false);
+
       provider.setStoreInfo(
         _selectedStoreType!,
         _storeNameController.text,
         _hotlineController.text,
       );
+
       provider.nextStep();
 
       Navigator.push(

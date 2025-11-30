@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../providers/registration_provider.dart';
 import '../services/location_service.dart';
 import '../services/location_data_service.dart';
+import '../utils/theme.dart';
 import '../widgets/glass_card.dart';
 import 'registration_step3_screen.dart';
 import 'login_screen.dart';
@@ -77,8 +78,8 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xFF000000),
+        decoration: BoxDecoration(
+          color: AppTheme.getBackgroundColor(context),
         ),
         child: SafeArea(
           child: Column(
@@ -87,16 +88,16 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
               _buildProgressIndicator(),
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(24),
+                  padding: EdgeInsets.all(24),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       _buildTitle(),
-                      const SizedBox(height: 32),
+                      SizedBox(height: 32),
                       _buildForm(),
-                      const SizedBox(height: 32),
+                      SizedBox(height: 32),
                       _buildButtons(),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       _buildLoginLink(),
                     ],
                   ),
@@ -108,31 +109,30 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
       ),
     );
   }
-
   Widget _buildHeader() {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20),
       child: Row(
         children: [
           IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            icon: Icon(Icons.arrow_back, color: AppTheme.getTextColor(context)),
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
           Container(
-            padding: const EdgeInsets.all(12),
+            padding: EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFFffffff).withOpacity(0.2),
+              color: AppTheme.getTextColor(context).withOpacity(0.2),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.location_city,
-              color: Color(0xFFffffff),
+              color: AppTheme.getTextColor(context),
               size: 32,
             ),
           ),
-          const SizedBox(width: 16),
-          const Column(
+          SizedBox(width: 16),
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -140,14 +140,14 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppTheme.getTextColor(context),
                 ),
               ),
               Text(
                 'Step 2 of 3',
                 style: TextStyle(
                   fontSize: 14,
-                  color: Colors.white60,
+                  color: AppTheme.getSecondaryTextColor(context),
                 ),
               ),
             ],
@@ -159,7 +159,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
 
   Widget _buildProgressIndicator() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: EdgeInsets.symmetric(horizontal: 24),
       child: Row(
         children: [
           _buildProgressDot(true),
@@ -178,7 +178,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
       height: 12,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: active ? const Color(0xFFffffff) : Colors.white30,
+        color: active ? AppTheme.getTextColor(context) : AppTheme.getBorderColor(context),
       ),
     );
   }
@@ -187,13 +187,13 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
     return Expanded(
       child: Container(
         height: 2,
-        color: active ? const Color(0xFFffffff) : Colors.white30,
+        color: active ? AppTheme.getTextColor(context) : AppTheme.getBorderColor(context),
       ),
     );
   }
 
   Widget _buildTitle() {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -201,7 +201,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppTheme.getTextColor(context),
           ),
         ),
         SizedBox(height: 8),
@@ -209,7 +209,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
           'Add your first branch location and contact details',
           style: TextStyle(
             fontSize: 16,
-            color: Colors.white60,
+            color: AppTheme.getSecondaryTextColor(context),
           ),
         ),
       ],
@@ -218,22 +218,20 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
 
   Widget _buildForm() {
     return GlassCard(
-      padding: const EdgeInsets.all(24),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _buildTextField(
+        padding: EdgeInsets.all(24),
+        child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+              _buildTextField(
               controller: _branchNameController,
               label: 'Branch Name *',
               icon: Icons.business,
               validator: (value) =>
               value?.isEmpty ?? true ? 'Please enter branch name' : null,
             ),
-            const SizedBox(height: 16),
-
-            // Country Dropdown
+            SizedBox(height: 16),
             _buildDropdownField(
               label: 'Country *',
               icon: Icons.public,
@@ -253,9 +251,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
               validator: (value) =>
               value == null ? 'Please select a country' : null,
             ),
-            const SizedBox(height: 16),
-
-            // City Dropdown (depends on Country)
+            SizedBox(height: 16),
             _buildDropdownField(
               label: 'City *',
               icon: Icons.location_city,
@@ -275,9 +271,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
               validator: (value) =>
               value == null ? 'Please select a city' : null,
             ),
-            const SizedBox(height: 16),
-
-            // Region Dropdown (depends on City)
+            SizedBox(height: 16),
             _buildDropdownField(
               label: 'Region *',
               icon: Icons.map,
@@ -293,8 +287,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
               validator: (value) =>
               value == null ? 'Please select a region' : null,
             ),
-            const SizedBox(height: 16),
-
+            SizedBox(height: 16),
             _buildTextField(
               controller: _addressController,
               label: 'Address *',
@@ -303,65 +296,65 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
               validator: (value) =>
               value?.isEmpty ?? true ? 'Please enter address' : null,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             _buildLocationButton(),
             if (_latitude != null && _longitude != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: Text(
-                  'Location: ${_locationService.formatCoordinates(_latitude!, _longitude!)}',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Color(0xFFffffff),
-                  ),
+        Padding(
+    padding: EdgeInsets.only(top: 8),
+    child: Text(
+    'Location: ${_locationService.formatCoordinates(_latitude!, _longitude!)}',
+    style: TextStyle(
+    fontSize: 12,
+    color: AppTheme.getTextColor(context),
+    ),
+    ),
+    ),
+    SizedBox(height: 16),
+    _buildTextField(
+    controller: _landlineController,
+    label: 'Landline *',
+    icon: Icons.phone,
+    keyboardType: TextInputType.phone,
+    validator: (value) {
+    if (value?.isEmpty ?? true) return 'Please enter landline';
+    if (!RegExp(r'^[0-9]+$').hasMatch(value!)) {
+    return 'Must contain only digits';
+    }
+    return null;
+    },
+    ),
+                SizedBox(height: 16),
+                _buildTextField(
+                  controller: _mobileController,
+                  label: 'Mobile *',
+                  icon: Icons.phone_android,
+                  keyboardType: TextInputType.phone,
+                  validator: (value) {
+                    if (value?.isEmpty ?? true) return 'Please enter mobile';
+                    if (!RegExp(r'^[0-9]+$').hasMatch(value!)) {
+                      return 'Must contain only digits';
+                    }
+                    return null;
+                  },
                 ),
-              ),
-            const SizedBox(height: 16),
-            _buildTextField(
-              controller: _landlineController,
-              label: 'Landline *',
-              icon: Icons.phone,
-              keyboardType: TextInputType.phone,
-              validator: (value) {
-                if (value?.isEmpty ?? true) return 'Please enter landline';
-                if (!RegExp(r'^[0-9]+$').hasMatch(value!)) {
-                  return 'Must contain only digits';
-                }
-                return null;
-              },
+                SizedBox(height: 16),
+                _buildTextField(
+                  controller: _additionalMobileController,
+                  label: 'Additional Mobile (Optional)',
+                  icon: Icons.phone_android,
+                  keyboardType: TextInputType.phone,
+                  validator: (value) {
+                    if (value != null &&
+                        value.isNotEmpty &&
+                        !RegExp(r'^[0-9]+$').hasMatch(value)) {
+                      return 'Must contain only digits';
+                    }
+                    return null;
+                  },
+                ),
+              ],
             ),
-            const SizedBox(height: 16),
-            _buildTextField(
-              controller: _mobileController,
-              label: 'Mobile *',
-              icon: Icons.phone_android,
-              keyboardType: TextInputType.phone,
-              validator: (value) {
-                if (value?.isEmpty ?? true) return 'Please enter mobile';
-                if (!RegExp(r'^[0-9]+$').hasMatch(value!)) {
-                  return 'Must contain only digits';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 16),
-            _buildTextField(
-              controller: _additionalMobileController,
-              label: 'Additional Mobile (Optional)',
-              icon: Icons.phone_android,
-              keyboardType: TextInputType.phone,
-              validator: (value) {
-                if (value != null &&
-                    value.isNotEmpty &&
-                    !RegExp(r'^[0-9]+$').hasMatch(value)) {
-                  return 'Must contain only digits';
-                }
-                return null;
-              },
-            ),
-          ],
         ),
-      ),
     );
   }
 
@@ -377,22 +370,22 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
       controller: controller,
       keyboardType: keyboardType,
       maxLines: maxLines,
-      style: const TextStyle(color: Colors.white),
+      style: TextStyle(color: AppTheme.getTextColor(context)),
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: const TextStyle(color: Colors.white60),
-        prefixIcon: Icon(icon, color: const Color(0xFFffffff)),
+        labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
+        prefixIcon: Icon(icon, color: AppTheme.getTextColor(context)),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.white30),
+          borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.white30),
+          borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Color(0xFFffffff), width: 2),
+          borderSide: BorderSide(color: AppTheme.accentRed, width: 2),
         ),
       ),
       validator: validator,
@@ -409,35 +402,31 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
   }) {
     return DropdownButtonFormField<String>(
       value: value,
-      dropdownColor: Colors.black,
-      style: const TextStyle(color: Colors.white),
+      dropdownColor: AppTheme.getBackgroundColor(context),
+      style: TextStyle(color: AppTheme.getTextColor(context)),
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: const TextStyle(color: Colors.white60),
-        prefixIcon: Icon(icon, color: const Color(0xFFffffff)),
+        labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
+        prefixIcon: Icon(icon, color: AppTheme.getTextColor(context)),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.white30),
+          borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.white30),
+          borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Color(0xFFffffff), width: 2),
-        ),
-        disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.white10),
+          borderSide: BorderSide(color: AppTheme.accentRed, width: 2),
         ),
       ),
-      items: items.map((item) {
-        return DropdownMenuItem(
-          value: item,
-          child: Text(item),
-        );
-      }).toList(),
+      items: items
+          .map((item) => DropdownMenuItem(
+        value: item,
+        child: Text(item),
+      ))
+          .toList(),
       onChanged: onChanged,
       validator: validator,
     );
@@ -447,27 +436,27 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
     return ElevatedButton.icon(
       onPressed: _isLoadingLocation ? null : _getCurrentLocation,
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFFFF006E).withOpacity(0.2),
-        foregroundColor: const Color(0xFFFF006E),
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        side: const BorderSide(color: Color(0xFFFF006E)),
+        backgroundColor: AppTheme.getTextColor(context),
+        foregroundColor: AppTheme.getBackgroundColor(context),
+        padding: EdgeInsets.symmetric(vertical: 12),
+        side: BorderSide(color: AppTheme.getBorderColor(context)),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
       ),
       icon: _isLoadingLocation
-          ? const SizedBox(
+          ? SizedBox(
         width: 20,
         height: 20,
         child: CircularProgressIndicator(
           strokeWidth: 2,
-          valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFFF006E)),
+          valueColor: AlwaysStoppedAnimation<Color>(AppTheme.accentRed),
         ),
       )
-          : const Icon(Icons.my_location),
+          : Icon(Icons.my_location),
       label: Text(
         _isLoadingLocation ? 'Getting Location...' : 'Get Current Location',
-        style: const TextStyle(fontWeight: FontWeight.w600),
+        style: TextStyle(fontWeight: FontWeight.w600),
       ),
     );
   }
@@ -479,38 +468,36 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
           child: OutlinedButton(
             onPressed: () => Navigator.pop(context),
             style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              side: const BorderSide(color: Colors.white30, width: 2),
+              padding: EdgeInsets.symmetric(vertical: 16),
+              side: BorderSide(color: AppTheme.getBorderColor(context), width: 2),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: const Text(
+            child: Text(
               'Back',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: Colors.white,
+                color: AppTheme.getTextColor(context),
               ),
             ),
           ),
         ),
-        const SizedBox(width: 16),
+        SizedBox(width: 16),
         Expanded(
           flex: 2,
           child: ElevatedButton(
             onPressed: _handleNext,
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFffffff),
-              foregroundColor: Colors.black,
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              backgroundColor: AppTheme.getTextColor(context),
+              foregroundColor: AppTheme.getBackgroundColor(context),
+              padding: EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              // elevation: 8,
-              // shadowColor: const Color(0xFFffffff).withOpacity(0.5),
             ),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
@@ -540,20 +527,20 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
         );
       },
       style: TextButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: EdgeInsets.symmetric(vertical: 12),
       ),
       child: RichText(
-        text: const TextSpan(
+        text: TextSpan(
           style: TextStyle(
             fontSize: 14,
-            color: Colors.white60,
+            color: AppTheme.getSecondaryTextColor(context),
           ),
           children: [
             TextSpan(text: 'Already have an account? '),
             TextSpan(
               text: 'Login',
               style: TextStyle(
-                color: Color(0xFFffffff),
+                color: AppTheme.getAccentColor(context),
                 fontWeight: FontWeight.bold,
                 decoration: TextDecoration.underline,
               ),
@@ -566,7 +553,6 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
 
   Future<void> _getCurrentLocation() async {
     setState(() => _isLoadingLocation = true);
-
     try {
       final location = await _locationService.getCurrentLocation();
       setState(() {
@@ -574,14 +560,14 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
         _longitude = location['longitude'];
       });
 
-      final provider =
-      Provider.of<RegistrationProvider>(context, listen: false);
+      final provider = Provider.of<RegistrationProvider>(context, listen: false);
       provider.setLocation(_latitude!, _longitude!);
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text('Failed to get location. Using mock coordinates.'),
+            backgroundColor: AppTheme.accentRed,
           ),
         );
       }
@@ -594,16 +580,15 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
     if (_formKey.currentState!.validate()) {
       if (_latitude == null || _longitude == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text('Please get current location first'),
-            backgroundColor: Color(0xFFFF006E),
+            backgroundColor: AppTheme.accentRed,
           ),
         );
         return;
       }
 
-      final provider =
-      Provider.of<RegistrationProvider>(context, listen: false);
+      final provider = Provider.of<RegistrationProvider>(context, listen: false);
       provider.setBranchInfo(
         name: _branchNameController.text,
         country: _selectedCountry!,

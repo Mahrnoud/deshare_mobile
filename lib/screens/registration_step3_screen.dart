@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../providers/registration_provider.dart';
 import '../providers/auth_provider.dart';
 import '../models/registration_data.dart';
+import '../utils/theme.dart';
 import '../widgets/glass_card.dart';
 import 'login_screen.dart';
 
@@ -49,8 +50,8 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xFF000000)
+        decoration: BoxDecoration(
+          color: AppTheme.getBackgroundColor(context),
         ),
         child: SafeArea(
           child: Column(
@@ -88,23 +89,24 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
         children: [
           IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            icon: Icon(Icons.arrow_back,
+                color: AppTheme.getTextColor(context)),
           ),
           const SizedBox(width: 8),
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFFffffff).withOpacity(0.2),
+              color: AppTheme.getTextColor(context).withOpacity(0.2),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.person,
-              color: Color(0xFFffffff),
+              color: AppTheme.getTextColor(context),
               size: 32,
             ),
           ),
           const SizedBox(width: 16),
-          const Column(
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -112,14 +114,14 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppTheme.getTextColor(context),
                 ),
               ),
               Text(
                 'Step 3 of 3',
                 style: TextStyle(
                   fontSize: 14,
-                  color: Colors.white60,
+                  color: AppTheme.getSecondaryTextColor(context),
                 ),
               ),
             ],
@@ -150,7 +152,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
       height: 12,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: active ? const Color(0xFFffffff) : Colors.white30,
+        color: active ? AppTheme.getTextColor(context) : AppTheme.getBorderColor(context),
       ),
     );
   }
@@ -159,13 +161,13 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
     return Expanded(
       child: Container(
         height: 2,
-        color: active ? const Color(0xFFffffff) : Colors.white30,
+        color: active ? AppTheme.getTextColor(context) : AppTheme.getBorderColor(context),
       ),
     );
   }
 
   Widget _buildTitle() {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -173,15 +175,15 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppTheme.getTextColor(context),
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Text(
           'Create your manager account to access the system',
           style: TextStyle(
             fontSize: 16,
-            color: Colors.white60,
+            color: AppTheme.getSecondaryTextColor(context),
           ),
         ),
       ],
@@ -196,157 +198,156 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // NAME
             TextFormField(
               controller: _nameController,
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: AppTheme.getTextColor(context)),
               decoration: InputDecoration(
                 labelText: 'Manager Name *',
-                labelStyle: const TextStyle(color: Colors.white60),
+                labelStyle:
+                TextStyle(color: AppTheme.getSecondaryTextColor(context)),
                 prefixIcon:
-                const Icon(Icons.person, color: Color(0xFFffffff)),
+                 Icon(Icons.person, color: AppTheme.getTextColor(context)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.white30),
+                  borderSide:
+                  BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.white30),
+                  borderSide:
+                  BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide:
-                  const BorderSide(color: Color(0xFFffffff), width: 2),
+                  borderSide: BorderSide(color: AppTheme.getTextColor(context), width: 2),
                 ),
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter manager name';
-                }
-                return null;
-              },
+              validator: (value) =>
+              value == null || value.isEmpty ? 'Please enter manager name' : null,
             ),
+
             const SizedBox(height: 16),
+
+            // MOBILE
             TextFormField(
               controller: _mobileController,
               keyboardType: TextInputType.phone,
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: AppTheme.getTextColor(context)),
               decoration: InputDecoration(
                 labelText: 'Mobile Number *',
-                labelStyle: const TextStyle(color: Colors.white60),
-                prefixIcon: const Icon(Icons.phone, color: Color(0xFFffffff)),
+                labelStyle:
+                TextStyle(color: AppTheme.getSecondaryTextColor(context)),
+                prefixIcon: Icon(Icons.phone, color: AppTheme.getTextColor(context)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.white30),
+                  borderSide:
+                  BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.white30),
+                  borderSide:
+                  BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide:
-                  const BorderSide(color: Color(0xFFffffff), width: 2),
+                  borderSide: BorderSide(color: AppTheme.getTextColor(context), width: 2),
                 ),
               ),
               validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter mobile number';
-                }
+                if (value == null || value.isEmpty) return 'Please enter mobile number';
                 if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
                   return 'Mobile number must contain only digits';
                 }
                 return null;
               },
             ),
+
             const SizedBox(height: 16),
+
+            // PASSWORD
             TextFormField(
               controller: _passwordController,
               obscureText: _obscurePassword,
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: AppTheme.getTextColor(context)),
               decoration: InputDecoration(
                 labelText: 'Password *',
-                labelStyle: const TextStyle(color: Colors.white60),
-                prefixIcon: const Icon(Icons.lock, color: Color(0xFFffffff)),
+                labelStyle:
+                TextStyle(color: AppTheme.getSecondaryTextColor(context)),
+                prefixIcon: Icon(Icons.lock, color: AppTheme.getTextColor(context)),
                 suffixIcon: IconButton(
                   icon: Icon(
                     _obscurePassword
                         ? Icons.visibility_off
                         : Icons.visibility,
-                    color: Colors.white60,
+                    color: AppTheme.getSecondaryTextColor(context),
                   ),
-                  onPressed: () {
-                    setState(() => _obscurePassword = !_obscurePassword);
-                  },
+                  onPressed: () =>
+                      setState(() => _obscurePassword = !_obscurePassword),
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.white30),
+                  borderSide:
+                  BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.white30),
+                  borderSide:
+                  BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide:
-                  const BorderSide(color: Color(0xFFffffff), width: 2),
+                  borderSide: BorderSide(color: AppTheme.getTextColor(context), width: 2),
                 ),
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter password';
-                }
-                if (value.length < 6) {
-                  return 'Password must be at least 6 characters';
-                }
-                return null;
-              },
+              validator: (value) =>
+              value == null || value.isEmpty
+                  ? 'Please enter password'
+                  : value.length < 6
+                  ? 'Password must be at least 6 characters'
+                  : null,
             ),
+
             const SizedBox(height: 16),
+
+            // CONFIRM PASSWORD
             TextFormField(
               controller: _confirmPasswordController,
               obscureText: _obscureConfirmPassword,
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: AppTheme.getTextColor(context)),
               decoration: InputDecoration(
                 labelText: 'Confirm Password *',
-                labelStyle: const TextStyle(color: Colors.white60),
+                labelStyle:
+                TextStyle(color: AppTheme.getSecondaryTextColor(context)),
                 prefixIcon:
-                const Icon(Icons.lock_outline, color: Color(0xFFffffff)),
+                 Icon(Icons.lock_outline, color: AppTheme.getTextColor(context)),
                 suffixIcon: IconButton(
                   icon: Icon(
                     _obscureConfirmPassword
                         ? Icons.visibility_off
                         : Icons.visibility,
-                    color: Colors.white60,
+                    color: AppTheme.getSecondaryTextColor(context),
                   ),
-                  onPressed: () {
-                    setState(() =>
-                    _obscureConfirmPassword = !_obscureConfirmPassword);
-                  },
+                  onPressed: () => setState(() =>
+                  _obscureConfirmPassword = !_obscureConfirmPassword),
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.white30),
+                  borderSide:
+                  BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.white30),
+                  borderSide:
+                  BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide:
-                  const BorderSide(color: Color(0xFFffffff), width: 2),
+                  borderSide: BorderSide(color: AppTheme.getTextColor(context), width: 2),
                 ),
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please confirm password';
-                }
-                if (value != _passwordController.text) {
-                  return 'Passwords do not match';
-                }
-                return null;
-              },
+              validator: (value) =>
+              value == null || value.isEmpty
+                  ? 'Please confirm password'
+                  : value != _passwordController.text
+                  ? 'Passwords do not match'
+                  : null,
             ),
           ],
         ),
@@ -362,17 +363,20 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
             onPressed: _isLoading ? null : () => Navigator.pop(context),
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 16),
-              side: const BorderSide(color: Colors.white30, width: 2),
+              side: BorderSide(
+                color: AppTheme.getBorderColor(context),
+                width: 2,
+              ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: const Text(
+            child: Text(
               'Back',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: Colors.white,
+                color: AppTheme.getTextColor(context),
               ),
             ),
           ),
@@ -383,14 +387,12 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
           child: ElevatedButton(
             onPressed: _isLoading ? null : _handleComplete,
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFffffff),
-              foregroundColor: Colors.black,
+              backgroundColor: AppTheme.getTextColor(context),
+              foregroundColor: AppTheme.getBackgroundColor(context),
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              // elevation: 8,
-              // shadowColor: const Color(0xFFffffff).withOpacity(0.5),
             ),
             child: _isLoading
                 ? const SizedBox(
@@ -398,13 +400,12 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
               width: 20,
               child: CircularProgressIndicator(
                 strokeWidth: 2,
-                valueColor:
-                AlwaysStoppedAnimation<Color>(Colors.black),
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
               ),
             )
-                : const Row(
+                : Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 Text(
                   'Complete',
                   style: TextStyle(
@@ -433,14 +434,13 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
               (route) => false,
         );
       },
-      style: TextButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-      ),
       child: RichText(
         text: TextSpan(
           style: TextStyle(
             fontSize: 14,
-            color: _isLoading ? Colors.white30 : Colors.white60,
+            color: _isLoading
+                ? AppTheme.getBorderColor(context)
+                : AppTheme.getSecondaryTextColor(context),
           ),
           children: [
             const TextSpan(text: 'Already have an account? '),
@@ -448,8 +448,8 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
               text: 'Login',
               style: TextStyle(
                 color: _isLoading
-                    ? Colors.white30
-                    : const Color(0xFFffffff),
+                    ? AppTheme.getBorderColor(context)
+                    : AppTheme.getTextColor(context),
                 fontWeight: FontWeight.bold,
                 decoration: TextDecoration.underline,
               ),
@@ -487,28 +487,23 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
       await authProvider.completeRegistration(registrationData);
 
-      // Simulate processing
       await Future.delayed(const Duration(seconds: 2));
 
       setState(() => _isLoading = false);
 
       if (mounted) {
-        // Clear registration provider
         regProvider.reset();
 
-        // Show success message and navigate to login
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Row(
+            content: Row(
               children: [
-                Icon(Icons.check_circle, color: Color(0xFFffffff)),
+                Icon(Icons.check_circle, color: AppTheme.getTextColor(context)),
                 SizedBox(width: 12),
-                Expanded(
-                  child: Text('Registration completed successfully!'),
-                ),
+                Expanded(child: Text('Registration completed successfully!')),
               ],
             ),
-            backgroundColor: const Color(0xFF1A1F3A),
+            backgroundColor: AppTheme.getBackgroundColor(context),
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -516,7 +511,6 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
           ),
         );
 
-        // Navigate to login screen and clear navigation stack
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (_) => const LoginScreen()),
               (route) => false,

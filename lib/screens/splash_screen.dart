@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../providers/history_provider.dart';
+import '../utils/theme.dart';
 import '../widgets/onboarding_overlay.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -57,8 +58,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xFF000000)
+        decoration: BoxDecoration(
+          color: AppTheme.getBackgroundColor(context)
         ),
         child: Center(
           child: Column(
@@ -71,12 +72,12 @@ class _SplashScreenState extends State<SplashScreen> {
                 builder: (context, value, child) {
                   return Opacity(
                     opacity: value,
-                    child: const Text(
+                    child: Text(
                       'DeShare',
                       style: TextStyle(
                         fontSize: 48,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: AppTheme.getTextColor(context),
                       ),
                     ),
                   );
@@ -90,11 +91,11 @@ class _SplashScreenState extends State<SplashScreen> {
                 builder: (context, value, child) {
                   return Opacity(
                     opacity: value,
-                    child: const Text(
+                    child: Text(
                       'Streamline your delivery, share the load',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.white60,
+                        color: AppTheme.getSecondaryTextColor(context),
                       ),
                     ),
                   );
@@ -102,7 +103,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               // const SizedBox(height: 48),
               // const CircularProgressIndicator(
-              //   valueColor: AlwaysStoppedAnimation<Color>(Colors.white10),
+              //   valueColor: AlwaysStoppedAnimation<Color>(AppTheme.getTextColor(context)10),
               // ),
             ],
           ),

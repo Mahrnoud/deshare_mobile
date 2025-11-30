@@ -3,6 +3,7 @@
 // ============================================================================
 import 'package:flutter/material.dart';
 import '../models/delivery_stop.dart';
+import '../utils/theme.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/stop_input_card.dart';
 import 'request_confirmation.dart';
@@ -51,8 +52,7 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
     return _stops.every((s) =>
     s.addressText.isNotEmpty &&
         s.orderAmount > 0 &&
-        s.deliveryFee >= 0
-    );
+        s.deliveryFee >= 0);
   }
 
   double get _subtotal => _stops.fold(0, (sum, s) => sum + s.orderAmount);
@@ -63,8 +63,8 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xFF000000),
+        decoration: BoxDecoration(
+          color: AppTheme.getBackgroundColor(context),
         ),
         child: SafeArea(
           child: Column(
@@ -108,25 +108,25 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
         children: [
           IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            icon: Icon(Icons.arrow_back, color: AppTheme.getTextColor(context)),
           ),
           const SizedBox(width: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'New Delivery Request',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppTheme.getTextColor(context),
                 ),
               ),
               Text(
                 '${_stops.length} stop(s)',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
-                  color: Colors.white60,
+                  color: AppTheme.getSecondaryTextColor(context),
                 ),
               ),
             ],
@@ -145,18 +145,18 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: const Color(0xFFffffff).withOpacity(0.2),
+              color: AppTheme.getTextColor(context).withOpacity(0.2),
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.add, color: Color(0xFFffffff)),
+            child: Icon(Icons.add, color: AppTheme.getTextColor(context)),
           ),
           const SizedBox(width: 12),
-          const Text(
+          Text(
             'Add Another Stop',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: Colors.white,
+              color: AppTheme.getTextColor(context),
             ),
           ),
         ],
@@ -169,20 +169,20 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Summary',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: AppTheme.getTextColor(context),
             ),
           ),
           const SizedBox(height: 16),
-          _buildSummaryRow('Subtotal (Orders)', _subtotal, const Color(0xFFffffff)),
+          _buildSummaryRow('Subtotal (Orders)', _subtotal, AppTheme.getTextColor(context)),
           const SizedBox(height: 8),
-          _buildSummaryRow('Delivery Fees', _totalFees, const Color(0xFFffffff)),
-          const Divider(color: Colors.white30, height: 24),
-          _buildSummaryRow('Grand Total', _grandTotal, const Color(0xFFffffff), isTotal: true),
+          _buildSummaryRow('Delivery Fees', _totalFees, AppTheme.getTextColor(context)),
+          Divider(color: AppTheme.getBorderColor(context), height: 24),
+          _buildSummaryRow('Grand Total', _grandTotal, AppTheme.getTextColor(context), isTotal: true),
         ],
       ),
     );
@@ -197,7 +197,7 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
           style: TextStyle(
             fontSize: isTotal ? 18 : 14,
             fontWeight: isTotal ? FontWeight.bold : FontWeight.w500,
-            color: Colors.white70,
+            color: AppTheme.getTextColor(context),
           ),
         ),
         Text(
@@ -220,26 +220,27 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
       child: ElevatedButton(
         onPressed: _canProceed ? _proceedToConfirmation : null,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          disabledBackgroundColor: Colors.white24,
-          disabledForegroundColor: Colors.white38,
+          backgroundColor: AppTheme.getTextColor(context),
+          foregroundColor: AppTheme.getBackgroundColor(context),
+          disabledBackgroundColor: AppTheme.getTextColor(context).withOpacity(0.3),
+          disabledForegroundColor: AppTheme.getBackgroundColor(context).withOpacity(0.3),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
           elevation: 8,
-          shadowColor: const Color(0xFFffffff).withOpacity(0.5),
+          shadowColor: AppTheme.getTextColor(context).withOpacity(0.5),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.arrow_forward, size: 24),
-            const SizedBox(width: 12),
-            const Text(
+            Icon(Icons.arrow_forward, size: 24, color: AppTheme.getBackgroundColor(context),),
+            SizedBox(width: 12),
+            Text(
               'Review Request',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
+                color: AppTheme.getBackgroundColor(context)
               ),
             ),
           ],

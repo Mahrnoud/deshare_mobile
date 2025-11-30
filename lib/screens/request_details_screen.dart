@@ -3,6 +3,7 @@
 // ============================================================================
 import 'package:flutter/material.dart';
 import '../models/delivery_request.dart';
+import '../utils/theme.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/status_chip.dart';
 import 'request_confirmation.dart';
@@ -16,7 +17,7 @@ class RequestDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.black,
+        color: AppTheme.getBackgroundColor(context),
         child: SafeArea(
           child: Column(
             children: [
@@ -25,16 +26,16 @@ class RequestDetailsScreen extends StatelessWidget {
                 child: ListView(
                   padding: const EdgeInsets.all(20),
                   children: [
-                    _buildStatusCard(),
+                    _buildStatusCard(context),
                     const SizedBox(height: 16),
-                    _buildInfoCard(),
+                    _buildInfoCard(context),
                     const SizedBox(height: 16),
-                    _buildStopsCard(),
+                    _buildStopsCard(context),
                     const SizedBox(height: 16),
-                    _buildSummaryCard(),
+                    _buildSummaryCard(context),
                     if (request.timeline.isNotEmpty) ...[
                       const SizedBox(height: 16),
-                      _buildTimelineCard(),
+                      _buildTimelineCard(context),
                     ],
                     if (request.status == RequestStatus.expired ||
                         request.status == RequestStatus.cancelled) ...[
@@ -59,7 +60,7 @@ class RequestDetailsScreen extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            icon: Icon(Icons.arrow_back, color: AppTheme.getTextColor(context)),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -68,15 +69,15 @@ class RequestDetailsScreen extends StatelessWidget {
               children: [
                 Text(
                   'Request #${request.id.substring(request.id.length - 6)}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: AppTheme.getTextColor(context),
                   ),
                 ),
                 Text(
                   _formatDateTime(request.createdAt),
-                  style: const TextStyle(fontSize: 14, color: Colors.white60),
+                  style: TextStyle(fontSize: 14, color: AppTheme.getSecondaryTextColor(context)),
                 ),
               ],
             ),
@@ -86,16 +87,16 @@ class RequestDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusCard() {
+  Widget _buildStatusCard(BuildContext context) {
     return GlassCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+           Text(
             'Status',
             style: TextStyle(
               fontSize: 12,
-              color: Colors.white60,
+              color: AppTheme.getTextColor(context),
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -103,19 +104,19 @@ class RequestDetailsScreen extends StatelessWidget {
           StatusChip(status: request.status),
           if (request.acceptedDriverId != null) ...[
             const SizedBox(height: 16),
-            const Divider(color: Colors.white30),
+            Divider(color: AppTheme.getTextColor(context)),
             const SizedBox(height: 12),
             Row(
               children: [
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFffffff).withOpacity(0.2),
+                    color: AppTheme.getTextColor(context).withOpacity(0.2),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.person,
-                    color: Color(0xFFffffff),
+                    color: AppTheme.getTextColor(context),
                     size: 24,
                   ),
                 ),
@@ -124,27 +125,27 @@ class RequestDetailsScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                       Text(
                         'Driver',
-                        style: TextStyle(fontSize: 12, color: Colors.white60),
+                        style: TextStyle(fontSize: 12, color: AppTheme.getTextColor(context)),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         request.offers
                             .firstWhere((o) => o.id == request.acceptedOfferId)
                             .driverName,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: AppTheme.getTextColor(context),
                         ),
                       ),
                       Row(
                         children: [
-                          const Icon(
+                           Icon(
                             Icons.star,
                             size: 14,
-                            color: Color(0xFFffffff),
+                            color: AppTheme.getTextColor(context),
                           ),
                           const SizedBox(width: 4),
                           Text(
@@ -154,9 +155,9 @@ class RequestDetailsScreen extends StatelessWidget {
                                 )
                                 .driverRating
                                 .toStringAsFixed(1),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 13,
-                              color: Colors.white70,
+                              color: AppTheme.getTextColor(context),
                             ),
                           ),
                         ],
@@ -172,7 +173,7 @@ class RequestDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoCard() {
+  Widget _buildInfoCard(BuildContext context) {
     return GlassCard(
       child: Row(
         children: [
@@ -180,39 +181,39 @@ class RequestDetailsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                 Text(
                   'Request ID',
-                  style: TextStyle(fontSize: 12, color: Colors.white60),
+                  style: TextStyle(fontSize: 12, color: AppTheme.getTextColor(context)),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   '#${request.id.substring(request.id.length - 6)}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: AppTheme.getTextColor(context),
                   ),
                 ),
               ],
             ),
           ),
-          Container(width: 1, height: 40, color: Colors.white30),
+          Container(width: 1, height: 40, color: AppTheme.getBorderColor(context)),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                 Text(
                   'Created',
-                  style: TextStyle(fontSize: 12, color: Colors.white60),
+                  style: TextStyle(fontSize: 12, color: AppTheme.getTextColor(context)),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   _formatDateTime(request.createdAt),
-                  style: const TextStyle(
+                  style:  TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: AppTheme.getTextColor(context),
                   ),
                 ),
               ],
@@ -223,17 +224,17 @@ class RequestDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStopsCard() {
+  Widget _buildStopsCard(BuildContext context) {
     return GlassCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+           Text(
             'Delivery Stops',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: AppTheme.getTextColor(context),
             ),
           ),
           const SizedBox(height: 16),
@@ -250,14 +251,14 @@ class RequestDetailsScreen extends StatelessWidget {
                     width: 32,
                     height: 32,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFffffff).withOpacity(0.2),
+                      color: AppTheme.getTextColor(context).withOpacity(0.2),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Center(
                       child: Text(
                         '${index + 1}',
-                        style: const TextStyle(
-                          color: Color(0xFFffffff),
+                        style: TextStyle(
+                          color: AppTheme.getTextColor(context),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -270,18 +271,18 @@ class RequestDetailsScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            const Icon(
+                             Icon(
                               Icons.location_on,
                               size: 14,
-                              color: Color(0xFFffffff),
+                              color: AppTheme.getTextColor(context),
                             ),
                             const SizedBox(width: 4),
                             Expanded(
                               child: Text(
                                 stop.addressText,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.white,
+                                  color: AppTheme.getTextColor(context),
                                 ),
                               ),
                             ),
@@ -296,23 +297,23 @@ class RequestDetailsScreen extends StatelessWidget {
                                 vertical: 4,
                               ),
                               decoration: BoxDecoration(
-                                color: const Color(0xFFffffff).withOpacity(0.2),
+                                color: AppTheme.getTextColor(context).withOpacity(0.2),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const Icon(
+                                   Icon(
                                     Icons.shopping_bag,
                                     size: 12,
-                                    color: Color(0xFFffffff),
+                                    color: AppTheme.getTextColor(context),
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
                                     '\$${stop.orderAmount.toStringAsFixed(2)}',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 12,
-                                      color: Color(0xFFffffff),
+                                      color: AppTheme.getTextColor(context),
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -326,23 +327,23 @@ class RequestDetailsScreen extends StatelessWidget {
                                 vertical: 4,
                               ),
                               decoration: BoxDecoration(
-                                color: const Color(0xFFffffff).withOpacity(0.2),
+                                color: AppTheme.getTextColor(context).withOpacity(0.2),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const Icon(
+                                   Icon(
                                     Icons.local_shipping,
                                     size: 12,
-                                    color: Color(0xFFffffff),
+                                    color: AppTheme.getTextColor(context),
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
                                     '\$${stop.deliveryFee.toStringAsFixed(2)}',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 12,
-                                      color: Color(0xFFffffff),
+                                      color: AppTheme.getTextColor(context),
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -356,23 +357,23 @@ class RequestDetailsScreen extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.05),
+                              color: AppTheme.getTextColor(context).withOpacity(0.05),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Row(
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.note,
                                   size: 12,
-                                  color: Colors.white54,
+                                  color: AppTheme.getTextColor(context),
                                 ),
                                 const SizedBox(width: 8),
                                 Expanded(
                                   child: Text(
                                     stop.notes,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 12,
-                                      color: Colors.white54,
+                                      color: AppTheme.getTextColor(context),
                                       fontStyle: FontStyle.italic,
                                     ),
                                   ),
@@ -393,36 +394,38 @@ class RequestDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSummaryCard() {
+  Widget _buildSummaryCard(BuildContext context) {
     return GlassCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Payment Summary',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: AppTheme.getTextColor(context),
             ),
           ),
           const SizedBox(height: 16),
           _buildSummaryRow(
+            context,
             'Orders Subtotal',
             request.subtotalOrders,
-            const Color(0xFFffffff),
+            AppTheme.getTextColor(context),
           ),
           const SizedBox(height: 8),
-          _buildSummaryRow(
+          _buildSummaryRow(context,
             'Delivery Fees',
             request.totalDeliveryFees,
-            const Color(0xFFffffff),
+            AppTheme.getTextColor(context),
           ),
-          const Divider(color: Colors.white30, height: 24),
+          const Divider(color: Colors.white, height: 24),
           _buildSummaryRow(
+            context,
             'Grand Total',
             request.grandTotal,
-            const Color(0xFFffffff),
+            AppTheme.getTextColor(context),
             isTotal: true,
           ),
         ],
@@ -431,6 +434,7 @@ class RequestDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildSummaryRow(
+      BuildContext context,
     String label,
     double amount,
     Color color, {
@@ -444,7 +448,7 @@ class RequestDetailsScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: isTotal ? 18 : 14,
             fontWeight: isTotal ? FontWeight.bold : FontWeight.w500,
-            color: Colors.white70,
+            color: AppTheme.getTextColor(context),
           ),
         ),
         Text(
@@ -459,17 +463,17 @@ class RequestDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTimelineCard() {
+  Widget _buildTimelineCard(BuildContext context) {
     return GlassCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+           Text(
             'Timeline',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: AppTheme.getTextColor(context),
             ),
           ),
           const SizedBox(height: 16),
@@ -487,8 +491,8 @@ class RequestDetailsScreen extends StatelessWidget {
                     width: 8,
                     height: 8,
                     margin: const EdgeInsets.only(top: 6),
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFffffff),
+                    decoration: BoxDecoration(
+                      color: AppTheme.getBorderColor(context),
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -499,17 +503,17 @@ class RequestDetailsScreen extends StatelessWidget {
                       children: [
                         Text(
                           message,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
-                            color: Colors.white,
+                            color: AppTheme.getTextColor(context),
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           _formatTime(time),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
-                            color: Colors.white54,
+                            color: AppTheme.getTextColor(context),
                           ),
                         ),
                       ],
@@ -528,14 +532,14 @@ class RequestDetailsScreen extends StatelessWidget {
     return GlassCard(
       child: Column(
         children: [
-          const Icon(Icons.refresh, size: 32, color: Color(0xFFffffff)),
+           Icon(Icons.refresh, size: 32, color: AppTheme.getTextColor(context)),
           const SizedBox(height: 12),
-          const Text(
+          Text(
             'Request Again?',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: AppTheme.getTextColor(context),
             ),
           ),
           const SizedBox(height: 8),
@@ -543,7 +547,7 @@ class RequestDetailsScreen extends StatelessWidget {
             'Use the same delivery stops for a new request',
             style: TextStyle(
               fontSize: 14,
-              color: Colors.white.withOpacity(0.6),
+              color: AppTheme.getTextColor(context).withOpacity(0.6),
             ),
             textAlign: TextAlign.center,
           ),
@@ -551,8 +555,8 @@ class RequestDetailsScreen extends StatelessWidget {
           ElevatedButton(
             onPressed: () => _reRequestDelivery(context),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFffffff),
-              foregroundColor: Colors.black,
+              backgroundColor: AppTheme.getTextColor(context),
+              foregroundColor: AppTheme.getBackgroundColor(context),
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
