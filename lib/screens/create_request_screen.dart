@@ -2,6 +2,7 @@
 // FILE: lib/screens/create_request_screen.dart
 // ============================================================================
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../models/delivery_stop.dart';
 import '../utils/theme.dart';
 import '../widgets/glass_card.dart';
@@ -115,7 +116,7 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'New Delivery Request',
+                AppLocalizations.of(context)!.newDeliveryRequest,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -123,7 +124,7 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
                 ),
               ),
               Text(
-                '${_stops.length} stop(s)',
+                AppLocalizations.of(context)!.stops(_stops.length),
                 style: TextStyle(
                   fontSize: 14,
                   color: AppTheme.getSecondaryTextColor(context),
@@ -152,7 +153,7 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
           ),
           const SizedBox(width: 12),
           Text(
-            'Add Another Stop',
+            AppLocalizations.of(context)!.addAnotherStop,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -170,7 +171,7 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Summary',
+            AppLocalizations.of(context)!.summary,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -178,11 +179,15 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          _buildSummaryRow('Subtotal (Orders)', _subtotal, AppTheme.getTextColor(context)),
+          _buildSummaryRow(
+              AppLocalizations.of(context)!.subtotalOrders, _subtotal, AppTheme.getTextColor(context)),
           const SizedBox(height: 8),
-          _buildSummaryRow('Delivery Fees', _totalFees, AppTheme.getTextColor(context)),
+          _buildSummaryRow(AppLocalizations.of(context)!.deliveryFees,
+              _totalFees, AppTheme.getTextColor(context)),
           Divider(color: AppTheme.getBorderColor(context), height: 24),
-          _buildSummaryRow('Grand Total', _grandTotal, AppTheme.getTextColor(context), isTotal: true),
+          _buildSummaryRow(AppLocalizations.of(context)!.grandTotal,
+              _grandTotal, AppTheme.getTextColor(context),
+              isTotal: true),
         ],
       ),
     );
@@ -236,7 +241,7 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
             Icon(Icons.arrow_forward, size: 24, color: AppTheme.getBackgroundColor(context),),
             SizedBox(width: 12),
             Text(
-              'Review Request',
+              AppLocalizations.of(context)!.reviewRequest,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,

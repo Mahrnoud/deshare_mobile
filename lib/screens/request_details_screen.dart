@@ -2,6 +2,7 @@
 // FILE: lib/screens/request_details_screen.dart
 // ============================================================================
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../models/delivery_request.dart';
 import '../utils/theme.dart';
 import '../widgets/glass_card.dart';
@@ -68,7 +69,8 @@ class RequestDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Request #${request.id.substring(request.id.length - 6)}',
+                  AppLocalizations.of(context)!
+                      .request(request.id.substring(request.id.length - 6)),
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -92,8 +94,8 @@ class RequestDetailsScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Text(
-            'Status',
+          Text(
+            AppLocalizations.of(context)!.status,
             style: TextStyle(
               fontSize: 12,
               color: AppTheme.getTextColor(context),
@@ -125,9 +127,10 @@ class RequestDetailsScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       Text(
-                        'Driver',
-                        style: TextStyle(fontSize: 12, color: AppTheme.getTextColor(context)),
+                      Text(
+                        AppLocalizations.of(context)!.driver,
+                        style:
+                            TextStyle(fontSize: 12, color: AppTheme.getTextColor(context)),
                       ),
                       const SizedBox(height: 4),
                       Text(
@@ -181,8 +184,8 @@ class RequestDetailsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                 Text(
-                  'Request ID',
+                Text(
+                  AppLocalizations.of(context)!.requestId,
                   style: TextStyle(fontSize: 12, color: AppTheme.getTextColor(context)),
                 ),
                 const SizedBox(height: 4),
@@ -203,8 +206,8 @@ class RequestDetailsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                 Text(
-                  'Created',
+                Text(
+                  AppLocalizations.of(context)!.created,
                   style: TextStyle(fontSize: 12, color: AppTheme.getTextColor(context)),
                 ),
                 const SizedBox(height: 4),
@@ -229,8 +232,8 @@ class RequestDetailsScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Text(
-            'Delivery Stops',
+          Text(
+            AppLocalizations.of(context)!.deliveryStops,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -400,7 +403,7 @@ class RequestDetailsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Payment Summary',
+            AppLocalizations.of(context)!.paymentSummary,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -410,20 +413,21 @@ class RequestDetailsScreen extends StatelessWidget {
           const SizedBox(height: 16),
           _buildSummaryRow(
             context,
-            'Orders Subtotal',
+            AppLocalizations.of(context)!.ordersSubtotal,
             request.subtotalOrders,
             AppTheme.getTextColor(context),
           ),
           const SizedBox(height: 8),
-          _buildSummaryRow(context,
-            'Delivery Fees',
+          _buildSummaryRow(
+            context,
+            AppLocalizations.of(context)!.deliveryFees,
             request.totalDeliveryFees,
             AppTheme.getTextColor(context),
           ),
           const Divider(color: Colors.white, height: 24),
           _buildSummaryRow(
             context,
-            'Grand Total',
+            AppLocalizations.of(context)!.grandTotal,
             request.grandTotal,
             AppTheme.getTextColor(context),
             isTotal: true,
@@ -468,8 +472,8 @@ class RequestDetailsScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Text(
-            'Timeline',
+          Text(
+            AppLocalizations.of(context)!.timeline,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -532,10 +536,10 @@ class RequestDetailsScreen extends StatelessWidget {
     return GlassCard(
       child: Column(
         children: [
-           Icon(Icons.refresh, size: 32, color: AppTheme.getTextColor(context)),
+          Icon(Icons.refresh, size: 32, color: AppTheme.getTextColor(context)),
           const SizedBox(height: 12),
           Text(
-            'Request Again?',
+            AppLocalizations.of(context)!.requestAgain,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -544,7 +548,7 @@ class RequestDetailsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Use the same delivery stops for a new request',
+            AppLocalizations.of(context)!.useSameStops,
             style: TextStyle(
               fontSize: 14,
               color: AppTheme.getTextColor(context).withOpacity(0.6),
@@ -557,14 +561,15 @@ class RequestDetailsScreen extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: AppTheme.getTextColor(context),
               foregroundColor: AppTheme.getBackgroundColor(context),
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: const Text(
-              'Create New Request',
-              style: TextStyle(fontWeight: FontWeight.bold),
+            child: Text(
+              AppLocalizations.of(context)!.createNewRequest,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
         ],
@@ -582,7 +587,7 @@ class RequestDetailsScreen extends StatelessWidget {
   }
 
   String _formatDateTime(DateTime date) {
-    return '${date.day}/${date.month}/${date.year} at ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
+    return '${date.day}/${date.month}/${date.year} ${AppLocalizations.of(context)!.at} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
   }
 
   String _formatTime(DateTime time) {

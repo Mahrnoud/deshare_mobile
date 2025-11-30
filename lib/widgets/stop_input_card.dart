@@ -3,6 +3,7 @@
 // ============================================================================
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../l10n/app_localizations.dart';
 import '../models/delivery_stop.dart';
 import '../services/geocoding_service.dart';
 import '../utils/theme.dart';
@@ -72,7 +73,7 @@ class _StopInputCardState extends State<StopInputCard> {
                   ),
                   SizedBox(width: 8),
                   Text(
-                    'Stop',
+                    AppLocalizations.of(context)!.stop(widget.index + 1),
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -97,7 +98,7 @@ class _StopInputCardState extends State<StopInputCard> {
             controller: _addressController,
             style: TextStyle(color: AppTheme.getTextColor(context)),
             decoration: InputDecoration(
-              labelText: 'Delivery Address',
+              labelText: AppLocalizations.of(context)!.address,
               labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
               prefixIcon: Icon(Icons.location_on, color: AppTheme.getTextColor(context)),
               border: OutlineInputBorder(
@@ -115,10 +116,9 @@ class _StopInputCardState extends State<StopInputCard> {
             ),
             onChanged: _onAddressChanged,
           ),
-
           if (_showSuggestions && _suggestions.isNotEmpty)
             Container(
-              margin: EdgeInsets.only(top: 8),
+              margin: const EdgeInsets.only(top: 8),
               decoration: BoxDecoration(
                 color: AppTheme.getBackgroundColor(context),
                 borderRadius: BorderRadius.circular(12),
@@ -140,9 +140,7 @@ class _StopInputCardState extends State<StopInputCard> {
                 },
               ),
             ),
-
-          SizedBox(height: 12),
-
+          const SizedBox(height: 12),
           Row(
             children: [
               Expanded(
@@ -151,40 +149,46 @@ class _StopInputCardState extends State<StopInputCard> {
                   keyboardType: TextInputType.number,
                   style: TextStyle(color: AppTheme.getTextColor(context)),
                   decoration: InputDecoration(
-                    labelText: 'Order Amount',
-                    labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
+                    labelText: AppLocalizations.of(context)!.orderAmount,
+                    labelStyle:
+                        TextStyle(color: AppTheme.getSecondaryTextColor(context)),
                     prefixText: '\$ ',
                     prefixStyle: TextStyle(color: AppTheme.getTextColor(context)),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
+                      borderSide:
+                          BorderSide(color: AppTheme.getBorderColor(context)),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
+                      borderSide:
+                          BorderSide(color: AppTheme.getBorderColor(context)),
                     ),
                   ),
                   onChanged: (_) => _updateStop(),
                 ),
               ),
-              SizedBox(width: 12),
+              const SizedBox(width: 12),
               Expanded(
                 child: TextField(
                   controller: _feeController,
                   keyboardType: TextInputType.number,
                   style: TextStyle(color: AppTheme.getTextColor(context)),
                   decoration: InputDecoration(
-                    labelText: 'Delivery Fee',
-                    labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
+                    labelText: AppLocalizations.of(context)!.deliveryFee,
+                    labelStyle:
+                        TextStyle(color: AppTheme.getSecondaryTextColor(context)),
                     prefixText: '\$ ',
                     prefixStyle: TextStyle(color: AppTheme.getTextColor(context)),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
+                      borderSide:
+                          BorderSide(color: AppTheme.getBorderColor(context)),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: AppTheme.getBorderColor(context)),
+                      borderSide:
+                          BorderSide(color: AppTheme.getBorderColor(context)),
                     ),
                   ),
                   onChanged: (_) => _updateStop(),
@@ -192,9 +196,7 @@ class _StopInputCardState extends State<StopInputCard> {
               ),
             ],
           ),
-
-          SizedBox(height: 12),
-
+          const SizedBox(height: 12),
           TextField(
             controller: _notesController,
             style: TextStyle(color: AppTheme.getTextColor(context)),
