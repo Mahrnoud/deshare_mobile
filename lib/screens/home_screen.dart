@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   final user = authProvider.currentUser;
                   return Text(
                     user != null
-                        ? AppLocalizations.of(context)!.welcome(user['name'])
+                        ? AppLocalizations.of(context)!.welcome(user['name'] ?? '...')
                         : AppLocalizations.of(context)!.storeManager,
                     style: TextStyle(
                       fontSize: 14,

@@ -3,6 +3,7 @@
 // ============================================================================
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../l10n/app_localizations.dart';
 import '../providers/auth_provider.dart';
 import '../providers/history_provider.dart';
 import '../utils/theme.dart';
@@ -92,7 +93,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   return Opacity(
                     opacity: value,
                     child: Text(
-                      'Streamline your delivery, share the load',
+                      AppLocalizations.of(context)!.appSlogan,
                       style: TextStyle(
                         fontSize: 16,
                         color: AppTheme.getSecondaryTextColor(context),

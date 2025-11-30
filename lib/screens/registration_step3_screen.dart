@@ -3,6 +3,7 @@
 // ============================================================================
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../l10n/app_localizations.dart';
 import '../providers/registration_provider.dart';
 import '../providers/auth_provider.dart';
 import '../models/registration_data.dart';
@@ -110,7 +111,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Manager Account',
+                AppLocalizations.of(context)!.managerAccount,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -118,7 +119,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
                 ),
               ),
               Text(
-                'Step 3 of 3',
+                AppLocalizations.of(context)!.step3Of3,
                 style: TextStyle(
                   fontSize: 14,
                   color: AppTheme.getSecondaryTextColor(context),
@@ -171,7 +172,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Manager Account',
+          AppLocalizations.of(context)!.managerAccount,
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
@@ -180,7 +181,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
         ),
         const SizedBox(height: 8),
         Text(
-          'Create your manager account to access the system',
+          AppLocalizations.of(context)!.createManagerAccount,
           style: TextStyle(
             fontSize: 16,
             color: AppTheme.getSecondaryTextColor(context),
@@ -203,27 +204,29 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
               controller: _nameController,
               style: TextStyle(color: AppTheme.getTextColor(context)),
               decoration: InputDecoration(
-                labelText: 'Manager Name *',
+                labelText: AppLocalizations.of(context)!.managerName,
                 labelStyle:
-                TextStyle(color: AppTheme.getSecondaryTextColor(context)),
+                    TextStyle(color: AppTheme.getSecondaryTextColor(context)),
                 prefixIcon:
-                 Icon(Icons.person, color: AppTheme.getTextColor(context)),
+                    Icon(Icons.person, color: AppTheme.getTextColor(context)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide:
-                  BorderSide(color: AppTheme.getBorderColor(context)),
+                      BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide:
-                  BorderSide(color: AppTheme.getBorderColor(context)),
+                      BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppTheme.getTextColor(context), width: 2),
+                  borderSide:
+                      BorderSide(color: AppTheme.getTextColor(context), width: 2),
                 ),
               ),
-              validator: (value) =>
-              value == null || value.isEmpty ? 'Please enter manager name' : null,
+              validator: (value) => value == null || value.isEmpty
+                  ? AppLocalizations.of(context)!.enterManagerName
+                  : null,
             ),
 
             const SizedBox(height: 16),
@@ -234,28 +237,31 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
               keyboardType: TextInputType.phone,
               style: TextStyle(color: AppTheme.getTextColor(context)),
               decoration: InputDecoration(
-                labelText: 'Mobile Number *',
+                labelText: AppLocalizations.of(context)!.managerMobile,
                 labelStyle:
-                TextStyle(color: AppTheme.getSecondaryTextColor(context)),
-                prefixIcon: Icon(Icons.phone, color: AppTheme.getTextColor(context)),
+                    TextStyle(color: AppTheme.getSecondaryTextColor(context)),
+                prefixIcon:
+                    Icon(Icons.phone, color: AppTheme.getTextColor(context)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide:
-                  BorderSide(color: AppTheme.getBorderColor(context)),
+                      BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide:
-                  BorderSide(color: AppTheme.getBorderColor(context)),
+                      BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppTheme.getTextColor(context), width: 2),
+                  borderSide:
+                      BorderSide(color: AppTheme.getTextColor(context), width: 2),
                 ),
               ),
               validator: (value) {
-                if (value == null || value.isEmpty) return 'Please enter mobile number';
+                if (value == null || value.isEmpty)
+                  return AppLocalizations.of(context)!.enterManagerMobile;
                 if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                  return 'Mobile number must contain only digits';
+                  return AppLocalizations.of(context)!.mustContainDigits;
                 }
                 return null;
               },
@@ -269,10 +275,11 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
               obscureText: _obscurePassword,
               style: TextStyle(color: AppTheme.getTextColor(context)),
               decoration: InputDecoration(
-                labelText: 'Password *',
+                labelText: AppLocalizations.of(context)!.password,
                 labelStyle:
-                TextStyle(color: AppTheme.getSecondaryTextColor(context)),
-                prefixIcon: Icon(Icons.lock, color: AppTheme.getTextColor(context)),
+                    TextStyle(color: AppTheme.getSecondaryTextColor(context)),
+                prefixIcon:
+                    Icon(Icons.lock, color: AppTheme.getTextColor(context)),
                 suffixIcon: IconButton(
                   icon: Icon(
                     _obscurePassword
@@ -286,23 +293,23 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide:
-                  BorderSide(color: AppTheme.getBorderColor(context)),
+                      BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide:
-                  BorderSide(color: AppTheme.getBorderColor(context)),
+                      BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppTheme.getTextColor(context), width: 2),
+                  borderSide:
+                      BorderSide(color: AppTheme.getTextColor(context), width: 2),
                 ),
               ),
-              validator: (value) =>
-              value == null || value.isEmpty
-                  ? 'Please enter password'
+              validator: (value) => value == null || value.isEmpty
+                  ? AppLocalizations.of(context)!.pleaseEnterPassword
                   : value.length < 6
-                  ? 'Password must be at least 6 characters'
-                  : null,
+                      ? AppLocalizations.of(context)!.passwordTooShort
+                      : null,
             ),
 
             const SizedBox(height: 16),
@@ -313,11 +320,11 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
               obscureText: _obscureConfirmPassword,
               style: TextStyle(color: AppTheme.getTextColor(context)),
               decoration: InputDecoration(
-                labelText: 'Confirm Password *',
+                labelText: AppLocalizations.of(context)!.confirmPassword,
                 labelStyle:
-                TextStyle(color: AppTheme.getSecondaryTextColor(context)),
-                prefixIcon:
-                 Icon(Icons.lock_outline, color: AppTheme.getTextColor(context)),
+                    TextStyle(color: AppTheme.getSecondaryTextColor(context)),
+                prefixIcon: Icon(Icons.lock_outline,
+                    color: AppTheme.getTextColor(context)),
                 suffixIcon: IconButton(
                   icon: Icon(
                     _obscureConfirmPassword
@@ -325,29 +332,29 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
                         : Icons.visibility,
                     color: AppTheme.getSecondaryTextColor(context),
                   ),
-                  onPressed: () => setState(() =>
-                  _obscureConfirmPassword = !_obscureConfirmPassword),
+                  onPressed: () => setState(
+                      () => _obscureConfirmPassword = !_obscureConfirmPassword),
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide:
-                  BorderSide(color: AppTheme.getBorderColor(context)),
+                      BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide:
-                  BorderSide(color: AppTheme.getBorderColor(context)),
+                      BorderSide(color: AppTheme.getBorderColor(context)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppTheme.getTextColor(context), width: 2),
+                  borderSide:
+                      BorderSide(color: AppTheme.getTextColor(context), width: 2),
                 ),
               ),
-              validator: (value) =>
-              value == null || value.isEmpty
-                  ? 'Please confirm password'
+              validator: (value) => value == null || value.isEmpty
+                  ? AppLocalizations.of(context)!.confirmPasswordHint
                   : value != _passwordController.text
-                  ? 'Passwords do not match'
-                  : null,
+                      ? AppLocalizations.of(context)!.passwordsDoNotMatch
+                      : null,
             ),
           ],
         ),
@@ -372,7 +379,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
               ),
             ),
             child: Text(
-              'Back',
+              AppLocalizations.of(context)!.back,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -396,27 +403,27 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
             ),
             child: _isLoading
                 ? const SizedBox(
-              height: 20,
-              width: 20,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-              ),
-            )
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                    ),
+                  )
                 : Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
-                  'Complete',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.complete,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      const Icon(Icons.check_circle),
+                    ],
                   ),
-                ),
-                SizedBox(width: 8),
-                Icon(Icons.check_circle),
-              ],
-            ),
           ),
         ),
       ],
@@ -428,12 +435,12 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
       onPressed: _isLoading
           ? null
           : () {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (_) => const LoginScreen()),
-              (route) => false,
-        );
-      },
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => const LoginScreen()),
+                (route) => false,
+              );
+            },
       child: RichText(
         text: TextSpan(
           style: TextStyle(
@@ -443,9 +450,9 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
                 : AppTheme.getSecondaryTextColor(context),
           ),
           children: [
-            const TextSpan(text: 'Already have an account? '),
+            TextSpan(text: AppLocalizations.of(context)!.alreadyHaveAccount),
             TextSpan(
-              text: 'Login',
+              text: AppLocalizations.of(context)!.loginAction,
               style: TextStyle(
                 color: _isLoading
                     ? AppTheme.getBorderColor(context)
@@ -465,7 +472,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
       setState(() => _isLoading = true);
 
       final regProvider =
-      Provider.of<RegistrationProvider>(context, listen: false);
+          Provider.of<RegistrationProvider>(context, listen: false);
 
       regProvider.setManagerInfo(
         _nameController.text,
@@ -498,9 +505,12 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
           SnackBar(
             content: Row(
               children: [
-                Icon(Icons.check_circle, color: AppTheme.getTextColor(context)),
-                SizedBox(width: 12),
-                Expanded(child: Text('Registration completed successfully!')),
+                Icon(Icons.check_circle,
+                    color: AppTheme.getTextColor(context)),
+                const SizedBox(width: 12),
+                Expanded(
+                    child:
+                        Text(AppLocalizations.of(context)!.registrationSuccess)),
               ],
             ),
             backgroundColor: AppTheme.getBackgroundColor(context),
@@ -513,7 +523,7 @@ class _RegistrationStep3ScreenState extends State<RegistrationStep3Screen> {
 
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (_) => const LoginScreen()),
-              (route) => false,
+          (route) => false,
         );
       }
     }

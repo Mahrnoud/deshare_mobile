@@ -3,6 +3,7 @@
 // ============================================================================
 import 'package:deshare/screens/login_screen.dart';
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../providers/registration_provider.dart';
 import '../utils/theme.dart';
@@ -104,7 +105,7 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Store Registration',
+                AppLocalizations.of(context)!.storeRegistration,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -112,7 +113,7 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
                 ),
               ),
               Text(
-                'Step 1 of 3',
+                AppLocalizations.of(context)!.step1Of3,
                 style: TextStyle(
                   fontSize: 14,
                   color: AppTheme.getSecondaryTextColor(context),
@@ -165,7 +166,7 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Store Information',
+          AppLocalizations.of(context)!.storeInformation,
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
@@ -174,7 +175,7 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
         ),
         const SizedBox(height: 8),
         Text(
-          'Let\'s start by setting up your store',
+          AppLocalizations.of(context)!.setupYourStore,
           style: TextStyle(
             fontSize: 16,
             color: AppTheme.getSecondaryTextColor(context),
@@ -197,7 +198,7 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
               dropdownColor: AppTheme.getBackgroundColor(context),
               style: TextStyle(color: AppTheme.getTextColor(context)),
               decoration: InputDecoration(
-                labelText: 'Store Type *',
+                labelText: AppLocalizations.of(context)!.storeType,
                 labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
                 prefixIcon: Icon(Icons.category, color: AppTheme.getTextColor(context)),
                 border: OutlineInputBorder(
@@ -213,17 +214,30 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
                   borderSide: BorderSide(color: AppTheme.getTextColor(context), width: 2),
                 ),
               ),
-              items: _storeTypes.map((type) {
-                return DropdownMenuItem(
-                  value: type,
-                  child: Text(type),
-                );
-              }).toList(),
+              items: [
+                DropdownMenuItem(
+                  value: 'Restaurant',
+                  child: Text(AppLocalizations.of(context)!.restaurant),
+                ),
+                DropdownMenuItem(
+                  value: 'Pharmacy',
+                  child: Text(AppLocalizations.of(context)!.pharmacy),
+                ),
+                DropdownMenuItem(
+                  value: 'Supermarket',
+                  child: Text(AppLocalizations.of(context)!.supermarket),
+                ),
+                DropdownMenuItem(
+                  value: 'Other',
+                  child: Text(AppLocalizations.of(context)!.other),
+                ),
+              ],
               onChanged: (value) {
                 setState(() => _selectedStoreType = value);
               },
-              validator: (value) =>
-              value == null ? 'Please select a store type' : null,
+              validator: (value) => value == null
+                  ? AppLocalizations.of(context)!.selectStoreType
+                  : null,
             ),
 
             const SizedBox(height: 20),
@@ -232,7 +246,7 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
               controller: _storeNameController,
               style: TextStyle(color: AppTheme.getTextColor(context)),
               decoration: InputDecoration(
-                labelText: 'Store Name *',
+                labelText: AppLocalizations.of(context)!.storeName,
                 labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
                 prefixIcon: Icon(Icons.storefront, color: AppTheme.getTextColor(context)),
                 border: OutlineInputBorder(
@@ -248,8 +262,9 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
                   borderSide: BorderSide(color: AppTheme.getTextColor(context), width: 2),
                 ),
               ),
-              validator: (value) =>
-              value == null || value.isEmpty ? 'Please enter store name' : null,
+              validator: (value) => value == null || value.isEmpty
+                  ? AppLocalizations.of(context)!.enterStoreName
+                  : null,
             ),
 
             const SizedBox(height: 20),
@@ -259,7 +274,7 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
               keyboardType: TextInputType.phone,
               style: TextStyle(color: AppTheme.getTextColor(context)),
               decoration: InputDecoration(
-                labelText: 'Hotline *',
+                labelText: AppLocalizations.of(context)!.hotline,
                 labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
                 prefixIcon: Icon(Icons.phone, color: AppTheme.getTextColor(context)),
                 border: OutlineInputBorder(
@@ -277,10 +292,10 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter hotline number';
+                  return AppLocalizations.of(context)!.enterHotline;
                 }
                 if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                  return 'Hotline must contain only digits';
+                  return AppLocalizations.of(context)!.invalidHotline;
                 }
                 return null;
               },
@@ -304,13 +319,13 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           Text(
-            'Next',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            AppLocalizations.of(context)!.next,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          SizedBox(width: 8),
-          Icon(Icons.arrow_forward),
+          const SizedBox(width: 8),
+          const Icon(Icons.arrow_forward),
         ],
       ),
     );
@@ -331,9 +346,9 @@ class _RegistrationStep1ScreenState extends State<RegistrationStep1Screen> {
             color: AppTheme.getSecondaryTextColor(context),
           ),
           children: [
-            TextSpan(text: 'Already have an account? '),
+            TextSpan(text: AppLocalizations.of(context)!.alreadyHaveAccount),
             TextSpan(
-              text: 'Login',
+              text: AppLocalizations.of(context)!.loginAction,
               style: TextStyle(
                 color: AppTheme.getTextColor(context),
                 fontWeight: FontWeight.bold,

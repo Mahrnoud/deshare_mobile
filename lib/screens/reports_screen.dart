@@ -3,6 +3,7 @@
 // ============================================================================
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../l10n/app_localizations.dart';
 import '../providers/history_provider.dart';
 import '../models/delivery_request.dart';
 import '../utils/theme.dart';
@@ -77,7 +78,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Reports & Analytics',
+                  AppLocalizations.of(context)!.reportsAndAnalytics,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -85,7 +86,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                   ),
                 ),
                 Text(
-                  'Track your delivery performance',
+                  AppLocalizations.of(context)!.trackPerformance,
                   style: TextStyle(
                     fontSize: 14,
                     color: AppTheme.getSecondaryTextColor(context),
@@ -104,11 +105,17 @@ class _ReportsScreenState extends State<ReportsScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
-          Expanded(child: _buildPeriodButton('Daily', ReportPeriod.daily, Icons.today)),
+          Expanded(
+              child: _buildPeriodButton(AppLocalizations.of(context)!.daily,
+                  ReportPeriod.daily, Icons.today)),
           const SizedBox(width: 8),
-          Expanded(child: _buildPeriodButton('Weekly', ReportPeriod.weekly, Icons.view_week)),
+          Expanded(
+              child: _buildPeriodButton(AppLocalizations.of(context)!.weekly,
+                  ReportPeriod.weekly, Icons.view_week)),
           const SizedBox(width: 8),
-          Expanded(child: _buildPeriodButton('Monthly', ReportPeriod.monthly, Icons.calendar_month)),
+          Expanded(
+              child: _buildPeriodButton(AppLocalizations.of(context)!.monthly,
+                  ReportPeriod.monthly, Icons.calendar_month)),
         ],
       ),
     );
@@ -202,7 +209,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               Icon(Icons.assessment, color: AppTheme.getTextColor(context), size: 20),
               const SizedBox(width: 8),
               Text(
-                'Overview',
+                AppLocalizations.of(context)!.overview,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -216,7 +223,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
             children: [
               Expanded(
                 child: _buildStatItem(
-                  'Total Requests',
+                  AppLocalizations.of(context)!.totalRequests,
                   '${stats.totalRequests}',
                   Icons.all_inbox,
                   AppTheme.getTextColor(context),
@@ -229,7 +236,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               ),
               Expanded(
                 child: _buildStatItem(
-                  'Delivered',
+                  AppLocalizations.of(context)!.delivered,
                   '${stats.deliveredCount}',
                   Icons.check_circle,
                   AppTheme.getTextColor(context),
@@ -242,7 +249,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
             children: [
               Expanded(
                 child: _buildStatItem(
-                  'Expired',
+                  AppLocalizations.of(context)!.expired,
                   '${stats.expiredCount}',
                   Icons.timer_off,
                   AppTheme.getTextColor(context),
@@ -255,7 +262,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               ),
               Expanded(
                 child: _buildStatItem(
-                  'Cancelled',
+                  AppLocalizations.of(context)!.cancelled,
                   '${stats.cancelledCount}',
                   Icons.cancel,
                   AppTheme.getTextColor(context),
@@ -312,7 +319,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               ),
               const SizedBox(width: 12),
               Text(
-                'Delivered Orders',
+                AppLocalizations.of(context)!.deliveredOrders,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -323,26 +330,26 @@ class _ReportsScreenState extends State<ReportsScreen> {
           ),
           const SizedBox(height: 20),
           _buildReportRow(
-            'Total Orders',
+            AppLocalizations.of(context)!.totalOrders,
             '${stats.deliveredCount}',
             Icons.shopping_bag,
             AppTheme.getTextColor(context),
           ),
           Divider(color: AppTheme.getBorderColor(context), height: 24),
           _buildReportRow(
-            'Orders Amount',
+            AppLocalizations.of(context)!.ordersAmount,
             '\$${stats.deliveredOrdersAmount.toStringAsFixed(2)}',
             Icons.attach_money,
             AppTheme.getTextColor(context),
-            subtitle: 'Excluding delivery fees',
+            subtitle: AppLocalizations.of(context)!.excludingDeliveryFees,
           ),
           Divider(color: AppTheme.getBorderColor(context), height: 24),
           _buildReportRow(
-            'Delivery Fees',
+            AppLocalizations.of(context)!.deliveryFees,
             '\$${stats.deliveredDeliveryFees.toStringAsFixed(2)}',
             Icons.local_shipping,
             AppTheme.getTextColor(context),
-            subtitle: 'Total fees collected',
+            subtitle: AppLocalizations.of(context)!.totalFeesCollected,
           ),
         ],
       ),
@@ -368,7 +375,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               ),
               const SizedBox(width: 12),
               Text(
-                'Expired Orders',
+                AppLocalizations.of(context)!.expiredOrders,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -379,13 +386,15 @@ class _ReportsScreenState extends State<ReportsScreen> {
           ),
           const SizedBox(height: 20),
           _buildReportRow(
-            'Total Expired',
+            AppLocalizations.of(context)!.totalExpired,
             '${stats.expiredCount}',
             Icons.timer_off_outlined,
             AppTheme.getTextColor(context),
             subtitle: stats.expiredCount > 0
-                ? '${((stats.expiredCount / stats.totalRequests) * 100).toStringAsFixed(1)}% of total'
-                : 'No expired requests',
+                ? AppLocalizations.of(context)!.percentageOfTotal(
+                    ((stats.expiredCount / stats.totalRequests) * 100)
+                        .toStringAsFixed(1))
+                : AppLocalizations.of(context)!.noExpiredRequests,
           ),
         ],
       ),
@@ -411,7 +420,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               ),
               const SizedBox(width: 12),
               Text(
-                'Cancelled Orders',
+                AppLocalizations.of(context)!.cancelledOrders,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -422,13 +431,15 @@ class _ReportsScreenState extends State<ReportsScreen> {
           ),
           const SizedBox(height: 20),
           _buildReportRow(
-            'Total Cancelled',
+            AppLocalizations.of(context)!.totalCancelled,
             '${stats.cancelledCount}',
             Icons.cancel_outlined,
             AppTheme.getTextColor(context),
             subtitle: stats.cancelledCount > 0
-                ? '${((stats.cancelledCount / stats.totalRequests) * 100).toStringAsFixed(1)}% of total'
-                : 'Great job!',
+                ? AppLocalizations.of(context)!.percentageOfTotal(
+                    ((stats.cancelledCount / stats.totalRequests) * 100)
+                        .toStringAsFixed(1))
+                : AppLocalizations.of(context)!.greatJob,
           ),
         ],
       ),
@@ -454,7 +465,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               ),
               const SizedBox(width: 12),
               Text(
-                'Financial Summary',
+                AppLocalizations.of(context)!.financialSummary,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -481,12 +492,12 @@ class _ReportsScreenState extends State<ReportsScreen> {
             child: Column(
               children: [
                 _summaryRow(
-                  'Orders Amount',
+                  AppLocalizations.of(context)!.ordersAmount,
                   '\$${stats.deliveredOrdersAmount.toStringAsFixed(2)}',
                 ),
                 const SizedBox(height: 8),
                 _summaryRow(
-                  'Delivery Fees',
+                  AppLocalizations.of(context)!.deliveryFees,
                   '\$${stats.deliveredDeliveryFees.toStringAsFixed(2)}',
                 ),
                 Divider(color: AppTheme.getBorderColor(context), height: 24),
@@ -494,7 +505,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Total Revenue',
+                      AppLocalizations.of(context)!.totalRevenue,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -517,11 +528,13 @@ class _ReportsScreenState extends State<ReportsScreen> {
           const SizedBox(height: 12),
           Row(
             children: [
-              Icon(Icons.info_outline, size: 14, color: AppTheme.getTextColor(context).withOpacity(0.54)),
+              Icon(Icons.info_outline,
+                  size: 14, color: AppTheme.getTextColor(context).withOpacity(0.54)),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  'Based on ${stats.deliveredCount} delivered order${stats.deliveredCount != 1 ? 's' : ''}',
+                  AppLocalizations.of(context)!.basedOn(
+                      stats.deliveredCount, stats.deliveredCount != 1 ? 's' : ''),
                   style: TextStyle(
                     fontSize: 12,
                     color: AppTheme.getTextColor(context).withOpacity(0.54),
@@ -684,9 +697,19 @@ class _ReportsScreenState extends State<ReportsScreen> {
   String _formatDate(DateTime date) => '${date.day}/${date.month}/${date.year}';
 
   String _getMonthName(int month) {
-    const months = [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
+    final months = [
+      AppLocalizations.of(context)!.january,
+      AppLocalizations.of(context)!.february,
+      AppLocalizations.of(context)!.march,
+      AppLocalizations.of(context)!.april,
+      AppLocalizations.of(context)!.may,
+      AppLocalizations.of(context)!.june,
+      AppLocalizations.of(context)!.july,
+      AppLocalizations.of(context)!.august,
+      AppLocalizations.of(context)!.september,
+      AppLocalizations.of(context)!.october,
+      AppLocalizations.of(context)!.november,
+      AppLocalizations.of(context)!.december,
     ];
     return months[month - 1];
   }

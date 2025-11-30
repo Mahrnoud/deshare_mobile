@@ -3,6 +3,7 @@
 // ============================================================================
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../l10n/app_localizations.dart';
 import '../providers/registration_provider.dart';
 import '../services/location_service.dart';
 import '../services/location_data_service.dart';
@@ -136,7 +137,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Branch Registration',
+                AppLocalizations.of(context)!.branchRegistration,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -144,7 +145,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
                 ),
               ),
               Text(
-                'Step 2 of 3',
+                AppLocalizations.of(context)!.step2Of3,
                 style: TextStyle(
                   fontSize: 14,
                   color: AppTheme.getSecondaryTextColor(context),
@@ -197,7 +198,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'First Branch',
+          AppLocalizations.of(context)!.firstBranch,
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
@@ -206,7 +207,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
         ),
         SizedBox(height: 8),
         Text(
-          'Add your first branch location and contact details',
+          AppLocalizations.of(context)!.addBranchDetails,
           style: TextStyle(
             fontSize: 16,
             color: AppTheme.getSecondaryTextColor(context),
@@ -224,16 +225,17 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-              _buildTextField(
-              controller: _branchNameController,
-              label: 'Branch Name *',
-              icon: Icons.business,
-              validator: (value) =>
-              value?.isEmpty ?? true ? 'Please enter branch name' : null,
-            ),
-            SizedBox(height: 16),
+                _buildTextField(
+                  controller: _branchNameController,
+                  label: AppLocalizations.of(context)!.branchName,
+                  icon: Icons.business,
+                  validator: (value) => value?.isEmpty ?? true
+                      ? AppLocalizations.of(context)!.enterBranchName
+                      : null,
+                ),
+                SizedBox(height: 16),
             _buildDropdownField(
-              label: 'Country *',
+              label: AppLocalizations.of(context)!.country,
               icon: Icons.public,
               value: _selectedCountry,
               items: _locationDataService.getCountries(),
@@ -248,110 +250,117 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
                   _availableRegions = [];
                 });
               },
-              validator: (value) =>
-              value == null ? 'Please select a country' : null,
+              validator: (value) => value == null
+                  ? AppLocalizations.of(context)!.selectCountry
+                  : null,
             ),
             SizedBox(height: 16),
             _buildDropdownField(
-              label: 'City *',
+              label: AppLocalizations.of(context)!.city,
               icon: Icons.location_city,
               value: _selectedCity,
               items: _availableCities,
               onChanged: _selectedCountry == null
                   ? null
                   : (value) {
-                setState(() {
-                  _selectedCity = value;
-                  _selectedRegion = null;
-                  _availableRegions = value != null
-                      ? _locationDataService.getRegionsByCity(value)
-                      : [];
-                });
-              },
-              validator: (value) =>
-              value == null ? 'Please select a city' : null,
+                      setState(() {
+                        _selectedCity = value;
+                        _selectedRegion = null;
+                        _availableRegions = value != null
+                            ? _locationDataService.getRegionsByCity(value)
+                            : [];
+                      });
+                    },
+              validator: (value) => value == null
+                  ? AppLocalizations.of(context)!.selectCity
+                  : null,
             ),
             SizedBox(height: 16),
             _buildDropdownField(
-              label: 'Region *',
+              label: AppLocalizations.of(context)!.region,
               icon: Icons.map,
               value: _selectedRegion,
               items: _availableRegions,
               onChanged: _selectedCity == null
                   ? null
                   : (value) {
-                setState(() {
-                  _selectedRegion = value;
-                });
-              },
-              validator: (value) =>
-              value == null ? 'Please select a region' : null,
+                      setState(() {
+                        _selectedRegion = value;
+                      });
+                    },
+              validator: (value) => value == null
+                  ? AppLocalizations.of(context)!.selectRegion
+                  : null,
             ),
             SizedBox(height: 16),
             _buildTextField(
               controller: _addressController,
-              label: 'Address *',
+              label: AppLocalizations.of(context)!.address,
               icon: Icons.home,
               maxLines: 2,
-              validator: (value) =>
-              value?.isEmpty ?? true ? 'Please enter address' : null,
+              validator: (value) => value?.isEmpty ?? true
+                  ? AppLocalizations.of(context)!.enterAddress
+                  : null,
             ),
             SizedBox(height: 16),
             _buildLocationButton(),
             if (_latitude != null && _longitude != null)
-        Padding(
-    padding: EdgeInsets.only(top: 8),
-    child: Text(
-    'Location: ${_locationService.formatCoordinates(_latitude!, _longitude!)}',
-    style: TextStyle(
-    fontSize: 12,
-    color: AppTheme.getTextColor(context),
-    ),
-    ),
-    ),
-    SizedBox(height: 16),
-    _buildTextField(
-    controller: _landlineController,
-    label: 'Landline *',
-    icon: Icons.phone,
-    keyboardType: TextInputType.phone,
-    validator: (value) {
-    if (value?.isEmpty ?? true) return 'Please enter landline';
-    if (!RegExp(r'^[0-9]+$').hasMatch(value!)) {
-    return 'Must contain only digits';
-    }
-    return null;
-    },
-    ),
-                SizedBox(height: 16),
-                _buildTextField(
-                  controller: _mobileController,
-                  label: 'Mobile *',
-                  icon: Icons.phone_android,
-                  keyboardType: TextInputType.phone,
-                  validator: (value) {
-                    if (value?.isEmpty ?? true) return 'Please enter mobile';
-                    if (!RegExp(r'^[0-9]+$').hasMatch(value!)) {
-                      return 'Must contain only digits';
-                    }
-                    return null;
-                  },
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Text(
+                  AppLocalizations.of(context)!.location(
+                      _locationService.formatCoordinates(_latitude!, _longitude!)),
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: AppTheme.getTextColor(context),
+                  ),
                 ),
-                SizedBox(height: 16),
-                _buildTextField(
-                  controller: _additionalMobileController,
-                  label: 'Additional Mobile (Optional)',
-                  icon: Icons.phone_android,
-                  keyboardType: TextInputType.phone,
-                  validator: (value) {
-                    if (value != null &&
-                        value.isNotEmpty &&
-                        !RegExp(r'^[0-9]+$').hasMatch(value)) {
-                      return 'Must contain only digits';
-                    }
-                    return null;
-                  },
-                ),
+              ),
+            SizedBox(height: 16),
+            _buildTextField(
+              controller: _landlineController,
+              label: AppLocalizations.of(context)!.landline,
+              icon: Icons.phone,
+              keyboardType: TextInputType.phone,
+              validator: (value) {
+                if (value?.isEmpty ?? true)
+                  return AppLocalizations.of(context)!.enterLandline;
+                if (!RegExp(r'^[0-9]+$').hasMatch(value!)) {
+                  return AppLocalizations.of(context)!.mustContainDigits;
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 16),
+            _buildTextField(
+              controller: _mobileController,
+              label: AppLocalizations.of(context)!.mobile,
+              icon: Icons.phone_android,
+              keyboardType: TextInputType.phone,
+              validator: (value) {
+                if (value?.isEmpty ?? true)
+                  return AppLocalizations.of(context)!.enterMobile;
+                if (!RegExp(r'^[0-9]+$').hasMatch(value!)) {
+                  return AppLocalizations.of(context)!.mustContainDigits;
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 16),
+            _buildTextField(
+              controller: _additionalMobileController,
+              label: AppLocalizations.of(context)!.additionalMobile,
+              icon: Icons.phone_android,
+              keyboardType: TextInputType.phone,
+              validator: (value) {
+                if (value != null &&
+                    value.isNotEmpty &&
+                    !RegExp(r'^[0-9]+$').hasMatch(value)) {
+                  return AppLocalizations.of(context)!.mustContainDigits;
+                }
+                return null;
+              },
+            ),
               ],
             ),
         ),
@@ -455,7 +464,9 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
       )
           : Icon(Icons.my_location),
       label: Text(
-        _isLoadingLocation ? 'Getting Location...' : 'Get Current Location',
+        _isLoadingLocation
+            ? AppLocalizations.of(context)!.gettingLocation
+            : AppLocalizations.of(context)!.getCurrentLocation,
         style: TextStyle(fontWeight: FontWeight.w600),
       ),
     );
@@ -475,7 +486,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
               ),
             ),
             child: Text(
-              'Back',
+              AppLocalizations.of(context)!.back,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -501,7 +512,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Next',
+                  AppLocalizations.of(context)!.next,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -523,7 +534,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (_) => const LoginScreen()),
-              (route) => false,
+          (route) => false,
         );
       },
       style: TextButton.styleFrom(
@@ -536,9 +547,9 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
             color: AppTheme.getSecondaryTextColor(context),
           ),
           children: [
-            TextSpan(text: 'Already have an account? '),
+            TextSpan(text: AppLocalizations.of(context)!.alreadyHaveAccount),
             TextSpan(
-              text: 'Login',
+              text: AppLocalizations.of(context)!.loginAction,
               style: TextStyle(
                 color: AppTheme.getAccentColor(context),
                 fontWeight: FontWeight.bold,
@@ -566,7 +577,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to get location. Using mock coordinates.'),
+            content: Text(AppLocalizations.of(context)!.failedToGetLocation),
             backgroundColor: AppTheme.accentRed,
           ),
         );
@@ -581,7 +592,7 @@ class _RegistrationStep2ScreenState extends State<RegistrationStep2Screen> {
       if (_latitude == null || _longitude == null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Please get current location first'),
+            content: Text(AppLocalizations.of(context)!.pleaseGetLocation),
             backgroundColor: AppTheme.accentRed,
           ),
         );
