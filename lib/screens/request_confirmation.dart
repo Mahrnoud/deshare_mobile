@@ -183,7 +183,7 @@ class RequestConfirmationScreen extends StatelessWidget {
                       Icon(Icons.shopping_bag, size: 16, color: AppTheme.getTextColor(context)),
                       SizedBox(width: 8),
                       Text(
-                        AppLocalizations.of(context)!.order,
+                        AppLocalizations.of(context)!.order(stop.orderAmount.toStringAsFixed(2)),
                         style: TextStyle(
                           fontSize: 14,
                           color: AppTheme.getTextColor(context).withOpacity(0.7),
@@ -196,7 +196,7 @@ class RequestConfirmationScreen extends StatelessWidget {
                       Icon(Icons.local_shipping, size: 16, color: AppTheme.getTextColor(context)),
                       SizedBox(width: 8),
                       Text(
-                        AppLocalizations.of(context)!.feeWithAmount,
+                        AppLocalizations.of(context)!.feeWithAmount(stop.deliveryFee.toStringAsFixed(2)),
                         style: TextStyle(
                           fontSize: 14,
                           color: AppTheme.getTextColor(context).withOpacity(0.7),

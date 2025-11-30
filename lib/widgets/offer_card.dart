@@ -63,8 +63,7 @@ class OfferCard extends StatelessWidget {
                   ),
                   child: Text(
                     AppLocalizations.of(context)!.counter,
-                    style: const TextStyle(
-                      fontSize: 10,
+                    style: const TextStyle(fontSize: 10,
                       color: AppTheme.accentRed,
                       fontWeight: FontWeight.bold,
                     ),

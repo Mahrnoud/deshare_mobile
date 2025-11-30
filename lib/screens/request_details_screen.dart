@@ -78,7 +78,7 @@ class RequestDetailsScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  _formatDateTime(request.createdAt),
+                  _formatDateTime(context, request.createdAt),
                   style: TextStyle(fontSize: 14, color: AppTheme.getSecondaryTextColor(context)),
                 ),
               ],
@@ -212,7 +212,7 @@ class RequestDetailsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  _formatDateTime(request.createdAt),
+                  _formatDateTime(context, request.createdAt),
                   style:  TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -586,7 +586,7 @@ class RequestDetailsScreen extends StatelessWidget {
     );
   }
 
-  String _formatDateTime(DateTime date) {
+  String _formatDateTime(BuildContext context, DateTime date) {
     return '${date.day}/${date.month}/${date.year} ${AppLocalizations.of(context)!.at} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
   }
 
