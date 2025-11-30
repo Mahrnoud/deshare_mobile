@@ -103,7 +103,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               IconButton(
                 onPressed: () => _showLogoutDialog(context),
-                icon: Icon(Icons.logout, color: AppTheme.getTextColor(context)),
+                icon: Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.rotationY(
+                    Localizations.localeOf(context).languageCode == 'ar' ? 3.1416 : 0,
+                  ),
+                  child: Icon(Icons.logout, color: AppTheme.getTextColor(context)),
+                ),
               ),
             ],
           ),

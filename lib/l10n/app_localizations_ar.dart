@@ -148,7 +148,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get toggleLanguage => 'التبديل بين اللغتين الإنجليزية والعربية';
 
   @override
-  String get appSlogan => 'قم بتبسيط عملية التسليم الخاصة بك، وشارك الحمل';
+  String get appSlogan => 'Streamline your delivery, share the load';
 
   @override
   String get storeRegistration => 'تسجيل متجر';
