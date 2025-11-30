@@ -3,6 +3,7 @@
 // ============================================================================
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../l10n/app_localizations.dart';
 import '../utils/theme.dart';
 import 'glass_card.dart';
 import '../providers/auth_provider.dart';
@@ -23,23 +24,29 @@ class _OnboardingOverlayState extends State<OnboardingOverlay> {
   int _currentPage = 0;
   final _pageController = PageController();
 
-  final _pages = [
-    _OnboardingPage(
-      icon: Icons.add_location_alt,
-      title: 'Multi-Stop Delivery',
-      description: 'Create delivery requests with multiple customer addresses. Use autocomplete to find addresses quickly.',
-    ),
-    _OnboardingPage(
-      icon: Icons.local_offer,
-      title: 'Receive Offers',
-      description: 'Nearby drivers will send offers. Each offer is valid for 30 seconds. Accept the best one!',
-    ),
-    _OnboardingPage(
-      icon: Icons.delivery_dining,
-      title: 'Track Delivery',
-      description: 'Monitor your delivery in real-time from pickup to completion. All requests are saved in history.',
-    ),
-  ];
+  late final List<_OnboardingPage> _pages;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _pages = [
+      _OnboardingPage(
+        icon: Icons.add_location_alt,
+        title: AppLocalizations.of(context)!.onboardingTitle1,
+        description: AppLocalizations.of(context)!.onboardingDesc1,
+      ),
+      _OnboardingPage(
+        icon: Icons.local_offer,
+        title: AppLocalizations.of(context)!.onboardingTitle2,
+        description: AppLocalizations.of(context)!.onboardingDesc2,
+      ),
+      _OnboardingPage(
+        icon: Icons.delivery_dining,
+        title: AppLocalizations.of(context)!.onboardingTitle3,
+        description: AppLocalizations.of(context)!.onboardingDesc3,
+      ),
+    ];
+  }
 
   void _handleGetStarted() {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
@@ -116,7 +123,7 @@ class _OnboardingOverlayState extends State<OnboardingOverlay> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
-                            child: const Text('Back'),
+                            child: Text(AppLocalizations.of(context)!.back),
                           ),
                         ),
                       if (_currentPage > 0) const SizedBox(width: 12),
@@ -126,9 +133,9 @@ class _OnboardingOverlayState extends State<OnboardingOverlay> {
                           onPressed: _currentPage == _pages.length - 1
                               ? _handleGetStarted
                               : () => _pageController.nextPage(
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                          ),
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeInOut,
+                                  ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppTheme.getTextColor(context),
                             foregroundColor: AppTheme.getBackgroundColor(context),
@@ -138,7 +145,9 @@ class _OnboardingOverlayState extends State<OnboardingOverlay> {
                             ),
                           ),
                           child: Text(
-                            _currentPage == _pages.length - 1 ? 'Get Started' : 'Next',
+                            _currentPage == _pages.length - 1
+                                ? AppLocalizations.of(context)!.getStarted
+                                : AppLocalizations.of(context)!.next,
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),

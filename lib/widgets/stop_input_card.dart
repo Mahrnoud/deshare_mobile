@@ -202,7 +202,7 @@ class _StopInputCardState extends State<StopInputCard> {
             style: TextStyle(color: AppTheme.getTextColor(context)),
             maxLines: 2,
             decoration: InputDecoration(
-              labelText: 'Notes (optional)',
+              labelText: AppLocalizations.of(context)!.notesOptional,
               labelStyle: TextStyle(color: AppTheme.getSecondaryTextColor(context)),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
