@@ -1,0 +1,15 @@
+{
+  "hello": "مرحباً",
+  "storeManagerLogin": "دخول مدير المتجر",
+  "welcomeBack": "مرحباً بعودتك",
+  "signInToContinue": "سجل الدخول للمتابعة",
+  "mobileNumber": "رقم الجوال",
+  "password": "كلمة المرور",
+  "login": "تسجيل الدخول",
+  "or": "أو",
+  "createNewAccount": "إنشاء حساب جديد",
+  "pleaseEnterMobile": "الرجاء إدخال رقم الجوال",
+  "invalidMobile": "يجب أن يحتوي رقم الجوال على أرقام فقط",
+  "pleaseEnterPassword": "الرجاء إدخال كلمة المرور",
+  "invalidCredentials": "رقم الجوال أو كلمة المرور غير صحيحة"
+}

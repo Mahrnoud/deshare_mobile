@@ -3,11 +3,13 @@
 // ============================================================================
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'providers/language_provider.dart';
 import 'providers/request_provider.dart';
 import 'providers/history_provider.dart';
 import 'providers/settings_provider.dart';
 import 'providers/auth_provider.dart';
 import 'providers/registration_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'providers/theme_provider.dart'; // NEW
 import 'screens/splash_screen.dart';
 import 'utils/theme.dart';
@@ -24,6 +26,7 @@ class DeShareApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => LanguageProvider()..fetchLocale()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()..init()), // NEW
         ChangeNotifierProvider(create: (_) => AuthProvider()..init()),
         ChangeNotifierProvider(create: (_) => RegistrationProvider()),
@@ -39,13 +42,20 @@ class DeShareApp extends StatelessWidget {
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) {
-          return MaterialApp(
-            title: 'DeShare',
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.lightTheme, // Light theme
-            darkTheme: AppTheme.darkTheme, // Dark theme
-            themeMode: themeProvider.themeMode, // Use provider's theme mode
-            home: const SplashScreen(),
+          return Consumer<LanguageProvider>(
+            builder: (context, languageProvider, _) {
+              return MaterialApp(
+                title: 'DeShare',
+                debugShowCheckedModeBanner: false,
+                theme: AppTheme.lightTheme, // Light theme
+                darkTheme: AppTheme.darkTheme, // Dark theme
+                themeMode: themeProvider.themeMode, // Use provider's theme mode
+                locale: languageProvider.appLocale,
+                localizationsDelegates: AppLocalizations.localizationsDelegates,
+                supportedLocales: AppLocalizations.supportedLocales,
+                home: const SplashScreen(),
+              );
+            },
           );
         },
       ),
